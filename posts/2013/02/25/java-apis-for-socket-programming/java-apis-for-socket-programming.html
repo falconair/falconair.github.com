@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Java APIs for Socket Programming</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        
+        <!-- CSS -->
+        <link rel="stylesheet" href="/bootstrap-2.3.0/css/bootstrap.min.css" media="screen"/>
+        <link rel="stylesheet" href="/css/highlight/xcode.css"/>
+        <link rel="stylesheet" href="/css/nv.d3.css"/>
+
+        <style>
+            /*D3 chart styles*/
+          .axis path,
+          .axis line {
+            fill: none;
+            stroke: rgba(0, 0, 0, 0.05);
+            shape-rendering: crispEdges;
+          }
+          
+          .axis text {
+            font-family: sans-serif;
+            font-size: 10px;
+            color: lightgray;
+          }
+          
+        </style>
+
+        <!-- Javascript -->
+        <script src="/js/jquery-1.9.1.min.js"></script>
+        <script src="/bootstrap-2.3.0/js/bootstrap.min.js"></script>
+        <script src="/js/highlight.pack.js"></script>
+        <script src="/js/d3.v3.min.js"></script>
+        <script src="/js/underscore-min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                $("code").each(function(i, e) {hljs.highlightBlock(e)});
+              });
+        </script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <h1>Java APIs for socket programming</h1>
+                
+                <p><i>If you are writing a simple client, are NIO or NIO2 going to give consistenly better latency or throughput?  Not really.</i></p>
+                
+                <p>As of JDK 7, Java has three separate APIs for network programming. Most programmers don&#39;t work at the level of sockets. Even those of us who write financial trading systems use higher level code. Market data vendors such as Bloomberg, Reuters and Activ provide their own libraries. Connections to other brokers or market centers are over their proprietary libraries or, more likely, over FIX protocol. Messaging queues, such as JMS and its various implementation in the Java world, are far more convenient than working directly with sockets. There are times however, when knowledge of socket level programming comes in handy. Java provides three main methods of doing socket programming and several options within those methods. The following is my attempt at exercising each socket I/O API and learn what it offers.</p>
+                
+                <h3>Test Setup</h3>
+                
+                <p>The code for these tests is written to be as small as possible. I try to separate message parsing code from connection handling code. Each client connects to the server, one at a time, and receives a large number of messages containing two values: server time stamp and message counter.  The client parses these messages, compares server time stamp to local time stamp to calculate latency and compares counter values to make sure no messages were dropped. At the end of the run, client also records the total time it took to transfer all messages.  Note that this is a client oriented read test. I attempt to measure throughput and latency, but NOT scalability. In other words, I want to know which client handles the most number of messages per second or throughout. Since my background is in trading systems, I care <em>even more</em> about which client is able to receive a message quickest, aka latency. The number of connection a server can handle, or scalability, is a very important performance measure for servers, just not for this test.</p>
+                
+                <h5>Server</h5>
+                
+                <pre><code class="java">
+                //Very simple server which handles only one client at a time and simply sends them two 'long' values in a tight loop.
+                ...
+                final ServerSocket server = new ServerSocket(PORT);
+                while(true){
+                    final Socket c1 = server.accept();
+                    c1.setTcpNoDelay(true);
+                    long counter = 0;
+                    DataOutputStream serverout;
+                    try {
+                        serverout = new DataOutputStream(c1.getOutputStream());
+                        for(int i=0;i < SENDCOUNT;i++){ 
+                            serverout.writeLong(System.nanoTime());
+                            serverout.writeLong(counter);
+                            counter++;
+                        }
+                    } catch (IOException e) { e.printStackTrace(); }
+                    finally{ try { c1.close(); } catch (IOException e) { e.printStackTrace();} }
+                }
+                </code></pre>
+                
+                <h3>Java Streams (Old IO)</h3>
+                
+                <p>The first set of tests use the oldest socket API in java. This API also happens to be the easiest to use.  These clients use the InputStream interface, sometimes by itself, sometimes wrapping BufferedInputStream and/or DataInputStreams around it. Buffer size is not applicable for Input or DataInput streams and is ignored.</p>
+                
+                <h5>Parser Code</h5>
+                
+                <pre><code class="java">
+                //Parser code for InputStream and BufferedInputStream
+                ...
+                private final byte[] internalBufferBA = new byte[8];
+                ...
+                public void process(InputStream input) throws IOException{
+                    while(true){
+                        size = input.read(internalBufferBA, 0, 8);
+                        if(size == -1) break;
+                        long remoteTS = toLong(internalBufferBA);
+                
+                        size = input.read(internalBufferBA, 0, 8);
+                        if(size == -1) break;
+                        long remoteCounter = toLong(internalBufferBA);
+                        ...
+                    }
+                }
+                </code></pre>
+                
+                <pre><code class="java">
+                //Parser code for DataInputStream
+                ...
+                public void process(DataInputStream input) throws IOException{
+                    ...
+                    while(true){
+                        long remoteTS = input.readLong();
+                        long remoteCounter = input.readLong();
+                        ...
+                    }
+                    ...
+                </code></pre>
+                
+                <h5>Connection Code</h5>
+                
+                <pre><code class="java">
+                //Connection code for InputStream, BufferedInputStream, DataInputStream and Buffered DataInputStream
+                ...
+                Socket client = new Socket(InetAddress.getLocalHost(), PORT);
+                client.setTcpNoDelay(TCP_NO_DELAY);
+                
+                //InputStream, BufferedInputStream, DataInputStream and Buffered DataInputStream share exactly the same code, except the next line
+                InputStream in = client.getInputStream();
+                //InputStream in = new BufferedInputStream(client.getInputStream(), bufferSize);
+                //DataInputStream in = new DataInputStream(client.getInputStream());
+                //DataInputStream in = new BufferedInputStream(new DataInputStream(client.getInputStream()), bufferSize);
+                
+                try{
+                    p.startTimer();
+                    p.process(in);
+                    p.endTimer();
+                }
+                finally{ client.close(); }
+                </code></pre>
+                
+                <h3>New IO (NIO)</h3>
+                
+                <p>The second set of tests use the Channel interface provided by the NIO library. Channels may be used in a blocking manner, but they are supposed to be used in conjunction with a selector. Users register their interest in connection, read or write events and are notified accordingly. One of the clients uses neither selectors nor blocking. This client simply spins in an empty loop until data is available to consume. The implementation and the results are interesting.</p>
+                
+                <h5>Parser Code (shared by all NIO and NIO2 clients)</h5>
+                
+                <pre><code class="java">
+                ...
+                private final ByteBuffer internalBufferBB = ByteBuffer.allocate(8);
+                ...
+                public void process(int size, ByteBuffer buf){
+                    //if buffer is big enough to contain both vlaues, get them and process them
+                    //else do ByteBuffer management, see full source code for full implementation
+                    ...
+                    if(internalBufferBB.position() == 8 && buf.remaining() >= 8){
+                        internalBufferBB.flip();
+                        remoteTS = internalBufferBB.getLong();
+                        internalBufferBB.clear();
+                        remoteCounter = buf.getLong();
+                    }
+                    ...
+                }
+                </code></pre>
+                
+                <h5>Connection Code</h5>
+                
+                <pre><code class="java">
+                //NIO channels in blocking mode
+                ..
+                SocketChannel channel = SocketChannel.open();
+                channel.setOption(StandardSocketOptions.TCP_NODELAY,TCP_NO_DELAY);
+                channel.connect(new InetSocketAddress(InetAddress.getLocalHost(), PORT));
+                
+                ByteBuffer data = ByteBuffer.allocate(bufferSize);
+                int size = 0;
+                try{
+                    ...
+                    while(-1 != (size = channel.read(data))){
+                        data.flip();
+                        p.process(size, data);
+                        data.clear();
+                    }
+                    ...
+                }
+                finally{ channel.close();}
+                ...
+                </code></pre>
+                
+                <pre><code class="java">
+                //NIO channels in non-blocking mode, using empty spin to poll for data
+                ...
+                SocketChannel channel = SocketChannel.open();
+                channel.setOption(StandardSocketOptions.TCP_NODELAY,TCP_NO_DELAY);
+                channel.configureBlocking(false);
+                channel.connect(new InetSocketAddress(InetAddress.getLocalHost(), PORT));
+                channel.finishConnect();
+                
+                ByteBuffer data = ByteBuffer.allocate(bufferSize);
+                int size = 0;
+                try{
+                    ...
+                    while(-1 != (size = channel.read(data))){
+                        if(size != 0){
+                            data.flip();
+                            p.process(size, data);
+                            data.clear();               
+                        }
+                    }
+                    ...
+                }
+                finally{ channel.close();}
+                ...
+                </code></pre>
+                
+                <pre><code class="java">
+                //NIO channels in non-blocking mode, using Selectors
+                ...
+                Selector selector = Selector.open();
+                        
+                SocketChannel channel = SocketChannel.open();
+                channel.setOption(StandardSocketOptions.TCP_NODELAY,TCP_NO_DELAY);
+                channel.configureBlocking(false);
+                channel.register(selector, SelectionKey.OP_READ);
+                channel.connect(new InetSocketAddress(InetAddress.getLocalHost(), PORT));
+                
+                ByteBuffer data = ByteBuffer.allocate(bufferSize);
+                int size = 0;
+                channel.finishConnect();
+                ...
+                try{
+                    while(true){
+                
+                        selector.select();
+                
+                        Iterator< SelectionKey> iter = selector.selectedKeys().iterator();
+                        while(iter.hasNext()){
+                            SelectionKey key = iter.next();
+                            iter.remove();
+                            //remove selectionKey, since we are going to deal with it now
+                            if(key.isReadable()){
+                                size = ((SocketChannel)key.channel()).read(data);
+                                if(size != -1){
+                                    data.flip();
+                                    p.process(size, data);
+                                    data.clear();
+                                }
+                                else{
+                                    ... 
+                                }
+                            }
+                        }
+                    }
+                }
+                catch(Exception e){ e.printStackTrace();}
+                finally{ channel.close();}
+                ...
+                </code></pre>
+                
+                <h3>New IO 2 (NIO.2)</h3>
+                
+                <p>The last set of tests uses Java&#39;s latest I/O API, called NIO2. This API is truly asynchronous. A word of caution, asynchronous style of programming is not natural to Java programmers so design and test you programs well (node.js dabblers will confirm callback spaghetti code). Also pay attention to use of anonymous inner class and recursive method. I suspect this style of programming will become more prevalent when lambda functions arrive in JDK 8.</p>
+                
+                <pre><code class="java">
+                //NIO2 Async client
+                final AsynchronousSocketChannel channel = AsynchronousSocketChannel.open();
+                channel.setOption(StandardSocketOptions.TCP_NODELAY,TCP_NO_DELAY);
+                Future< Void> connectFuture = channel.connect(new InetSocketAddress(InetAddress.getLocalHost(), PORT));
+                connectFuture.get();
+                
+                final ByteBuffer data = ByteBuffer.allocate(bufferSize);
+                try{
+                    ...
+                    channel.read(data, null, new CompletionHandler< Integer, Void>() {
+                
+                        @Override public void completed(Integer result, Void att) {
+                            final int size = result.intValue();
+                
+                            if(size != -1){
+                                data.flip();
+                                p.process(size, data);
+                                data.clear();
+                                channel.read(data,null,this);
+                            }
+                            else{
+                                ...
+                                latch.countDown();
+                            }
+                        }
+                
+                        @Override public void failed(Throwable exc, Void att) { exc.printStackTrace();}
+                    });
+                
+                    latch.await();
+                }
+                finally{ channel.close();}
+                </code></pre>
+                
+            </div>
+            <div class="row">
+                <h3>Results</h3>
+            
+                <div class="span10">
+                    <div id="chart1">
+                      <svg id="chart1-svg" height="500"></svg>
+                    </div>
+                    
+                </div>
+                <div class="span2">
+                    <div id="legend-implementations">Client implementation names: </div>
+                    <br/>
+                    <div id="chart1-legend">
+                        <div id="legend-buffer-sizes">Bigger circles represent bigger buffers and smaller circles represent smaller circles.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row"><br/>
+                <p><i>NIO Non-Blocked Spinning Channel</i> has the lowest latency and highest throughput. Recall that this code simply spins in a tight loop, continiously polling for data. This client never blocks and does not rely on any asynchronous method like call backs. Outside of very high performance code, Java developers almost never write code like this. Note, however, that this result is not always consistent. This method is best for throughput, but one of the worst data points also belongs to this test case.</p>
+                <p><i>NIO2 Async</i>, in general, provides worse latency than other methods.</p>
+                <p>In terms of performance, <i>stream</i> based socket programming holds its own against other, more complex methods. Other methods sometimes show better performance, but this performance is not consistent enough to land a knockout punch against streams.</p>
+                
+                <h3>Future Directions</h3>
+                <p>Future versions of this test can add several more test cases:
+                    <ul>
+                        <li>Measure performance of clients when they send data to servers, not just read from servers</li>
+                        <li>Include popular third-party libraries, such as Mina and Netty</li>
+                        <li>Measure server scalability</li>
+                    </ul>
+                </p>
+            </div>
+
+
+        </div>
+        
+        
+        <script>
+            /* D3 */
+            
+            //mbostock's advice about margins: https://gist.github.com/mbostock/3019563
+            var DEBUG = false;
+            var margin = {top: 40, right: 40, bottom: 40, left: 50};
+            var width = $("#chart1").width() - margin.left - margin.right,
+                height = $("#chart1 #chart1-svg").height()- margin.top - margin.bottom;
+            
+            //data
+            //var headerData = ["ID","MIN_LATENCY","MAX_LATENCY","AVG_LATENCY","MICROSECS_PER_BYTE","MSGS_PER_MILLISEC","TCP_NO_DELAY","BUFFER_SIZE","ITERATION"];
+            var avgLatencyData = [16.491,17.15,19.525,19.719,23.083,23.1,23.645,23.731,23.916,24.073,24.879,25.226,25.244,25.408,25.624,26.191,26.267,26.27,26.528,26.782,26.87,27.029,27.115,27.118,27.763,27.768,27.787,28.084,28.684,29.558,29.89,30.324,30.482,30.64,30.895,30.901,31.917,36.04,41.771,42.185,43.123,43.755];
+            var microsecPerByteData = [1.0157,1.0912,1.1276,1.1418,1.0526,1.1546,1.15,1.1165,1.1479,1.1034,1.229,1.2875,1.1083,1.251,1.2246,1.2758,1.2306,1.2533,1.2935,1.1893,1.1873,1.289,1.397,1.1727,1.3729,1.4895,1.1845,1.2263,1.2461,1.282,1.3616,1.2003,1.2535,1.6296,1.1657,1.2638,1.2055,1.4293,1.1335,1.7084,1.407,1.4293];
+            var bufferData = [48,1376,1312,1232,1360,0,1360,48,1376,48,0,0,0,1232,1360,1376,1232,1312,1312,1232,1232,0,1376,0,1376,0,48,48,1312,1312,1072,1376,0,1360,1232,0,1312,0,48,1360,1360,192];
+            var idData =                ["NIO Non-Blocked Spinning Channel","NIO Non-Blocked Spinning Channel","NIO Non-Blocked Spinning Channel","NIO Non-Blocked Spinning Channel","NIO Non-Blocked Selector Channel","OIO InputStream","OIO DataBufferedInputStream","NIO Blocked Channel","NIO Blocked Channel","NIO Non-Blocked Selector Channel","OIO DataInputStream","OIO InputStream","OIO DataInputStream","NIO Blocked Channel","OIO BufferedInputStream","NIO Non-Blocked Selector Channel","OIO BufferedInputStream","NIO Non-Blocked Selector Channel","OIO DataBufferedInputStream","OIO DataBufferedInputStream","NIO Non-Blocked Selector Channel","OIO InputStream","OIO DataBufferedInputStream","OIO InputStream","OIO BufferedInputStream","OIO DataInputStream","OIO BufferedInputStream","OIO DataBufferedInputStream","NIO Blocked Channel","OIO BufferedInputStream","NIO Non-Blocked Spinning Channel","NIO2 Async","OIO InputStream","NIO Non-Blocked Spinning Channel","NIO2 Async","OIO DataInputStream","NIO2 Async","OIO DataInputStream","NIO2 Async","NIO Blocked Channel","NIO2 Async","NIO2 Async"];
+    
+    
+            var range = d3.range(avgLatencyData.length);
+            
+            //scales and axis
+            var xExtent = d3.extent(avgLatencyData);
+            var yExtent = d3.extent(microsecPerByteData);
+            var sizeExtent = d3.extent(bufferData);
+            //normalize so minimum is the least of zero or negative values
+            //var xExtent = [Math.min(0,xExtent[0]), xExtent[1]];
+            //var yExtent = [Math.min(0,yExtent[0]), yExtent[1]];
+            //scale
+            var xScale = d3.scale.linear().domain(xExtent).range([0,width]);
+            var yScale = d3.scale.linear().domain(yExtent).range([height,0]);
+            var sizeScale = d3.scale.linear().domain(sizeExtent).range([5,10]);
+            var shapeScale = d3.scale.linear().domain([true,false]).range(["","9,5"]);
+            var idScale = d3.scale.category10().domain(idData);
+            //axes definition
+            var xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+            var yAxis = d3.svg.axis().scale(yScale).orient("left");
+              
+            //Setup svg window
+            var outersvg = d3.select("#chart1 #chart1-svg");
+    
+            var svg = outersvg.append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
+            //DEBUG LINES (show svg and margins)
+            if(DEBUG){
+              outersvg.append("rect")
+                .attr("x",0)
+                .attr("y",0)
+                .attr("width",width+margin.left+margin.right)
+                .attr("height",height+margin.top+margin.bottom)
+                .style("fill","rgba(0,0,0,0)")
+                .style("stroke","rgba(0,0,0,.1)")
+                .style("stroke-width",1);
+              svg.append("rect")
+                .attr("x",0)
+                .attr("y",0)
+                .attr("width",width)
+                .attr("height",height)
+                .style("fill","rgba(0,0,0,0)")
+                .style("stroke","rgba(0,0,0,.1)")
+                .style("stroke-width",1);
+              outersvg.selectAll("line").data(d3.range(0,width+margin.left+margin.right,10)).enter()
+                .append("line")
+                  .style("stroke","rgba(0,0,0,.1)")
+                  .style("stroke-width",1)
+                  .attr("x1",function(d){return d;})
+                  .attr("y1",0)
+                  .attr("x2",function(d){return d;})
+                  .attr("y2",height+margin.top+margin.bottom);
+            //END DEBUG LINES (show svg and margins)
+            }
+            
+            //Axes
+            svg.append("g")
+              .attr("transform", "translate(0," + (height ) + ")")
+              .attr("class", "axis")
+              .call(xAxis.tickSize(-height));
+            svg.append("g")
+              //.attr("transform", "translate(" + (margin.left) + ",0)")
+              .attr("class", "axis")
+              .call(yAxis.tickSize(-width).ticks(15));
+              
+            //Axes labels
+            //x-axis label
+            svg.append("text")
+              .attr("class","label")
+              .attr("text-anchor", "middle")
+              .attr("x",width/2)
+              .attr("y",height + margin.bottom - 5 )
+              .text("Averge Latency In Nano Seconds")
+            //y-axis label
+            svg.append("text")
+              .attr("class","label")
+              .attr("text-anchor", "middle")
+              .attr("y",-40)
+              .attr("x",  -1 * height /2 )
+              .attr("dy", ".75em")
+              .attr("transform", "rotate(-90)")
+              .text("Throughput In Terms of Microseconds / byte")
+            
+            //Legend
+            //is there a more 'd3' way of doing this?
+            var uniqVals = _.uniq(idData);
+            /*
+            var legendX = width, legendY = height;
+            svg.selectAll("circle").data(uniqVals).enter()
+              .append("circle")
+                .style("fill",function(d){ return idScale(d);})
+                .style("fill-opacity", 0.5)
+                .attr("r",5)
+                .attr("cx",function(d, i){ return legendX+10 ;})
+                .attr("cy",function(d, i){ return i*15 ;});
+            svg.selectAll("text.labelx").data(uniqVals).enter()
+              .append("text")
+                .attr("class","label")
+                .attr("text-anchor", "start")
+                .attr("x",function(d, i){ return legendX+20;})
+                .attr("y",function(d, i){ return i*15+4;})
+                .text(function(d,i){return d;});
+            */
+            d3.select("#legend-implementations").selectAll("span").data(uniqVals).enter()
+              .append("span")
+              .attr("class","label")
+              .style("background-color",function(d){ return idScale(d);})
+              .style("opacity","0.5")
+              .style("color","white")
+              .text(function(d,i){return d;});
+            
+    
+            //Show data
+            var dataVals = svg.selectAll("circle").data(range).enter()
+              .append("circle")
+                .style("fill",function(d){ return idScale(idData[d]);})
+                .style("fill-opacity", 0.5)
+                .style("stroke",function(d){ return d3.rgb(idScale(idData[d])).darker(1);})
+                .attr("r",function(d){ return sizeScale(bufferData[d]);})
+                .attr("cx",function(d){ return xScale(avgLatencyData[d]);})
+                .attr("cy",function(d){ return yScale(microsecPerByteData[d]);})
+                .on("mouseover",function(d){console.log(getRecord(d));});
+            
+    
+            //Show data
+            /*var dataVals = svg.selectAll("text").data(range).enter()
+              .append("text")
+                .attr("x",function(d){ return xScale(avgLatencyData[d]);})
+                .attr("y",function(d){ return yScale(microsecPerByteData[d]);})
+                .on("mouseover",function(){})
+                .on("mouseout",function(){})
+                .text("");*/
+    
+            function getRecord(d){
+              return {
+                id:idData[d],
+                avgLatency:avgLatencyData[d],
+                microsecPerByte:microsecPerByteData[d],
+                buffer:bufferData[d]
+                };
+            }
+        </script>
+
+    </body>
+</html>
