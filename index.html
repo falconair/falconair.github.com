@@ -1,54 +1,81 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Blog of Shahbaz Chaudhary</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        
-        <!-- CSS -->
-        <link rel="stylesheet" href="/bootstrap-2.3.0/css/bootstrap.min.css" media="screen"/>
-
-        <!-- Javascript -->
-        <script src="/js/jquery-1.9.1.min.js"></script>
-        <script src="/bootstrap-2.3.0/js/bootstrap.min.js"></script>
-
-        <script>
-            $(document).ready(function() {
-              });
-        </script>
-        
-        <script type="text/javascript">
-
-          var _gaq = _gaq || [];
-          _gaq.push(['_setAccount', 'UA-38599850-1']);
-          _gaq.push(['_trackPageview']);
-        
-          (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-          })();
-        
-        </script>
-    </head>
-
-    <body>
-        <ul class="nav nav-list span2">
-          <li class="active"><a href="http://falconair.github.com">Home</a></li>
-          <li class="nav-header">Applications</li>
-          <li><a href="http://fixparser.targetcompid.com"><i class="icon-random"></i>FIX Parser </a></li>
-          <li class="nav-header">Articles/Posts</li>
-          <li><a href="http://targetcompid.tumblr.com/post/39879066034/what-is-fix-protocol"><i class="icon-align-right"></i>What is FIX Protocol? </a></li>
-          <li><a href="http://falconair.github.com/posts/2013/02/25/java-apis-for-socket-programming/java-apis-for-socket-programming.html"><i class="icon-align-right"></i>Java APIs for Socket Programming </a></li>
-          <li class="nav-header">Open Source Projects</li>
-          <li><a href="https://github.com/falconair/fix.js"><i class="icon-wrench"></i>Javascript implementation of FIX Protocol </a></li>
-        </ul>
-        <div class="container">
-          </br>
-          <h1>Blog of Shahbaz Chaudhary</h1>
-
-          <p><i>shahbazc at gmail</i></p>
+---
+layout: default
+title: Mainpage
+---
+<!-- Content
+    ================================================== -->
+  <div class="top-strip"></div>
+  <div class="content">
+    <main class="container">
+    	<div class="row-fluid">
+    		<section class="content">
+    		  <h1>Blog of Shahbaz Chaudhary</h1>
+    		</section>
+        <div style="text-align: center">
+          <a href="mailto:shahbazc@gmail.com"><i class="icon-envelope-alt black"></i></a>
+          <a href="https://github.com/falconair"><i class="icon-github-alt black"></i></a>
+          <a href="https://www.linkedin.com/pub/shahbaz-chaudhary/2/427/25a"><i class="icon-linkedin-sign black"></i></a>
+          <a href="http://targetcompid.com"><i class="icon-signal black"></i></a>
         </div>
-        
 
-    </body>
-</html>
+    		<ul class="entries">
+    		{% for post in paginator.posts %}
+    		  <li>
+    		    <a href="{{ post.url }}">
+                      <span>{{ post.date | date: "%d %B %Y" }}</span>
+    		        <h3>{{ post.title }}</h3>
+                      <div>{{ post.content |truncatehtml | truncatewords: 30 }}</div>
+    		    </a>
+    		  </li>
+    		{% endfor %}
+    		</ul>
+    	</div>
+      <hr>
+      <div id="post-pagination">
+        {% if paginator.previous_page %}
+        <p class="prev">
+          {% if paginator.previous_page == 1 %}
+          <a href="/">Previous</a>
+          {% else %}
+          <a href="/page{{paginator.previous_page}}"> Previous</a>
+          {% endif %}
+        </p>
+        {% else %}
+<!--         <p class="prev disabled">
+          <span>Previous</span>
+        </p> -->
+        {% endif %}
+
+        <ul class="pages">
+          <li class="page">
+            {% if paginator.page == 1 %}
+<!--             <span class="current-page">1</span> -->
+            {% else %}
+            <a href="/">1</a>
+            {% endif %}
+          </li>
+
+          {% for count in (2..paginator.total_pages) %}
+          <li class="page">
+            {% if count == paginator.page %}
+            <span class="current-page">{{count}}</span>
+            {% else %}
+            <a href="/page{{count}}">{{count}}</a>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+
+        {% if paginator.next_page %}
+        <p class="next">
+          <a href="/page{{paginator.next_page}}">Next</a>
+        </p>
+        {% else %}
+<!--         <p class="next disabled">
+          <span>Next</span>
+        </p> -->
+        {% endif %}
+      </div>
+
+    </main>
+  </div>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<title> Simulating a financial exchange in Scala  - Vanilla Bean Creme</title>
+		<!-- For responsive site
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		-->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<link rel="author" href="/humans.txt">
+		<meta name="description" content="Blog of Shahbaz Chaudhary about trading systems and programming in general">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/prism.css">
+	<link rel="stylesheet" href="/css/custom.css">
+
+		<!--[if IE 7]>
+			<html class="ie7">
+			<link rel="stylesheet" type="text/css" href="/css/font-awesome-ie7.min.css">
+		<![endif]-->
+		<!--[if IE 8]><html class="ie8"> <![endif]-->
+	    <!--[if lt IE 9]>
+	      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	    <![endif]-->
+
+		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+		<link rel="shortcut icon" href="ico/favicon.png">
+	</head>
+	<body>
+	<!-- Header
+	    ================================================== -->
+	<header>
+
+	</header>
+
+	<div class="top-strip"></div>
+<main class="content">
+    <section class="container">
+    	<div class="row-fluid">
+    		<article class="home-icon">
+          <a href="/"><i class="icon-home"></i></a>
+			  </article>
+      </br></br>
+      <div style="text-align: center">
+        <a href="mailto:shahbazc@gmail.com"><i class="icon-envelope-alt black"></i></a>
+        <a href="https://github.com/falconair"><i class="icon-github-alt black"></i></a>
+        <a href="https://www.linkedin.com/pub/shahbaz-chaudhary/2/427/25a"><i class="icon-linkedin-sign black"></i></a>
+        <a href="http://targetcompid.com"><i class="icon-signal black"></i></a>
+      </div>
+			<article class="post">
+				<h5>01 January 2015</h5>
+				<h2 class="content">Simulating a financial exchange in Scala</h2>
+				<section>
+					<blockquote>
+<p>There are two hard things in computer science: cache invalidation, naming things, and off-by-one errors -- <a href="http://martinfowler.com/bliki/TwoHardThings.html">Phil Karlton</a></p>
+</blockquote>
+
+<p>Along the same lines as naming things, one of the most difficult things for a programmer is picking the right project to learn a new language. &quot;Hello world&quot; is an old tradition but to really get a feel for a new language, a project has to be large enough to touch various language structures, but small enough to be written in a few days. My first project in Scala implements a core part of a financial exchange called an order book.</p>
+
+<p>I will attempt to describe how an exchange works, how orders are matched, how and why price of an instrument might change second to second. Most of these concepts will also be implemented in Scala.</p>
+
+<p>Programmers familiar with the trading industry should keep in mind that I have only implemented the bare minimum to learn Scala, this is obviously no where near production level code. There are certain missing pieces I will specifically mention. However, if I have made a mistake in some concept, please send me a note.</p>
+
+<h3>What are financial exchanges?</h3>
+
+<p>Stock exchanges, or more generally financial exchanges, are market places where buyers and seller exchange goods. Think of a farmers&#39; market: you go there to buy fresh produce, you can also set up a table there to sell your own veggies. If you are a seller, you may put up a sign listing the price of your lettuce. However, as the day goes on, you may adjust your price according to how many customers are coming to your table or how other sellers and pricing their produce.</p>
+
+<p>Let&#39;s strain this analogy between farmers&#39; market and a stock market a bit. Assume that all produce is exactly the same. All the lettuce is identical to each other and all apple stalls provide exactly the same customer service. If price was the only differentiating factor, the most convenient thing for a buyer would be a list of all lettuce sellers and their prices, sorted. You would just pick the lowest price. Sellers would love a list of all customers and the maximum price they are willing to pay. They could pick the customer willing to pay the maximum.</p>
+
+<p>Think of a stock exchange similarly. A large number of buyers and sellers gather to buy or sell AAPL, GOOG, MSFT, IBM or any other stock. Instead of hundreds of buyers and sellers, what if there were tens of thousands. Given that one share of AAPL common stock is the same as any other, what would you do, as the stock market organizer, to facilitate the greatest number of transactions (meaning as many buyers are able to buy and as many sellers are able to sell as possible)?</p>
+
+<p>First, let&#39;s move trading of each stock to its own area. MSFT buyers and sellers in room 1A, IBM buyers and sellers in room 3C, etc. Next, let&#39;s create two lines, one of buyers and one of sellers. Have them stand in order of the price at which they are willing to do the transaction. Buyers stand in descending order (the higher the price you are willing to pay, closer you are to the head of the line). Sellers stand in ascending order (the lower the price at which you are willing to sell, closer you are to the head). People are welcome to get ahead or move behind by changing their price.</p>
+
+<p>Ask the two people at the head of buyers and seller lines if they agree on a price. If the Google (GOOG) buyer at the head of his line is willing to pay $550 per share, and the GOOG seller at the head of her line is willing to part with her shares at the same price, we have a trade! The two exchange the shares and the money and go home happy. The person organizing the trading of Google in room 2B makes a loud announcement, &quot;100 shares of GOOG traded at $550.&quot;  Now there are two new people at the head of their respective lines. The organizer again announces &quot;GOOG being sold (offered) for $560 and being bought (bid) at $540&quot; and the process continues.</p>
+
+<p>That&#39;s the basic idea. Details are a bit more complicated. If GOOG buyer was looking to buy a 1,000 shares, but the seller only had 100 to sell, the buyer would just go down the line of buyers, buying up all the shares he needed. If the buyer wanted to pay no more than $540 but the seller wanted at least $560, the two would just stand there, looking at each other until someone else decided to change their location in the line.</p>
+
+<h3>Why do prices change?</h3>
+
+<p>Let&#39;s step back a bit. Why was the seller willing to sell at $550/share? How did she arrive at the price? How did the buyer arrive at his price? Why are there other people in the line buying and selling at different price? In other words, why would someone choose to not be at the head of the line?</p>
+
+<p>Of course, we can&#39;t read the minds of our hypothetical buyers and sellers, but let&#39;s make some common sense guesses. The most obvious reason for someone to decide on a price is simply because others are also doing transactions at that price. As I type this, MSFT is at $47.88 and AAPL is at $113.99. I have no idea why, but if I expect the next version of Windows to bring unprecendented profits to Microsoft, I&#39;ll invest in their stock at the current price of $47.88.</p>
+
+<p>Another person could have done a great deal more analysis, looked over AAPL books and decided that it is worth 700 billion dollars as a company. Since there are around 5.8 billion shares of AAPL in the market, the stock price should be around $120 (company value / outstanding shares). Since AAPL is actually trading at $113.99, if I am certain of my analysis, I&#39;ll load up on AAPL and be willing to pay any price, up to, say, $118.</p>
+
+<p>Someone who bought XYZ when it ws three dollars cheaper is now ready to sell at the current price, they want to take their profit and buy a TV. Someone else is fed-up with the ethics of company ABC and wants to dump their shares of it as a matter of principal. Yet another person just inherited some money and buys a mutual fund, which, in turn, invests that money in a diversified portfolio.</p>
+
+<p>The buyers and sellers mentioned so far were basing their decisions to buy or sell on the company. There is another group of traders who couldn&#39;t care less about the company behind the acronym. Imagine you are back at the stock exchange where different rooms are setup to trade different stocks. All day prices rise and fall by a penny or two because someone&#39;s grandma left them some money or someone else friend told them about horrible business practices at whatever company. Every once in a while, you hear a commotion near some room. Initially, there are slightly more people in the room than usual, then the price starts moving in some direction, more people rush in to see what&#39;s going on. As the price trend continues, the bystanders decide to bet in the direction of the market. They don&#39;t know why the price is moving, but, to them, it looks like they will be able to eek out a profit before the trend is finished. As those people enter the market, the price trend becomes even stronger, attracting an even greater number of participants. Most of these people don&#39;t care about the underlying value of the company, they are simply speculating on the price.</p>
+
+<p>We can see how the madness (or rational decision making?) leads to short term trends, but what might be the starting piont of this panic or euphoria? I have no idea, but some common sense reasons might be the following: sudden need for cash may result in rapid selling of a portfolio, which results in price of a stock changing, even when the company behind the stock has done nothing new. If a large number of foreigners hold some stock, fluctuation in currency prices can cause holders of a stock to flee (or rush in).</p>
+
+<p>We have seen investors and speculators. There is yet another group which focuses not on a particular price, but among relationships between prices. Toyota is not only traded in Japan. If the price of Toyota is $128 in New York, but $130 in Tokyo, what is the natural thing to do? Buy it in NYC and sell it in Tokyo. When prices come back in line, unwind your position. Notice that by taking advantage of such arbitrage, you have not only made money for yourself, this act of buying and selling actually helped bring the two prices closer together. Let&#39;s look at the actual mechanics of it next.</p>
+
+<h3>How do prices change?</h3>
+
+<p>talk about moving the market buy picking off bbo (bring Toyota prices in line)</p>
+
+<h3>How to reduce price change?</h3>
+
+<p>trade slowly, don&#39;t show full position, stand in the opposite line (trade passively)</p>
+
+<h3>How to implement an order book?</h3>
+
+<p>start talking about code</p>
+
+<div style='height:500px;overflow:scroll;'>
+<!--pre data-line='3' data-line-offset='-1' -->
+<pre><code class="language-scala">
+import java.util.{Comparator, PriorityQueue}
+
+/** *
+*
+* @author Shahbaz Chaudhary (shahbazc gmail com)
+*
+*/
+
+
+abstract class OrderBookRequest
+case class NewOrder(timestamp: Long, tradeID: String, symbol: String, qty: Long, isBuy: Boolean, price: Option[Double]) extends OrderBookRequest
+case class Cancel(timestamp: Long, order: NewOrder) extends OrderBookRequest
+case class Amend(timestamp: Long, order:NewOrder, newPrice:Option[Double], newQty:Option[Long]) extends OrderBookRequest
+</code></pre></div>
+
+<div style='height:500px;overflow:scroll;'><pre><code class="language-scala">
+
+abstract class OrderBookResponse
+case class Filled(timestamp: Long, price: Double, qty: Long, order: Array[NewOrder]) extends OrderBookResponse
+case class Acknowledged(timestamp: Long, request: OrderBookRequest) extends OrderBookResponse
+case class Rejected(timestamp: Long, error: String, request: OrderBookRequest) extends OrderBookResponse
+case class Canceled(timestamp: Long, reason: String, order: NewOrder) extends OrderBookResponse
+
+</code></pre></div>
+
+<div style='height:500px;overflow:scroll;'><pre><code class="language-scala">
+
+abstract class MarketDataEvent
+case class LastSalePrice(timestamp: Long, symbol: String, price: Double, qty: Long, volume: Long) extends MarketDataEvent
+case class BBOChange(timestamp: Long, symbol: String, bidPrice:Option[Double], bidQty:Option[Long], offerPrice:Option[Double], offerQty:Option[Long]) extends MarketDataEvent
+
+</code></pre></div>
+
+<div style='height:500px;overflow:scroll;'><pre><code class="language-scala">
+
+class OrderBook(symbol: String) {
+  case class Order(timestamp: Long, tradeID: String, symbol: String, var qty: Long, isBuy: Boolean, var price: Option[Double], newOrderEvent:NewOrder)
+
+  val bidOrdering = Ordering.by { order: Order => (order.timestamp, order.price.get)}
+  val offerOrdering = bidOrdering.reverse
+
+  //Needed for java.util.PriorityQueue
+  val bidComparator = new Comparator[Order]{
+    def compare(o1:Order, o2:Order):Int = bidOrdering.compare(o1,o2)
+  }
+  val offerComparator = new Comparator[Order]{
+    def compare(o1:Order, o2:Order):Int = offerOrdering.compare(o1,o2)
+  }
+
+  //val bidsQ = new mutable.PriorityQueue[NewOrder]()(bidOrdering)
+  //val offersQ = new mutable.PriorityQueue[NewOrder]()(offerOrdering)
+
+  //scala PQ doesn't let me remove items, so must revert to Java's PQ
+  val bidsQ = new PriorityQueue[Order](5,bidComparator)
+  val offersQ = new PriorityQueue[Order](5,offerComparator)
+
+  var bestBid: Option[Order] = None
+  var bestOffer: Option[Order] = None
+  var volume: Long = 0
+
+  var transactionObserver: (OrderBookResponse) => Unit = (OrderBookEvent => ())
+  var marketdataObserver: (MarketDataEvent) => Unit = (MarketDataEvent => ())
+  </code></pre></div>
+
+  <div style='height:500px;overflow:scroll;'><pre><code class="language-scala">
+
+  def processOrderBookRequest(request: OrderBookRequest): Unit = request match {
+    case order: NewOrder => {
+
+      val currentTime = System.currentTimeMillis
+
+      val (isOK, message) = validateOrder(order)
+
+      if (!isOK) this.transactionObserver(Rejected(currentTime, message.getOrElse("N/A"), order))
+      else {
+        this.transactionObserver(Acknowledged(currentTime, order))
+
+        val orderBookOrder = Order(order.timestamp,order.tradeID,order.symbol,order.qty,order.isBuy,order.price,order)
+        processNewOrder(orderBookOrder)
+      }
+    }
+    case cancel:Cancel => {
+      val order = cancel.order
+
+      val orderQ = if (order.isBuy) bidsQ else offersQ
+
+      val isRemoved = orderQ.remove(order)
+
+      if(isRemoved){
+        this.transactionObserver(Acknowledged(System.currentTimeMillis(),cancel))
+        updateBBO()
+      }
+      else this.transactionObserver(Rejected(System.currentTimeMillis(),"Order not found",cancel))
+    }
+    case amend:Amend => {
+      val order = amend.order
+      val orderBookOrder = Order(order.timestamp,order.tradeID,order.symbol,order.qty,order.isBuy,order.price,order)
+
+      val orderQ = if (order.isBuy) bidsQ else offersQ
+      val oppositeQ = if (order.isBuy) offersQ else bidsQ
+
+      if(!orderQ.remove(orderBookOrder)){
+        this.transactionObserver(Rejected(System.currentTimeMillis(),"Order not found",amend))
+      }
+      else{
+
+        if(amend.newQty.isDefined) orderBookOrder.qty = amend.newQty.get
+        if(amend.newPrice.isDefined) orderBookOrder.price = amend.newPrice
+
+        orderQ.add(orderBookOrder)
+        this.transactionObserver(Acknowledged(System.currentTimeMillis(),amend))
+        updateBBO()
+      }
+    }
+  }
+  </code></pre></div>
+
+  <div style='height:500px;overflow:scroll;'><pre><code class="language-scala">
+
+  def processNewOrder(orderBookOrder: Order) {
+    val currentTime = System.currentTimeMillis
+
+    val orderQ = if (orderBookOrder.isBuy) bidsQ else offersQ
+    val oppositeQ = if (orderBookOrder.isBuy) offersQ else bidsQ
+
+
+    if (orderBookOrder.price.isDefined) {
+      //=====LIMIT ORDER=====
+
+      if (oppositeQ.isEmpty || !isLimitOrderExecutable(orderBookOrder, oppositeQ.peek)) {
+        orderQ.add(orderBookOrder)
+        updateBBO()
+      }
+      else {
+        matchOrder(orderBookOrder, oppositeQ)
+      }
+    }
+    else {
+      //=====Market order=====
+      //TODO: what if order was already partially executed, replace reject with partial cancel?
+      if (oppositeQ.isEmpty) this.transactionObserver(Rejected(currentTime, "No opposing orders in queue", orderBookOrder.newOrderEvent))
+      else matchOrder(orderBookOrder, oppositeQ)
+    }
+  }
+
+  private def validateOrder(order: NewOrder): (Boolean, Option[String]) = (true, None)
+
+  private def updateBBO() = {
+    val bidHead = Option(bidsQ.peek)
+    val offerHead = Option(offersQ.peek)
+
+    if(bidHead != bestBid || offerHead != bestOffer){
+      bestBid = bidHead
+      bestOffer = offerHead
+
+      var bidPrice:Option[Double]=None
+      var bidQty:Option[Long]=None
+      var offerPrice:Option[Double]=None
+      var offerQty:Option[Long] = None
+
+      //TODO: Does scala have some sort of monad magic to get rid of these, essentially, nested null checks?
+      if(bestBid.isDefined){
+        bidPrice = bestBid.get.price
+        bidQty = Some(bestBid.get.qty)
+      }
+      if(bestOffer.isDefined){
+        offerPrice = bestOffer.get.price
+        offerQty = Some(bestOffer.get.qty)
+      }
+
+      this.marketdataObserver(BBOChange(System.currentTimeMillis, this.symbol, bidPrice, bidQty, offerPrice, offerQty))
+    }
+  }
+
+  private def isLimitOrderExecutable(order: Order, oppositeOrder: Order): Boolean = {
+    if (order.isBuy) order.price.get >= oppositeOrder.price.get
+    else order.price.get <= oppositeOrder.price.get
+  }
+  </code></pre></div>
+
+  <div style='height:500px;overflow:scroll;'><pre><code class="language-scala">
+
+  private def matchOrder(order: Order, oppositeQ: PriorityQueue[Order]): Unit = {
+    val oppositeOrder = oppositeQ.peek
+    val currentTime = System.currentTimeMillis()
+
+    if (order.qty < oppositeOrder.qty) {
+      oppositeOrder.qty = oppositeOrder.qty - order.qty
+
+      this.volume += order.qty
+
+      this.transactionObserver(Filled(currentTime, order.price.get, order.qty, Array(order.newOrderEvent, oppositeOrder.newOrderEvent)))
+      this.marketdataObserver(LastSalePrice(currentTime, order.symbol, order.price.get, order.qty, volume))
+      updateBBO()
+    }
+    else if (order.qty > oppositeOrder.qty) {
+      oppositeQ.poll
+      val reducedQty = order.qty - oppositeOrder.qty
+      order.qty = reducedQty
+
+      this.volume += order.qty
+
+      this.transactionObserver(Filled(currentTime, order.price.get, order.qty, Array(order.newOrderEvent, oppositeOrder.newOrderEvent)))
+      this.marketdataObserver(LastSalePrice(currentTime, order.symbol, order.price.get, order.qty, volume))
+      updateBBO()
+
+      processNewOrder(order)
+    }
+    else {
+      //TODO: doing an '==' on doubles is a BAD idea!
+      oppositeQ.poll
+
+      this.volume += order.qty
+
+      this.transactionObserver(Filled(currentTime, order.price.get, order.qty, Array(order.newOrderEvent, oppositeOrder.newOrderEvent)))
+      this.marketdataObserver(LastSalePrice(currentTime, order.symbol, order.price.get, order.qty, volume))
+      updateBBO()
+    }
+  }
+
+  </code></pre></div>
+
+  <div style='height:500px;overflow:scroll;'><pre><code class="language-scala">
+
+
+  def listenForEvents(observer: (OrderBookResponse) => Unit): Unit = this.transactionObserver = observer
+
+  def listenForMarketData(observer: (MarketDataEvent) => Unit): Unit = this.marketdataObserver = observer
+}
+
+</code></pre></div>
+
+<div style='height:500px;overflow:scroll;'><pre><code class="language-scala">
+
+object Main extends App {
+  val random = new scala.util.Random
+
+  val msftBook = new OrderBook("MSFT")
+
+  msftBook.listenForEvents((response) => {
+    response match {
+      case resp => println(resp)
+    }
+    })
+
+    msftBook.listenForMarketData((response) => {
+      response match {
+        case resp => println(resp)
+      }
+      })
+
+
+      //one bid, only bidQ should be populated
+      val order1 = NewOrder(1, "1", "MSFT", 100, true, Some(50))
+      msftBook.processOrderBookRequest(order1)
+      assert(!msftBook.bidsQ.isEmpty)
+      assert(msftBook.offersQ.isEmpty)
+
+      //execute 50 shares of the order in bidsQ
+      val order2 = NewOrder(1, "2", "MSFT", 50, false, Some(50))
+      msftBook.processOrderBookRequest(order2)
+      assert(msftBook.bidsQ.peek.qty == 50)
+      assert(msftBook.offersQ.isEmpty)
+
+      //offer shares at a price where both bid and offer queues are populated with 50 shares
+      val order3 = NewOrder(1, "3", "MSFT", 50, false, Some(51))
+      msftBook.processOrderBookRequest(order3)
+      assert(msftBook.bidsQ.peek.qty == 50)
+      assert(msftBook.offersQ.peek.qty == 50)
+
+    }
+</code></pre>
+</div>
+
+					<hr>
+				</section>
+				<section style="font-weight:bold; margin-bottom: 2em;">
+					
+						
+				</section>
+			</article>
+		</div>
+	</section>
+</main>
+
+
+	<footer>
+		<div class="container">
+			<a href="http://richbray.me/frap/">Frappuccino</a> | Copyright or profile stuff goes here
+		</div>
+	</footer>
+
+	<!-- Footer
+	    ================================================== -->
+
+	<!-- Javascripts
+	    ================================================= -->
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/prism.js"></script>
+	<script src="/js/custom.js"></script>
+
+    <!-- Analytics
+    ================================================== -->
+    <script>
+		// analytics code
+    </script>
+	</body>
+</html>

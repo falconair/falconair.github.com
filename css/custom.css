@@ -1,0 +1,14 @@
+.top-strip{
+  background-color:#000;
+  height:1.5em;
+}
+
+.alignleft {
+	float: left;
+}
+.alignright {
+	float: right;
+}
+.black {
+  color: #000;
+}
