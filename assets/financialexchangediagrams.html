@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Introducing Snap.svg</title>
+    <script src="dist/snap.svg.js"></script>
+    <style type="text/css">
+    	body {
+    		font-family: 'Century Gothic', CenturyGothic, AppleGothic, monospace;
+    	}
+	    #messyMarket {
+		  width: 800px;
+		  height: 200px;
+		  /*display: block;
+		  position: absolute;
+		  top: 0; left: 0; right: 0; bottom: 0;
+		  margin: auto;*/
+		}
+	    #filteredMessyMarket {
+		  width: 800px;
+		  height: 200px;
+		}
+	    #singleMarket {
+		  width: 800px;
+		  height: 200px;
+		  /*display: block;
+		  position: absolute;
+		  top: 0; left: 0; right: 0; bottom: 0;
+		  margin: auto;*/
+		}
+	    #messyMarketOrganized {
+		  width: 800px;
+		  height: 200px;
+		}
+	    #neworder1 {
+		  width: 800px;
+		  height: 200px;
+		}
+	    #neworder2 {
+		  width: 800px;
+		  height: 200px;
+		}
+	    #neworder3 {
+		  width: 800px;
+		  height: 200px;
+		}
+    </style>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+    <svg id="messyMarket">
+    	    <rect x="0" y="0" width="100%" height="100%" onclick="textbox(event)" fill='white'/>
+    </svg>
+    <svg id="filteredMessyMarket">
+    	    <rect x="0" y="0" width="100%" height="100%" fill='white'/>
+    </svg>
+    <svg id="singleMarket">
+    	    <rect x="0" y="0" width="100%" height="100%" fill='white'/>
+    </svg>
+    <svg id="messyMarketOrganized">
+    	    <rect x="0" y="0" width="100%" height="100%" fill='white'/>
+    </svg>
+    <svg id="neworder1">
+    	    <rect x="0" y="0" width="100%" height="100%" fill='white'/>
+    </svg>
+    <svg id="neworder2">
+    	    <rect x="0" y="0" width="100%" height="100%" fill='white'/>
+    </svg>
+    <svg id="neworder3">
+    	    <rect x="0" y="0" width="100%" height="100%" fill='white'/>
+    </svg>
+
+    <script>
+	    //========Helper functions=======
+	    //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+	    function randInt(min, max) {
+		  return Math.floor(Math.random() * (max - min)) + min;
+		}
+		function rand(min, max) {
+		  var r =  Math.random() * (max - min) + min;
+		  return Math.round(r * 100) / 100
+		}
+    </script>
+    <script>
+		//=====Lookups=====
+		//var symbols = ["MSFT","GOOG","AAPL","FB","LNKD","YELP","TWTR","GTHB","LNUX","REDT","HKNS","UTUB"];//msft,goog,aapl,fb
+		var symbols = ["GTHB","LNUX","REDT"];
+		var symchars = {'MSFT':'', 'GOOG':'', 'AAPL':'', 'FB':'','LNKD':'','YELP':'','TWTR':'','GTHB':'','LNUX':'','REDT':'','HKNS':'','UTUB':'',"EMPTY":''}
+		var sides = ["BUY","SELL"]
+		var svgWidth = document.getElementById("messyMarket").clientWidth
+		var svgHeight = document.getElementById("messyMarket").clientHeight
+		//=====Snap code====
+
+		//========SINGLE MARKET========
+     	var s = Snap("#singleMarket");
+
+     	
+     	s.line(0,65,800,65).attr({strokeWidth:1,stroke:'black'});
+     	s.line(0,125,800,125).attr({strokeWidth:1,stroke:'black'});
+
+     	for(var i=10;i<90;i++){
+     		var price = " 34."+(i*1.0);
+     		//text
+	     	var bboxY = s.text(((i*15)-164), 100, price)
+	     		.attr({'font-size': 15,opacity:.50})
+	     		.transform('r90').getBBox().y;
+	     	//icon
+	     	//best bid
+     		if(price == " 34.36"){
+		     	s.text((i*15)-168, 27, 'Best Bid')
+		     		.attr({'font-size': 15, 'font-family':'FontAwesome',opacity:1,fill:'green'})
+		     		.transform('s.8r90');    			
+     		}
+     		//best offer
+     		if(price == " 34.38"){
+		     	s.text((i*15)-175, 178, 'Best Offer')
+		     		.attr({'font-size': 15, 'font-family':'FontAwesome',opacity:1,fill:'red'})
+		     		.transform('s.8r90');    			
+     		}
+
+     		if(price != " 34.37"){
+     			if(Math.random()<.75){
+			     	s.text((i*15)-146, i>36?143:60, '  ')
+			     		.attr({'font-size': 15, 'font-family':'FontAwesome'})
+			     		.transform('s1');     				
+     			}
+     		}
+     		else{
+     			s.text((i*15)-171, 160, 'SPREAD')
+		     		.attr({'font-size': 15, 'font-family':'FontAwesome',opacity:.5})
+		     		.transform('s.8r90');
+     			s.text((i*15)-171, 40, 'SPREAD')
+		     		.attr({'font-size': 15, 'font-family':'FontAwesome',opacity:.5})
+		     		.transform('s.8r90');
+     		}
+	     	//lines
+     		var xx = (i*15)-147;
+	     	//s.line(xx,85,xx,115).attr({strokeWidth:1,stroke:'black'});
+	     	s.line(xx,0,xx,200).attr({strokeWidth:1,stroke:'black',opacity:.05});
+     	}
+
+		//========MESSY MARKET & FILTERED========
+     	//var s = Snap("#messyMarket");
+		function textbox(event){
+			var sym = symbols[randInt(0,symbols.length)];
+			var price = "$"+rand(15,200);
+			var side = sides[randInt(0,2)];
+			textbox2(
+				Snap("#messyMarket"),
+				sym,
+				price,
+				side,
+				event.x,//randInt(0,svgWidth),
+				event.y,//randInt(0,svgHeight)
+				.75 //opacity
+			);
+			if(sym == 'REDT'){
+				textbox2(
+					Snap("#filteredMessyMarket"),
+					sym,
+					price,
+					side,
+					event.x,//randInt(0,svgWidth),
+					event.y,//randInt(0,svgHeight)
+					.75 //opacity
+				);				
+			}
+		}
+
+		function textbox2(snap, sym, price, side, x, y, opacity){
+			var g = snap.group();
+			g.add(snap.text(x, y, Math.random()>.5?'':'')
+	     		.attr({'font-size': 30, 'font-family':'FontAwesome',opacity:opacity})
+	     		.transform('s1'));
+
+			g.add(snap.text(x+25, y-15, side)
+				.attr({'font-size': 13,fill:side==="BUY"?'green':'red',opacity:opacity}));
+			if(sym!=''){
+				g.add(snap.text(x+55, y-15, symchars[sym]).attr({'font-size': 15,'font-family':'FontAwesome',opacity:opacity}));
+			}
+			g.add(snap.text(x+25, y+5, price).attr({'font-size': 15,opacity:opacity}));
+			g.addClass(sym);
+			return g;
+		}
+
+		//========New Order1========
+     	var s = Snap("#neworder1");
+
+     	
+     	s.line(0,65,300,65).attr({strokeWidth:1,stroke:'black'});
+     	s.line(0,125,300,125).attr({strokeWidth:1,stroke:'black'});
+
+     	for(var i=10;i<30;i++){
+
+     		//text
+     		var price = " 34."+(i*1.0+18);
+     		var color = i>19?"red":"green";
+     		if(price == " 34.37") color = "black";
+	     	var bboxY = s.text(((i*15)-164), 100, price)
+	     		.attr({'font-size': 15,opacity:.50,fill:color})
+	     		.transform('r90').getBBox().y;
+
+	     	//icon
+     		if(price != " 34.37"){
+     			if(Math.random()<.75){
+		     		var price = " 34."+(i*1.0+18);
+		     		var color = "black";
+		     		if(price == " 34.36") color = "green";
+		     		if(price == " 34.38") color = "red";
+			     	s.text((i*15)-146, i>19?143:60, '  ')
+			     		.attr({'font-size': 15, 'font-family':'FontAwesome',fill:color})
+			     		.transform('s1');     				
+     			}
+     		}
+	     	//lines
+     		var xx = (i*15)-147;
+	     	//s.line(xx,85,xx,115).attr({strokeWidth:1,stroke:'black'});
+	     	s.line(xx,0,xx,200).attr({strokeWidth:1,stroke:'black',opacity:.05});
+     	}
+     	textbox2(s, '', "$34.35", 'BUY', 320, 105,i*.1)
+				.transform('s.75');
+		s.path("M115,40 C115,5 308,9 337,80")
+			.attr({strokeWidth:3,stroke:'black','fill-opacity':0,"stroke-dasharray": "10 5"});
+
+
+		//========New Order2========
+     	var s = Snap("#neworder2");
+
+     	
+     	s.line(0,65,300,65).attr({strokeWidth:1,stroke:'black'});
+     	s.line(0,125,300,125).attr({strokeWidth:1,stroke:'black'});
+
+     	for(var i=10;i<30;i++){
+
+     		//text
+     		var price = " 34."+(i*1.0+18);
+     		var color = i>19?"red":"green";
+     		if(price == " 34.37") color = "black";
+	     	var bboxY = s.text(((i*15)-164), 100, price)
+	     		.attr({'font-size': 15,opacity:.50,fill:color})
+	     		.transform('r90').getBBox().y;
+
+	     	//icon
+     		if(price != " 34.37"){
+     			if(Math.random()<.75){
+		     		var price = " 34."+(i*1.0+18);
+		     		var color = "black";
+		     		if(price == " 34.36") color = "green";
+		     		if(price == " 34.38") color = "red";
+			     	s.text((i*15)-146, i>19?143:60, '  ')
+			     		.attr({'font-size': 15, 'font-family':'FontAwesome',fill:color})
+			     		.transform('s1');     				
+     			}
+     		}
+	     	//lines
+     		var xx = (i*15)-147;
+	     	//s.line(xx,85,xx,115).attr({strokeWidth:1,stroke:'black'});
+	     	s.line(xx,0,xx,200).attr({strokeWidth:1,stroke:'black',opacity:.05});
+     	}
+     	textbox2(s, '', "$34.35", 'BUY', 320, 105,i*.1)
+				.transform('s.75');
+		s.path("M163,60 C163,5 308,9 337,80")
+			.attr({strokeWidth:3,stroke:'black','fill-opacity':0,"stroke-dasharray": "10 5"});
+
+
+		//========New Order3========
+     	var s = Snap("#neworder3");
+
+     	
+     	s.line(0,65,300,65).attr({strokeWidth:1,stroke:'black'});
+     	s.line(0,125,300,125).attr({strokeWidth:1,stroke:'black'});
+
+     	for(var i=10;i<30;i++){
+
+     		//text
+     		var price = " 34."+(i*1.0+18);
+     		var color = i>19?"red":"green";
+     		if(price == " 34.37") color = "black";
+	     	var bboxY = s.text(((i*15)-164), 100, price)
+	     		.attr({'font-size': 15,opacity:.50,fill:color})
+	     		.transform('r90').getBBox().y;
+
+	     	//icon
+     		if(price != " 34.37"){
+     			if(Math.random()<.75){
+		     		var price = " 34."+(i*1.0+18);
+		     		var color = "black";
+		     		if(price == " 34.36") color = "green";
+		     		if(price == " 34.38") color = "red";
+			     	s.text((i*15)-146, i>19?143:60, '  ')
+			     		.attr({'font-size': 15, 'font-family':'FontAwesome',fill:color})
+			     		.transform('s1');     				
+     			}
+     		}
+	     	//lines
+     		var xx = (i*15)-147;
+	     	//s.line(xx,85,xx,115).attr({strokeWidth:1,stroke:'black'});
+	     	s.line(xx,0,xx,200).attr({strokeWidth:1,stroke:'black',opacity:.05});
+     	}
+     	textbox2(s, '', "$34.35", 'SELL', 320, 105,i*.1)
+				.transform('s.75');
+		s.path("M237,150 C272,177 338,168 340,110")
+			.attr({strokeWidth:3,stroke:'black','fill-opacity':0,"stroke-dasharray": "10 5"});
+
+
+		//========MESSY MARKET ORGANIZED========
+     	var s = Snap("#messyMarketOrganized");
+     	var price = 34;
+		for(var i = 1; i < 11; i++){
+			price = price + i;
+			textbox2(s, '', "$"+price, 'BUY', i*50, 70,i*.1)
+				.transform('r270');
+		}
+		//price = 80;
+		for(var i = 10; i > 0; i--){
+			price = price + i;
+			textbox2(s, '', "$"+price, 'SELL', i*50, 160,i*.1)
+				.transform('r270');
+		}
+
+
+    </script>
+</body>
+</html>
