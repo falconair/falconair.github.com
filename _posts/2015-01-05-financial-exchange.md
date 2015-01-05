@@ -1,7 +1,7 @@
 ---
 layout: post_page
 title: Simulating a financial exchange in Scala
-draft: true
+comments: true
 ---
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
