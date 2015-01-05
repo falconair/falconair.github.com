@@ -406,6 +406,8 @@ object Main extends App {
 </code></pre>
 </div>
 
+Full code available on [github] (https://github.com/falconair/SimpleFinancialExchange)
+
 #### CTRL+F and no mention of concurrency
 
 A developer who wants to join the modern trading industry must learn about performance and concurrency. While Silicon Valley measures performance interms of scalability or throughput, Wall Street measures it in terms of latency and consistency.
