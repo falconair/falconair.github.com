@@ -19,7 +19,7 @@ title: Mainpage
         </div>
 
     		<ul class="entries">
-    		{% for post in paginator.posts %}
+          {% for post in paginator.posts %}
     		  <li>
     		    <a href="{{ post.url }}">
                       <span>{{ post.date | date: "%d %B %Y" }}</span>
