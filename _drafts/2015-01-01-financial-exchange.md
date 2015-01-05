@@ -57,13 +57,18 @@ Notice that buyers stand in line in a way that prices increase closer to the hea
 </div>
 > ###### Single line with prices, more naturally shows how buyers and sellers line up
 
-Ask the two people at the head of buyers and seller lines if they agree on a price. If the Google (GOOG) buyer at the head of his line is willing to pay $550 per share, and the GOOG seller at the head of her line is willing to part with her shares at the same price, we have a trade! The two exchange the shares and the money and go home happy. The person organizing the trading of Google in room 2B makes a loud announcement, "100 shares of GOOG traded at $550."  Now there are two new people at the head of their respective lines. The organizer again announces "GOOG being sold (offered) for $560 and being bought (bid) at $540" and the process continues.
+### Market mechanics
+
+Let's step through how an order is matched.
+
 
 <div style="margin: 0 auto;width: 400px;">
 <svg id="neworder1" width="400px" height="150px">
 <desc>Created with Snap</desc><defs></defs><line x1="0" x2="300" y1="65" y2="65" stroke="#000000" style="stroke-width: 1px;"></line><line x1="0" x2="300" y1="125" y2="125" stroke="#000000" style="stroke-width: 1px;"></line><text x="-14" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,104.7422,86.7578)"> 34.28</text><text x="4" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="3" x2="3" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="1" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,119.7422,71.7578)"> 34.29</text><text x="19" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="18" x2="18" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="16" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,134.7422,56.7578)"> 34.30</text><text x="34" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="33" x2="33" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="31" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,149.7422,41.7578)"> 34.31</text><text x="49" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="48" x2="48" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="46" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,164.7422,26.7578)"> 34.32</text><text x="64" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="63" x2="63" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="61" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,179.7422,11.7578)"> 34.33</text><text x="79" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="78" x2="78" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="76" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,194.7422,-3.2422)"> 34.34</text><text x="94" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="93" x2="93" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="91" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,209.7422,-18.2422)"> 34.35</text><line x1="108" x2="108" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="106" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,224.7422,-33.2422)"> 34.36</text><text x="124" y="60" fill="#008000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="123" x2="123" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="121" y="100" fill="#000000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,239.7422,-48.2422)"> 34.37</text><line x1="138" x2="138" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="136" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,254.7422,-63.2422)"> 34.38</text><text x="154" y="143" fill="#ff0000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="153" x2="153" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="151" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,269.7422,-78.2422)"> 34.39</text><text x="169" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="168" x2="168" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="166" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,284.7422,-93.2422)"> 34.40</text><line x1="183" x2="183" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="181" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,299.7422,-108.2422)"> 34.41</text><text x="199" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="198" x2="198" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="196" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,314.7422,-123.2422)"> 34.42</text><line x1="213" x2="213" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="211" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,329.7422,-138.2422)"> 34.43</text><text x="229" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="228" x2="228" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="226" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,344.7422,-153.2422)"> 34.44</text><line x1="243" x2="243" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="241" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,359.7422,-168.2422)"> 34.45</text><line x1="258" x2="258" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="256" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,374.7422,-183.2422)"> 34.46</text><text x="274" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="273" x2="273" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="271" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,389.7422,-198.2422)"> 34.47</text><text x="289" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="288" x2="288" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><g transform="matrix(0.75,0,0,0.75,90.1484,24.1602)"><text x="320" y="105" transform="matrix(1,0,0,1,0,0)" style="font-size: 30px; font-family: FontAwesome; opacity: 3;"></text><text x="345" y="90" fill="#008000" style="font-size: 13px; opacity: 3;">BUY</text><text x="345" y="110" style="font-size: 15px; opacity: 3;">$34.35</text></g><path d="M115,40 C115,5 308,9 337,80" stroke="#000000" style="stroke-width: 3px; fill-opacity: 0; stroke-dasharray: 10px, 5px;"></path></svg>
 </div>
 > ###### Buyer's order isn't matched so she takes her place in line
+
+If a new buyer comes into the market and wants to buy a stock for $34.35, but the lowest price at which it is being offered is $34.38, there is no match and the buyer gets in line among the buyers.
 
 <div style="margin: 0 auto;width: 400px;">
 <svg id="neworder3" width="400px" height="200px">
@@ -72,12 +77,16 @@ Ask the two people at the head of buyers and seller lines if they agree on a pri
 </div>
 > ###### Seller's order isn't matched, so she takes her place in line
 
+Similarly, if a new seller wants to sell their stock at no less than $34.35, but there are no buyers at that price, the seller gets in line.
+
 <div style="margin: 0 auto;width: 400px;">
 <svg id="neworder2" width="400px" height="150px">
 <rect x="0" y="0" width="100%" height="100%" fill="white"></rect>
-<desc>Created with Snap</desc><defs></defs><line x1="0" x2="300" y1="65" y2="65" stroke="#000000" style="stroke-width: 1px;"></line><line x1="0" x2="300" y1="125" y2="125" stroke="#000000" style="stroke-width: 1px;"></line><text x="-14" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,104.7422,86.7578)"> 34.28</text><line x1="3" x2="3" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="1" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,119.7422,71.7578)"> 34.29</text><text x="19" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="18" x2="18" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="16" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,134.7422,56.7578)"> 34.30</text><text x="34" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="33" x2="33" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="31" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,149.7422,41.7578)"> 34.31</text><text x="49" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="48" x2="48" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="46" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,164.7422,26.7578)"> 34.32</text><line x1="63" x2="63" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="61" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,179.7422,11.7578)"> 34.33</text><text x="79" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="78" x2="78" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="76" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,194.7422,-3.2422)"> 34.34</text><text x="94" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="93" x2="93" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="91" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,209.7422,-18.2422)"> 34.35</text><text x="109" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="108" x2="108" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="106" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,224.7422,-33.2422)"> 34.36</text><text x="124" y="60" fill="#008000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="123" x2="123" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="121" y="100" fill="#000000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,239.7422,-48.2422)"> 34.37</text><line x1="138" x2="138" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="136" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,254.7422,-63.2422)"> 34.38</text><text x="154" y="143" fill="#ff0000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="153" x2="153" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="151" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,269.7422,-78.2422)"> 34.39</text><text x="169" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="168" x2="168" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="166" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,284.7422,-93.2422)"> 34.40</text><text x="184" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="183" x2="183" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="181" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,299.7422,-108.2422)"> 34.41</text><text x="199" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="198" x2="198" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="196" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,314.7422,-123.2422)"> 34.42</text><text x="214" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="213" x2="213" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="211" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,329.7422,-138.2422)"> 34.43</text><text x="229" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="228" x2="228" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="226" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,344.7422,-153.2422)"> 34.44</text><text x="244" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="243" x2="243" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="241" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,359.7422,-168.2422)"> 34.45</text><text x="259" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="258" x2="258" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="256" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,374.7422,-183.2422)"> 34.46</text><text x="274" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="273" x2="273" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="271" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,389.7422,-198.2422)"> 34.47</text><line x1="288" x2="288" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><g transform="matrix(0.75,0,0,0.75,90.1484,24.1602)"><text x="320" y="105" transform="matrix(1,0,0,1,0,0)" style="font-size: 30px; font-family: FontAwesome; opacity: 3;"></text><text x="345" y="90" fill="#008000" style="font-size: 13px; opacity: 3;">BUY</text><text x="345" y="110" style="font-size: 15px; opacity: 3;">$34.35</text></g><path d="M163,60 C163,5 308,9 337,80" stroke="#000000" style="stroke-width: 3px; fill-opacity: 0; stroke-dasharray: 10px, 5px;"></path></svg>
+<desc>Created with Snap</desc><defs></defs><line x1="0" x2="300" y1="65" y2="65" stroke="#000000" style="stroke-width: 1px;"></line><line x1="0" x2="300" y1="125" y2="125" stroke="#000000" style="stroke-width: 1px;"></line><text x="-14" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,104.7422,86.7578)"> 34.28</text><line x1="3" x2="3" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="1" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,119.7422,71.7578)"> 34.29</text><text x="19" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="18" x2="18" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="16" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,134.7422,56.7578)"> 34.30</text><text x="34" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="33" x2="33" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="31" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,149.7422,41.7578)"> 34.31</text><text x="49" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="48" x2="48" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="46" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,164.7422,26.7578)"> 34.32</text><line x1="63" x2="63" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="61" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,179.7422,11.7578)"> 34.33</text><text x="79" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="78" x2="78" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="76" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,194.7422,-3.2422)"> 34.34</text><text x="94" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="93" x2="93" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="91" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,209.7422,-18.2422)"> 34.35</text><text x="109" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="108" x2="108" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="106" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,224.7422,-33.2422)"> 34.36</text><text x="124" y="60" fill="#008000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="123" x2="123" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="121" y="100" fill="#000000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,239.7422,-48.2422)"> 34.37</text><line x1="138" x2="138" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="136" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,254.7422,-63.2422)"> 34.38</text><text x="154" y="143" fill="#ff0000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="153" x2="153" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="151" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,269.7422,-78.2422)"> 34.39</text><text x="169" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="168" x2="168" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="166" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,284.7422,-93.2422)"> 34.40</text><text x="184" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="183" x2="183" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="181" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,299.7422,-108.2422)"> 34.41</text><text x="199" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="198" x2="198" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="196" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,314.7422,-123.2422)"> 34.42</text><text x="214" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="213" x2="213" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="211" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,329.7422,-138.2422)"> 34.43</text><text x="229" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="228" x2="228" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="226" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,344.7422,-153.2422)"> 34.44</text><text x="244" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="243" x2="243" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="241" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,359.7422,-168.2422)"> 34.45</text><text x="259" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="258" x2="258" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="256" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,374.7422,-183.2422)"> 34.46</text><text x="274" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="273" x2="273" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="271" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,389.7422,-198.2422)"> 34.47</text><line x1="288" x2="288" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><g transform="matrix(0.75,0,0,0.75,90.1484,24.1602)"><text x="320" y="105" transform="matrix(1,0,0,1,0,0)" style="font-size: 30px; font-family: FontAwesome; opacity: 3;"></text><text x="345" y="90" fill="#008000" style="font-size: 13px; opacity: 3;">BUY</text><text x="345" y="110" style="font-size: 15px; opacity: 3;">$34.38</text></g><path d="M163,60 C163,5 308,9 337,80" stroke="#000000" style="stroke-width: 3px; fill-opacity: 0; stroke-dasharray: 10px, 5px;"></path></svg>
 </div>
 > ###### Buyer is willing to pay what a seller is charging, matched!
+
+If a buyer is will to pay $34.38 and there _is_ a seller at that price, a match is found and the trade occurs.
 
 That's the basic idea. Details are a bit more complicated. If GOOG buyer was looking to buy a 1,000 shares, but the seller only had 100 to sell, the buyer would just go down the line of buyers, buying up all the shares he needed. If the buyer wanted to pay no more than $540 but the seller wanted at least $560, the two would just stand there, looking at each other until someone else decided to change their location in the line.
 
@@ -102,18 +111,31 @@ We have seen investors and speculators. There is yet another group which focuses
 
 ### How do prices change?
 
-talk about moving the market buy picking off bbo (bring Toyota prices in line)
+<div style="margin: 0 auto;width: 400px;">
+<svg id="neworder2" width="400px" height="150px">
+<rect x="0" y="0" width="100%" height="100%" fill="white"></rect>
+<desc>Created with Snap</desc><defs></defs><line x1="0" x2="300" y1="65" y2="65" stroke="#000000" style="stroke-width: 1px;"></line><line x1="0" x2="300" y1="125" y2="125" stroke="#000000" style="stroke-width: 1px;"></line><text x="-14" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,104.7422,86.7578)"> 34.28</text><line x1="3" x2="3" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="1" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,119.7422,71.7578)"> 34.29</text><text x="19" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="18" x2="18" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="16" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,134.7422,56.7578)"> 34.30</text><text x="34" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="33" x2="33" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="31" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,149.7422,41.7578)"> 34.31</text><text x="49" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="48" x2="48" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="46" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,164.7422,26.7578)"> 34.32</text><line x1="63" x2="63" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="61" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,179.7422,11.7578)"> 34.33</text><text x="79" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="78" x2="78" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="76" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,194.7422,-3.2422)"> 34.34</text><text x="94" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="93" x2="93" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="91" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,209.7422,-18.2422)"> 34.35</text><text x="109" y="60" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="108" x2="108" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="106" y="100" fill="#008000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,224.7422,-33.2422)"> 34.36</text><text x="124" y="60" fill="#008000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="123" x2="123" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="121" y="100" fill="#000000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,239.7422,-48.2422)"> 34.37</text><line x1="138" x2="138" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="136" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,254.7422,-63.2422)"> 34.38</text><text x="154" y="143" fill="#ff0000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="153" x2="153" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="151" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,269.7422,-78.2422)"> 34.39</text><text x="169" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="168" x2="168" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="166" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,284.7422,-93.2422)"> 34.40</text><text x="184" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="183" x2="183" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="181" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,299.7422,-108.2422)"> 34.41</text><text x="199" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="198" x2="198" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="196" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,314.7422,-123.2422)"> 34.42</text><text x="214" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="213" x2="213" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="211" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,329.7422,-138.2422)"> 34.43</text><text x="229" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="228" x2="228" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="226" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,344.7422,-153.2422)"> 34.44</text><text x="244" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="243" x2="243" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="241" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,359.7422,-168.2422)"> 34.45</text><text x="259" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="258" x2="258" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="256" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,374.7422,-183.2422)"> 34.46</text><text x="274" y="143" fill="#000000" style="font-size: 15px; font-family: FontAwesome;" transform="matrix(1,0,0,1,0,0)">  </text><line x1="273" x2="273" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><text x="271" y="100" fill="#ff0000" style="font-size: 15px; opacity: 0.5;" transform="matrix(0,1,-1,0,389.7422,-198.2422)"> 34.47</text><line x1="288" x2="288" y1="0" y2="200" stroke="#000000" style="stroke-width: 1px; opacity: 0.05;"></line><g transform="matrix(0.75,0,0,0.75,90.1484,24.1602)"><text x="320" y="105" transform="matrix(1,0,0,1,0,0)" style="font-size: 30px; font-family: FontAwesome; opacity: 3;"></text><text x="345" y="90" fill="#008000" style="font-size: 13px; opacity: 3;">BUY</text><text x="345" y="110" style="font-size: 15px; opacity: 3;">$34.38</text></g><path d="M163,60 C163,5 308,9 337,80" stroke="#000000" style="stroke-width: 3px; fill-opacity: 0; stroke-dasharray: 10px, 5px;"></path></svg>
+</div>
+> ###### Buyer is willing to pay what a seller is charging, matched!
 
-### How to reduce price change?
+Take another look at the diagram which shows a pair of traders getting a match. A new buyer enters the market and is matched against a seller who was offering their stock at $34.38. What happens after the match is done? If there was no one else offering their stock at $34.38, the best offer would move up a penny to $34.39.
 
-trade slowly, don't show full position, stand in the opposite line (trade passively)
+In this scenario, a single buyer, could have been you, managed to change the price of a stock. There was no central authority managing the price. There is no explicit, centralized, mechanism to keep prices at a certain level. The price of a stock moved because the person offering the stock at $34.38 was bought out by some anonymous buyer.
+
+This post hasn't discussed the role of order sizes. I have made a simplifying assumption that every one is interested in buying or selling the same quantity. However, what if the person buying stock wanted more than what was being offered by the top seller? What if the buyer was willing to pay a few pennies more? The matching algorithm would simply go down the list of buyers and buy as much stock as required by the buyer (up to the buyer's price limit).
+
+This action of 'sweeping the book' has the consequence of rapidly changing the price. Rather than stock jumping around by a penny, a large order, or a large number of traders on either side of the market can 'move' the market in the opposite direction. A large buyer will raise the price of a stock and a large seller will reduce the price.
+
+This leads to a whole industry of algorithms designed to reduce such market impact.
+
 
 ### How to implement an order book?
 
-start talking about code
+Let's, finally, take a look at some code.
 
+An order book expects to receive three kinds of requests: a request to submit a new order, a request to cancel a previously entered order and a request to amend an existing order.
 
-<div style='height:500px;overflow:scroll;'>
+<div style='overflow:scroll;'>
 <!--pre data-line='3' data-line-offset='-1' -->
 <pre><code class="language-scala">
 abstract class OrderBookRequest
@@ -122,7 +144,9 @@ case class Cancel(timestamp: Long, order: NewOrder) extends OrderBookRequest
 case class Amend(timestamp: Long, order:NewOrder, newPrice:Option[Double], newQty:Option[Long]) extends OrderBookRequest
 </code></pre></div>
 
-<div style='height:500px;overflow:scroll;'><pre><code class="language-scala">
+The order book responds with an acknowledgement of a new order, notification that it was filled (partially or completely), rejected or canceled.
+
+<div style='overflow:scroll;'><pre><code class="language-scala">
 abstract class OrderBookResponse
 case class Filled(timestamp: Long, price: Double, qty: Long, order: Array[NewOrder]) extends OrderBookResponse
 case class Acknowledged(timestamp: Long, request: OrderBookRequest) extends OrderBookResponse
@@ -130,13 +154,19 @@ case class Rejected(timestamp: Long, error: String, request: OrderBookRequest) e
 case class Canceled(timestamp: Long, reason: String, order: NewOrder) extends OrderBookResponse
 </code></pre></div>
 
-<div style='height:500px;overflow:scroll;'><pre><code class="language-scala">
+An order book also needs to notify when an execution occurs or when the best bid or offer changes. In the code below, BBOChange refers to "best bid or offer."
+
+<div style='overflow:scroll;'><pre><code class="language-scala">
 abstract class MarketDataEvent
 case class LastSalePrice(timestamp: Long, symbol: String, price: Double, qty: Long, volume: Long) extends MarketDataEvent
 case class BBOChange(timestamp: Long, symbol: String, bidPrice:Option[Double], bidQty:Option[Long], offerPrice:Option[Double], offerQty:Option[Long]) extends MarketDataEvent
 </code></pre></div>
 
-<div style='height:500px;overflow:scroll;'><pre><code class="language-scala">
+The OrderBook class, itself, contains two priority queues, one for bids and one for offers. Naturally, the queues are ordered according to price. The class defines its own 'Order' object. While the requests sent by clients are never modified, the Order object is private to the Order Book class and can be modified.
+
+This class also contains basic infrastructure for keeping track of subscribers to various event types. See note near end regarding further detail on management of such subscriptions.
+
+<div style='overflow:scroll;'><pre><code class="language-scala">
 class OrderBook(symbol: String) {
   case class Order(timestamp: Long, tradeID: String, symbol: String, var qty: Long, isBuy: Boolean, var price: Option[Double], newOrderEvent:NewOrder)
 
@@ -165,6 +195,8 @@ class OrderBook(symbol: String) {
   var transactionObserver: (OrderBookResponse) => Unit = (OrderBookEvent => ())
   var marketdataObserver: (MarketDataEvent) => Unit = (MarketDataEvent => ())
   </code></pre></div>
+
+Method 'processOrderBookRequest' is the main method which receives requests sent to this object. In an actor system, this would be the 'receive' method. This method generally delegest all complex logic to other methods in the class.
 
   <div style='height:500px;overflow:scroll;'><pre><code class="language-scala">
 
@@ -219,7 +251,9 @@ class OrderBook(symbol: String) {
   }
   </code></pre></div>
 
-  <div style='height:500px;overflow:scroll;'><pre><code class="language-scala">
+'processNewOrder,' as the name implies takes on the task of processing requests to enter new order into the order book.  It does some basic book keeping, such as setting up the order queue, queue of the opposite side, etc. Unless the order needs to be rejected, 'matchOrder' is called to actually carry out the logic of matching orders.
+
+  <div style='overflow:scroll;'><pre><code class="language-scala">
   def processNewOrder(orderBookOrder: Order) {
     val currentTime = System.currentTimeMillis
 
@@ -248,40 +282,11 @@ class OrderBook(symbol: String) {
 
   private def validateOrder(order: NewOrder): (Boolean, Option[String]) = (true, None)
 
-  private def updateBBO() = {
-    val bidHead = Option(bidsQ.peek)
-    val offerHead = Option(offersQ.peek)
-
-    if(bidHead != bestBid || offerHead != bestOffer){
-      bestBid = bidHead
-      bestOffer = offerHead
-
-      var bidPrice:Option[Double]=None
-      var bidQty:Option[Long]=None
-      var offerPrice:Option[Double]=None
-      var offerQty:Option[Long] = None
-
-      //TODO: Does scala have some sort of monad magic to get rid of these, essentially, nested null checks?
-      if(bestBid.isDefined){
-        bidPrice = bestBid.get.price
-        bidQty = Some(bestBid.get.qty)
-      }
-      if(bestOffer.isDefined){
-        offerPrice = bestOffer.get.price
-        offerQty = Some(bestOffer.get.qty)
-      }
-
-      this.marketdataObserver(BBOChange(System.currentTimeMillis, this.symbol, bidPrice, bidQty, offerPrice, offerQty))
-    }
-  }
-
-  private def isLimitOrderExecutable(order: Order, oppositeOrder: Order): Boolean = {
-    if (order.isBuy) order.price.get >= oppositeOrder.price.get
-    else order.price.get <= oppositeOrder.price.get
-  }
   </code></pre></div>
 
-  <div style='height:500px;overflow:scroll;'><pre><code class="language-scala">
+Method 'matchOrder' carries out the logic (partially) diagrammed above. Unlike the diagram, it does order size management. For example, if the order size is larger than what is made available by the top buyer or seller, the match needs to occur for the number of shares available and the matching algorithm needs to be called recursively for the remaining shares.
+
+  <div style='overflow:scroll;'><pre><code class="language-scala">
   private def matchOrder(order: Order, oppositeQ: PriorityQueue[Order]): Unit = {
     val oppositeOrder = oppositeQ.peek
     val currentTime = System.currentTimeMillis()
@@ -321,15 +326,45 @@ class OrderBook(symbol: String) {
   }
   </code></pre></div>
 
-  <div style='height:500px;overflow:scroll;'><pre><code class="language-scala">
-  def listenForEvents(observer: (OrderBookResponse) => Unit): Unit = this.transactionObserver = observer
+  Method 'updateBBO' exists to abstract out logic which is repeatedly called all over the code. Whenever the price (or size) of the top seller or buyer changes, OrderBook needs to inform its clients.
 
-  def listenForMarketData(observer: (MarketDataEvent) => Unit): Unit = this.marketdataObserver = observer
-}
+  <div style='overflow:scroll;'><pre><code class="language-scala">
+  private def updateBBO() = {
+    val bidHead = Option(bidsQ.peek)
+    val offerHead = Option(offersQ.peek)
 
-</code></pre></div>
+    if(bidHead != bestBid || offerHead != bestOffer){
+      bestBid = bidHead
+      bestOffer = offerHead
 
-<div style='height:500px;overflow:scroll;'><pre><code class="language-scala">
+      var bidPrice:Option[Double]=None
+      var bidQty:Option[Long]=None
+      var offerPrice:Option[Double]=None
+      var offerQty:Option[Long] = None
+
+      //TODO: Does scala have some sort of monad magic to get rid of these, essentially, nested null checks?
+      if(bestBid.isDefined){
+        bidPrice = bestBid.get.price
+        bidQty = Some(bestBid.get.qty)
+      }
+      if(bestOffer.isDefined){
+        offerPrice = bestOffer.get.price
+        offerQty = Some(bestOffer.get.qty)
+      }
+
+      this.marketdataObserver(BBOChange(System.currentTimeMillis, this.symbol, bidPrice, bidQty, offerPrice, offerQty))
+    }
+  }
+
+  private def isLimitOrderExecutable(order: Order, oppositeOrder: Order): Boolean = {
+    if (order.isBuy) order.price.get >= oppositeOrder.price.get
+    else order.price.get <= oppositeOrder.price.get
+  }
+  </code></pre></div>
+
+The following listing is the 'public void main' method of Scala and actually executes a few scenarios.
+
+<div style='overflow:scroll;'><pre><code class="language-scala">
 object Main extends App {
   val random = new scala.util.Random
 
@@ -369,3 +404,30 @@ object Main extends App {
     }
 </code></pre>
 </div>
+
+#### CTRL+F and no mention of concurency
+
+A developer who wants to join the modern trading industry much learn about performance and concurrency. While Silicon Valley measures performance interms of scalability or throughput, Wall Street measures it in terms of latency and consistency.
+
+Unlike a social network, there usually aren't millions of clients being served by a service provider. While exchanges broadcast and trading firms may ingest millions of messages per second, the most important metric is the time it takes from the exchange publishing a quote until someone reads it, makes a decision on it, and sends an order back to the exchange. Secondly, this latency must be fairly consistent. If 70% of the decisions are taken in under a milli-second, but the remaining 30% takes hundreds of milliseconds (garbage collection, I'm looking at you), firms can (and do) lose money.
+
+One of the reasons I took up this project was to build a foundation in Scala to pick up the actor model (eralier attempts at Erlang failed). The Akka library has a great deal of buzz. Being a fairly high level library, I suspect that it won't perform as well in low latency scenarios as it might in high throughput and high scalability settings. Nevertheless, high productivity and the ability quickly write proof-of-concept code is immensely beneficial on its own.
+
+I'll leave experiments with Akka to another time, perhaps after a couple more projects with serial code. Learning the syntax, new programming paradigms, new libraries, etc. is quite enough for a first project.
+
+### So, is Scala good?
+I first looked at Scala years ago, probably around the time it was first released. I had discovered functional programming and programming langauge theory at [Lambda The Ultimate] (http://lambda-the-ultimate.org) and was trying to make sense of Haskell, O'Caml, Oz, Scheme/Lisp, Erlang, etc. Back then I did't much like the syntax of the langauge and moved on. In the intervening years Scala has started to pop up every where, including the trading industry (in non-performance cirtical systems, in my experience).
+
+While poking around Scala, I gained a great deal of respect for the experts working on the language. They were combining ideas from the very academic side of computer science to the very practical side of industry (the jvm!). Years ago I read a tutorial called "Scala By Example," by the author of the language, Martin Odersky. One of the chapters of the 100 or so page booklet was on concurrency. He started with the most basic locks and built layer upon layer, until he presented an implementation of the Actor library. Other chapters included an implementatino of the Hindley/Milner type inference system and a chapter on parser combinaotrs (although this chapter is no longer in the latest versions). This was one of the best programming language books I had read, certainly better than most other giant texts introducing languages.
+
+My first impression, after actually writing a few hundred lines of code (this project and the next) is that syntax is ok once one has written a few lines. I would have preferred Haskell or F# style syntax, but I adapted to Scala's style fairly quickly.
+
+Scala is quite a complex language. This is one of those language where learning to use it correctly requires reading a book or two. I'm still not quite sure how implicits work, how type safe the akka library is and how to correclty constrain type parameters. However, I'm  not sure if the complexity comes from the language or if I'm mis-calculating my position on the learning curve.
+
+I was a bit disappointed in the IDE support for Scala. I wrote code in the Intellij plugin for Scala as well as Eclipse. The intellij plugin kept showing errors which didn't show up when I manually compiled the code. Eclipse was much better at showing the correct errors, but not very user friendly with the inferred types it showed on mouse hover. Scala's dark theme looks beautiful while Eclipse looks like eclipse.
+
+While writing this code around Christmas, I found people on the #scala irc channel were extremely helpful and friendly. Even during the holiday season, there were always people there to help debug code.
+
+I certainly wouldn't recommend Scala for those who are new to programming. Experienced programmers, who have absoloutely no experience with functional programming should find that Scla is a great way to start. Unlike Haskell's laziness and purity or lisp's syntax, Scala's 'obscure' features such as algebraic data types, implicits and higher order function heavy libraries can be introduced more gradually.
+
+I'm not sure if Scala will ever be among my favorite languages, but I am certainly looking forward to doing a few more projects in the language. I'm glad to see there are commercial companies forming around the language and that it is gaining more acceptance in industry than Haskell was ever able to.
