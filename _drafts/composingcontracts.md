@@ -83,6 +83,37 @@ Const(10) will always return 10, no matter what date you pass in. Date() will si
 
 LiftX functions may be confusing to non-functional programmers. Say, for whatever reason, you want to write a contract against the square root of MSFT prices. You will notice that there is no square root combinator in Observable. Lift(squareroot) will 'lift' the square root function so it will also operate on Observable values.
 
+Just for completeness, let's paste the actual scala code here:
+
+<div style='overflow:scroll;'>
+<pre><code class="language-haskell">
+package ComposingContracts {
+
+  sealed trait Contract
+  case class Zero() extends Contract
+  case class One(currency: String) extends Contract
+  case class Give(contract: Contract) extends Contract
+  case class And(contract1: Contract, contract2: Contract) extends Contract
+  case class Or(contract1: Contract, contract2: Contract) extends Contract
+  case class Cond(cond: Obs[Boolean], contract1: Contract, contract2: Contract) extends Contract
+  case class Scale(scale: Obs[Double], contract: Contract) extends Contract
+  case class When(date: LocalDate, contract: Contract) extends Contract
+  case class Anytime(date: LocalDate, contract: Contract) extends Contract
+
+  abstract class Obs[A] {
+    def +(that: Obs[A])(implicit n: Numeric[A]): Obs[A] = Lift2(n.plus, this, that)
+    def -(that: Obs[A])(implicit n: Numeric[A]): Obs[A] = Lift2(n.minus, this, that)
+    ...
+  }
+  case class Const[A](k: A) extends Obs[A]
+  case class Lift[B, A](lifted: (B) => A, o: Obs[B]) extends Obs[A]
+  case class Lift2[C, B, A](lifted: (C, B) => A, o1: Obs[C], o2: Obs[B]) extends Obs[A]
+  case class DateObs() extends Obs[LocalDate]
+  case class Lookup[A](lookup: String) extends Obs[Double]
+}
+</code></pre></div>
+
+
 ### I'll buy a One
 Contracts and observables are all the end user sees. This domain specific language is enough to describe a large number of existing financial contracts, standardized as well us bespoke (or so the paper claims, assuming my own simplifications or errors didn't render this useless). Note that the claim is NOT that this langauge will describe ALL financial contracts. For example, ["Certified Symbolic Management of Financial Contracts"] (http://www.pa-ba.net/pubs/entries/bahr14nwpt.html) by Bahr, Berthold and Elsman extend this language with an accumulator conbinator to allow pricing of Asian options.
 
@@ -115,19 +146,23 @@ As the paper mentions, there are several ways of pricing financial contracts, in
 Let's delve a bit deeper into a fundamental concept, how to find a fair price for financial contracts. Wall Street employees so many people with math and science backgrounds that they have their own name: quants. People have won nobel prizes and earned billions of dollars by answering the question of pricing these contracts. Naturally, we will discuss the most basic concepts.
 
 #### A dollar today is worth more than a dollar tomorrow
-How much is a US Dollar worth? A dollar! If this isn't non-sensical enough, how much are zero dollars worth? Obviously nothing.
+How much are a thousand dollars worth? A thousand dollars! If you lend someone a thousand dollars for a year, how much should you charge them? The simplest answer is, you should charge them at least the thousand you are lending, plus at least as much as you would have earned if you just left that thousand bucks in your bank account.
 
-If you lend someone a thousand dollars for a year, how much should you charge them? The most simple answer is, you should charge them at least the thousand you are lending, plus at least as much as you would have earned if you just left that thousand bucks in your bank account. Yes, you could have played the lottery with that money and won millions, but the likelyhood is extremely low. You could have invested that money in the stock market, but the returns still would have been uncertain. By leaving the money in the bank, you are essentially guaranteed the interest without any risk.
-
-How much is a dollar worth a year or two years from now? We now know that this answer depends on the risk free interest rate and the duration of the loan. How much is a one $100 stock or a $100,000 house worth today, if you are guaranteed to receive ownership of these items in one year (at the quoted price)? Same 'discounting' idea applies.
+In order to know how much a future dollar is worth, you need to know how far away that future is, and interest rates during that time.
 
 #### Future's uncertain
-We can not predict the future, but can build models which take uncertainty into account. For this post, we will use a simple model of future prices. _Whatever the price is today, tomorrow's price will either rise or drop by some amount, based on previous movements of prices._
+We can not predict the future, but can build models which take uncertainty into account. For this post, we will use a simple model of future prices.
 
-If an interest rate or a stock is X today and historically it has moved up or down by a, tomorrow it will be X+a or X-a, the day after it will be X+a+a, X-a-a (and X+a-a, which is just X).
-TODO diagram.
+_Given today's price, tomorrow's price will either rise or drop proportional to the volatility._
+
+If an interest rate or a stock is S today and historically it has moved up by 'u' or down by 'd'', tomorrow it will be uS or dS, the day after it will be u^2S, d^2S or udS and so on.
+
+<img src="/img/binomiallattice.svg" >
+
 
 This is a simple model and one of the models mentioned by Peyton-Jones and Eber. Good enough for this implementation.
 
 ---
 <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
+
+Binomial lattice from http://stackoverflow.com/a/20911612/46799
