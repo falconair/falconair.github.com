@@ -1,0 +1,35 @@
+#class diagram for composing contracts
+[Instrument|value();risk()]
+[Instrument]<-[Stock]
+[Instrument]<-[Derivative]
+[Instrument]<-[Bond|notional()]
+[Derivative]<-[Option|underlying()]
+[Derivative]<-[Future|underlying()]
+
+[Option]<-[Asian]
+[Option]<-[American]
+[Option]<-[European]
+
+[Bond]<-[ZeroCoupon|expiration()]
+[Bond]<-[FixedRate|rate();expiration()]
+[Bond]<-[FloatingRate|index();expiration()]
+
+#class diagram for composing contracts with unknown classes
+[Instrument|value();risk()]
+[Instrument]<-[Stock]
+[Instrument]<-[Derivative]
+[Instrument]<--[3month:get $x, 6month:pay $y]
+[Instrument]<-[Bond|notional()]
+[Derivative]<--[OptionOnFutureOnStock]
+[Derivative]<-[Option|underlying()]
+[Derivative]<-[Future|underlying()]
+[Instrument]<--[BetOnRainInSeattle]
+[Instrument]<--[CanIBorrow1kIllPayBackWhenIWinLott]
+
+[Option]<-[Asian]
+[Option]<-[American]
+[Option]<-[European]
+
+[Bond]<-[ZeroCoupon|expiration()]
+[Bond]<-[FixedRate|rate();expiration()]
+[Bond]<-[FloatingRate|index();expiration()]
