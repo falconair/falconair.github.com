@@ -153,14 +153,84 @@ In order to know how much a future dollar is worth, you need to know how far awa
 #### Future's uncertain
 We can not predict the future, but can build models which take uncertainty into account. For this post, we will use a simple model of future prices.
 
-_Given today's price, tomorrow's price will either rise or drop proportional to the volatility._
+_Given today's price, tomorrow's price will either rise or drop proportional to volatility._
 
-If an interest rate or a stock is S today and historically it has moved up by 'u' or down by 'd'', tomorrow it will be uS or dS, the day after it will be u^2S, d^2S or udS and so on.
+If an interest rate or a stock is S today and historically it has moved up by 'u' or down by 'd'', tomorrow it will be uS or dS, the day after it will be u^2S, d^2S or udS and so on. Why only two prices for tomorrow, instead of three or 8? Because this is the binomial lattice method, not trinomial or octnomial lattice method. Those who already know this method should note that we are ignoring probabilities here.
 
 <img src="/img/binomiallattice.svg" >
 
 
-This is a simple model and one of the models mentioned by Peyton-Jones and Eber. Good enough for this implementation.
+If you ask this data structure for today's price, it will give you a single value, since that is already known. If you ask for any future dates, it will give you a range of values. In this specific model, day two will give you two values, day 10 will give you 10 values. The data structure is generally implemented as an list of arrays. If the whole lattice just contains a single number, we don't bother using arrays and just return that constant. A few more such optimizations are made.
+
+Note that with the popularization of machne learning, probabilistic programming has become a hot topic, and with good reason. This is an extremely interesting subject, so much so that I recently enrolled in a Master's degree program at U Of Chicago to study this stuff. However, the existing implementation not not very elegant, general...or even completely correct.
+
+<div style='overflow:scroll;'>
+<pre><code class="language-scala">
+trait BinomialLattice[A]{
+  def apply(i:Int):RandomVariable[A]
+  def apply(date:LocalDate):RandomVariable[A] = apply(ChronoUnit.DAYS.between(LocalDate.now(),date).toInt)
+  def zip[B]...
+  def map[B]...
+  ...
+}
+trait BinomialLatticeBounded[A] extends BinomialLattice[A]{
+  def size():Int
+  ...
+}
+class ConstantBL[A](k:A) extends BinomialLattice[A]{
+  override def apply(i:Int) = (j:Int)=>k
+}
+class PassThroughBL[A](func:(LocalDate)=>RandomVariable[A]) extends BinomialLattice[A]{
+  override def apply(i:Int) = apply(LocalDate.now().plusDays(i))
+  override def apply(i:LocalDate) = func(i)
+}
+class PassThroughBoundedBL[A](func:(LocalDate)=>RandomVariable[A], _size:Int) extends BinomialLatticeBounded[A]{
+  override def apply(i:Int) = apply(LocalDate.now().plusDays(i))
+  override def apply(i:LocalDate) = func(i)
+  override def size() = _size
+}
+//Given a starting price and an up factor, generate the whole lattice
+//NOTE: volatility is translated to up/down factor using a standard formula
+class GenerateBL(_size:Int, startVal:Double, upFactor:Double, upProbability:Double=0.5) extends BinomialLatticeBounded[Double]{
+  val cache = new ListBuffer[Array[Double]]
+  val downFactor:Double = 1.0/upFactor
+
+  cache.insert(0,Array(startVal))
+  for(i <- 1 to size()-1){
+    val arr = new Array[Double](i+1)
+    arr(0) = downFactor * cache(i-1)(0)
+    for(j <- 1 to i){
+      arr(j) = upFactor * cache(i-1)(j-1)
+    }
+    cache.insert(i,arr)
+  }
+  override def apply(i:Int) = cache(i)
+  override def size() = _size
+}
+
+//Given values of a lattice at the final date, apply function backwards towards start date
+//Think of a discounting function, which takes future prices and uses interest rates to calculate current value
+class PropagateLeftBL[A:ClassTag](source:BinomialLatticeBounded[A], func:((A,A)=>A)) extends BinomialLatticeBounded[A]{
+  val cache = new ListBuffer[Array[A]]
+
+  for(i <- 0 to size-1) cache.insert(i, new Array[A](i+1))
+
+  for(i <- (0 to size-1).reverse){
+    for(j <- (0 to i)){
+      val x = source(i+1)(j)
+      val y = source(i+1)(j+1)
+      cache(i)(j) = func(x,y)
+    }
+  }
+
+  override def apply(i:Int) = if ( size() > 1) cache(i) else source(i)
+  override def size() = if (source.size() > 1) source.size()-1 else 1
+}
+</code></pre></div>
+
+
+### Tie them together
+We have seen the contract description language and some gory details of how a binomial lattice is implemented. We don't yet have a path connecting the two.
 
 ---
 <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
