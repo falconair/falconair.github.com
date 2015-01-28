@@ -48,8 +48,8 @@ Notice that the root Instrument object contains a 'value' method, which returns 
 Peyton-Jones and Eber propose a completely different way of describing these contracts. They break up existing contracts into smaller pieces to find much more general and expressive pieces. When  combined, not only do these smaller units describe existing contracts, but are surprisingly effective at describing many custom and ad-hoc contracts.
 
 Here are some examples:
-<div style='overflow:scroll;'>
-<pre><code class="language-java">
+
+```java
 def usd(amount) = Scale(Const(amount),One("USD"))
 def stock(symbol) = Scale(Lookup(symbol),One("USD"))
 def buy(contract, amount) = And(contract,Give(usd(amount)))
@@ -62,14 +62,13 @@ def americanCallOption(at, c1, strike) = Anytime(at, option(buy(c1,strike)))
 def americanPutOption(at, c1, strike) = Anytime(at, option(sell(c1,strike)))
 
 val msft = stock("MSFT")
-</code></pre></div>
+```
 
 ### Implementation
 
 Let's start with 'Contract' described below:
 
-<div style='overflow:scroll;'>
-<pre><code class="language-haskell">
+```haskell
 Contract is
   Zero -- This contract is worth $0.00
   or One -- $1.00
@@ -80,7 +79,7 @@ Contract is
   or Scale(Observbale,Contract) -- Multiply value of Contract by Observable
   or When(Date,Contract) -- On Date, value is Contract, else $0.0
   or Anytime(Date,Contract) -- From now until Date, value is Contract, else $0.0
-</code></pre></div>
+```
 
 If you hold contract <span class="token constant">One</span>, you are owed a dollar immediately (currency implications are ignored in this explanation, although not in the implementation). If you own <span class="token constant">Give(One())</span>, you owe someone a dollar right away (not a few days from now). If you own <span class="token constant">When(tomorrow,One())</span>, tomorrow someone will deposit a dollar in your account. If you own <span class="token constant">Anytime(next week, One())</span>, you have the right to get your dollar anytime, between now and next week.
 
@@ -90,8 +89,7 @@ Note that I haven't implemented the <span class="token constant">Until</span> op
 
 Scale requires further comment, since it takes an Observable as an argument, not just Contract. Much of finance deals with future events. Stocks goe up, interest rates drop, a butterfly in China flaps wings and corn prices drop in Latin America. The language described by Contract alone is not able to represent real-world events. Since real-world events are uncertain, we need a way to represent this uncertainty. The 'Observable' type manages this uncertainty for us...somehow. We can write contracts which depend on the price of Google's stock, a year from now: When(next year, Scale(GOOG price, One())), and let Observable handle the details.
 
-<div style='overflow:scroll;'>
-<pre><code class="language-haskell">
+```haskell
 Observable is
   Const(c) -- Always returns c
   or Date() -- Always returns the date passed into observable
@@ -99,7 +97,7 @@ Observable is
   or Lift2()
   or Lookup() -- Looks up real-world values
   or various math operators
-</code></pre></div>
+```
 
 Observables represent uncertain values across time. Think of an Observable as a function which takes a date, and returns a range of possible values. For example, if you want to know the price of GOOG six months from now, Observable will get that for you. However, since no one knows the actual future price, Observable will return a range of possible values. For the mathematically inclined, an Observable is a stochastic process. For a given date, it will return a random variable.
 
@@ -109,8 +107,7 @@ LiftX functions may be confusing to non-functional programmers. Say, for whateve
 
 Just for completeness, let's paste the actual scala code here:
 
-<div style='overflow:scroll;'>
-<pre><code class="language-haskell">
+```haskell
 package ComposingContracts {
 
   sealed trait Contract
@@ -135,7 +132,7 @@ package ComposingContracts {
   case class DateObs() extends Obs[LocalDate]
   case class Lookup[A](lookup: String) extends Obs[Double]
 }
-</code></pre></div>
+```
 
 
 ### I'll buy a One
@@ -172,8 +169,7 @@ If you ask this data structure for today's price, it will give you a single valu
 
 Note that with the popularization of machne learning, probabilistic programming has become a hot topic, and with good reason. This is an extremely interesting subject, so much so that I recently enrolled in a Master's degree program at U Of Chicago to study this stuff. However, the existing implementation not not very elegant, general...or even completely correct.
 
-<div style='overflow:scroll;'>
-<pre><code class="language-scala">
+```scala
 trait BinomialLattice[A]{
   //apply functions allows this object to be 'called' as if it was a function
   def apply(i:Int):RandomVariable[A]
@@ -237,12 +233,11 @@ class PropagateLeftBL[A:ClassTag](source:BinomialLatticeBounded[A], func:((A,A)=
   override def apply(i:Int) = if ( size() > 1) cache(i) else source(i)
   override def size() = if (source.size() > 1) source.size()-1 else 1
 }
-</code></pre></div>
+```
 
 A couple of supporting functions. _binomialPriceTree_ takes a starting price, date range and volatility and converts it to a binomial lattice. Note this is very similar to the GenerateBL class. The only difference here is that _binomailPriceTree_ converts volatility ot up/down factors. _dicount_ method takes two lattices, one contains the data which needs to be discounted and the second contains the interest rates which will be used to do the discounting.
 
-<div style='overflow:scroll;'>
-<pre><code class="language-scala">
+```scala
 def binomialPriceTree(days:Int, startVal:Double, annualizedVolatility:Double, probability:Double=0.5):BinomialLatticeBounded[Double] = {
 
   val businessDaysInYear = 365.0
@@ -265,7 +260,7 @@ def discount(toDiscount:BinomialLatticeBounded[Double], interestRates:BinomialLa
     avg/(1.0+ir)
     })
 }
-</code></pre></div>
+```
 
 
 ### Tie them together
