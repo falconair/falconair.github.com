@@ -4,6 +4,10 @@ title: Adventures in financial and software engineering
 comments: true
 ---
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+TODO:
+-as an alternative to uml, display combinator icons:
+0, 1, +, negate, *, until, anytime
+-comment about 'until' replacing eventually and anytime (as in FRP)
 
 Several years ago I read one of the most interesting papers ["How to write a financial contract"] (http://research.microsoft.com/en-us/um/people/simonpj/Papers/financial-contracts/contracts-icfp.htm), by Simon Peyton Jones and Jean-Marc Eber. This paper presents a domain specific language for describing financial instruments such as bonds, options and futures. This subject is bound to be interesting to those in the financial industry; however, the ideas are explained so beautifully that the paper should inspire all programmers. Many academic papers are jargon filled and difficult to comprehend for non-experts. Peyton-Jones and Eber (and Julian Seward in a earlier version of the paper) take the time to motivate the problem and craft explanations as if they actually care about the audience. They also published a [powerpoint slide deck] (http://research.microsoft.com/en-us/um/people/simonpj/Papers/financial-contracts/Options-ICFP.ppt) which further explains the problem of writing composable financial contracts by developing a similar DSL for cupcakes!
 
@@ -14,16 +18,16 @@ I am not an expert in this topic and have written this post as an 'experience re
 
 Before we delve any deeper, let's discuss a few simple instruments so are not only speaking in terms of abstractions.
 
-<img src="/img/buy3.svg" height="42" width="42">
+<img src="/assets/composingcontracts/buy3.svg" height="42" width="42">
 A bond is simply a loan. When you buy a bond issued by a company or a government, you are lending them money. In return, at a future date, they may offer to give your money back to you in a single payment, multiple small payments with a big chunk, small payments based on this interest rate or that, etc.
 
-<img src="/img/urban.svg" height="42" width="42">
+<img src="/assets/composingcontracts/urban.svg" height="42" width="42">
 A stock gives you (a very small fraction of) ownership in a company. What's important for this project is that a stock has a price (see [previous blog] (TODO) for further details). At any time, you can sell that stock and receive cash (approximately) equivalent to the price of the stock.
 
-<img src="/img/business154.svg" height="42" width="42">
+<img src="/assets/composingcontracts/business154.svg" height="42" width="42">
 A future is a promise to do a transaction at a later date. If you are a farmer, you may decide to sell your crop before you have harvested it. Doing this limits your risk, but also limits your profits. Note that a future contract does not mean anything by itself. A 'future' has to refer to and 'underlying' product which will be bought or sold at a later time.
 
-<img src="/img/man268.svg" height="42" width="42">
+<img src="/assets/composingcontracts/man268.svg" height="42" width="42">
 An option is similar to a future, but adds 'optionality.' In other words, while a future binds you to a purchase or a sale, an option gives you the right to simply refuse a transaction. If you can only make the decision exactly on a specific date, such as option is referred to as a European option. If you can make the decision to buy or not by at anytime between now until some specific date, such contract is called an American option. There are a number of other variations, which will ignore for the sake of simplicity.
 
 
@@ -31,16 +35,35 @@ An option is similar to a future, but adds 'optionality.' In other words, while 
 
 The diagram below, while overly simplified, isn't completely unknown to financial programmers. It takes well established definitions and hierarchies and translates them into a uml diagram.
 
-<img src="/img/composingcontractsuml.png">
+<img src="/assets/composingcontracts/composingcontractsuml.png">
 
 
 However, what happens if we want to add custom contracts?
-<img src="/img/composingcontractsumlwunknowns.png">
+<img src="/assets/composingcontracts/composingcontractsumlwunknowns.png">
 
 Notice that the root Instrument object contains a 'value' method, which returns its current value. In most casses, each class will implement it's own valuation function. If, tomorrow, we discover a generelization, say Bond and anohter set of instruments can nicely fit under 'Fixed Incom' class, we will either be forced to break the existing hierarchy or ignore the new generelization.
 
 ### The combinator way
 Peyton-Jones and Eber propose a completely different way of describing these contracts. They break up existing contracts into smaller pieces to find much more general and expressive pieces. When  combined, not only do these smaller units describe existing contracts, but are surprisingly effective at describing many custom and ad-hoc contracts.
+
+Here are some examples:
+<div style='overflow:scroll;'>
+<pre><code class="language-java">
+def usd(amount) = Scale(Const(amount),One("USD"))
+def stock(symbol) = Scale(Lookup(symbol),One("USD"))
+def buy(contract, amount) = And(contract,Give(usd(amount)))
+def sell(contract, amount) = And(Give(contract),usd(amount))
+def zcb(maturity, notional, currency) = When(maturity, Scale(Const(notional),One(currency)))
+def option(contract) = Or(contract,Zero())
+def europeanCallOption(at, c1, strike) = When(at, option(buy(c1,strike)))
+def europeanPutOption(at, c1, strike) = When(at, option(sell(c1,strike)))
+def americanCallOption(at, c1, strike) = Anytime(at, option(buy(c1,strike)))
+def americanPutOption(at, c1, strike) = Anytime(at, option(sell(c1,strike)))
+
+val msft = stock("MSFT")
+</code></pre></div>
+
+### Implementation
 
 Let's start with 'Contract' described below:
 
@@ -81,7 +104,7 @@ Observables represent uncertain values across time. Think of an Observable as a 
 
 Const(10) will always return 10, no matter what date you pass in. Date() will simply return the date you pass in to it. Lookup("MSFT") will return Microsoft's future prices. Note that Lookup is not in the original papers, I added it so I could play around with equity derivatives.
 
-LiftX functions may be confusing to non-functional programmers. Say, for whatever reason, you want to write a contract against the square root of MSFT prices. You will notice that there is no square root combinator in Observable. Lift(squareroot) will 'lift' the square root function so it will also operate on Observable values.
+LiftX functions may be confusing to non-functional programmers. Say, for whatever reason, you want to write a contract against the square root of MSFT prices. You will notice that there is no square root combinator in Observable. Lift2(+) will 'overload' the plus function so it will also operate on Observable values.
 
 Just for completeness, let's paste the actual scala code here:
 
@@ -117,23 +140,6 @@ package ComposingContracts {
 ### I'll buy a One
 Contracts and observables are all the end user sees. This domain specific language is enough to describe a large number of existing financial contracts, standardized as well us bespoke (or so the paper claims, assuming my own simplifications or errors didn't render this useless). Note that the claim is NOT that this langauge will describe ALL financial contracts. For example, ["Certified Symbolic Management of Financial Contracts"] (http://www.pa-ba.net/pubs/entries/bahr14nwpt.html) by Bahr, Berthold and Elsman extend this language with an accumulator conbinator to allow pricing of Asian options.
 
-Follwing are some contracts defined in my implementation:
-
-<div style='overflow:scroll;'>
-<pre><code class="language-scala">
-def usd(amount:Double) = Scale(Const(amount),One("USD"))
-def buy(contract:Contract, amount:Double) = And(contract,Give(usd(amount)))
-def sell(contract:Contract, amount:Double) = And(Give(contract),usd(amount))
-def zcb(maturity:LocalDate, notional:Double, currency:String) = When(maturity, Scale(Const(notional),One(currency)))
-def option(contract:Contract) = Or(contract,Zero())
-def europeanCallOption(at:LocalDate, c1:Contract, strike:Double) = When(at, option(buy(c1,strike)))
-def europeanPutOption(at:LocalDate, c1:Contract, strike:Double) = When(at, option(sell(c1,strike)))
-def americanCallOption(at:LocalDate, c1:Contract, strike:Double) = Anytime(at, option(buy(c1,strike)))
-def americanPutOption(at:LocalDate, c1:Contract, strike:Double) = Anytime(at, option(sell(c1,strike)))
-
-def stock(symbol:String) = Scale(Lookup(symbol),One("USD"))
-val msft = stock("MSFT")
-</code></pre></div>
 
 ### What about computation?
 I have talked a lot about representing contracts. As Peyton-Jones and Eber point out, this, by itself, is quite remarkable. Such a descriptive language can be used to communicate effectively among companies, clients and regulators. However, what are the actual mechanics of pricing these contracts?
@@ -157,8 +163,9 @@ _Given today's price, tomorrow's price will either rise or drop proportional to 
 
 If an interest rate or a stock is S today and historically it has moved up by 'u' or down by 'd'', tomorrow it will be uS or dS, the day after it will be u^2S, d^2S or udS and so on. Why only two prices for tomorrow, instead of three or 8? Because this is the binomial lattice method, not trinomial or octnomial lattice method. Those who already know this method should note that we are ignoring probabilities here.
 
-<img src="/img/binomiallattice.svg" >
+<img src="/assets/composingcontracts/binomiallattice.svg" >
 
+<img src="/assets/composingcontracts/mappingdiagram.png"/>
 
 If you ask this data structure for today's price, it will give you a single value, since that is already known. If you ask for any future dates, it will give you a range of values. In this specific model, day two will give you two values, day 10 will give you 10 values. The data structure is generally implemented as an list of arrays. If the whole lattice just contains a single number, we don't bother using arrays and just return that constant. A few more such optimizations are made.
 
@@ -167,26 +174,29 @@ Note that with the popularization of machne learning, probabilistic programming 
 <div style='overflow:scroll;'>
 <pre><code class="language-scala">
 trait BinomialLattice[A]{
+  //apply functions allows this object to be 'called' as if it was a function
   def apply(i:Int):RandomVariable[A]
+  //convenience 'apply' method allows use to think in terms of days, rather than just a integer index
   def apply(date:LocalDate):RandomVariable[A] = apply(ChronoUnit.DAYS.between(LocalDate.now(),date).toInt)
   def zip[B]...
   def map[B]...
   ...
 }
+//Actualy lattice structure needs to be bounded, otherwise implementation becomes very complex
 trait BinomialLatticeBounded[A] extends BinomialLattice[A]{
   def size():Int
   ...
 }
+//If a value remains same, we can save memory by using ConstantBL
 class ConstantBL[A](k:A) extends BinomialLattice[A]{
   override def apply(i:Int) = (j:Int)=>k
 }
+//Not quite ConstantBL, but deterministic
 class PassThroughBL[A](func:(LocalDate)=>RandomVariable[A]) extends BinomialLattice[A]{
   override def apply(i:Int) = apply(LocalDate.now().plusDays(i))
   override def apply(i:LocalDate) = func(i)
 }
-class PassThroughBoundedBL[A](func:(LocalDate)=>RandomVariable[A], _size:Int) extends BinomialLatticeBounded[A]{
-  override def apply(i:Int) = apply(LocalDate.now().plusDays(i))
-  override def apply(i:LocalDate) = func(i)
+class PassThroughBoundedBL[A](func:(LocalDate)=>RandomVariable[A], _size:Int) extends PassThroughBL[A](func) with BinomialLatticeBounded[A]{
   override def size() = _size
 }
 //Given a starting price and an up factor, generate the whole lattice
@@ -228,9 +238,37 @@ class PropagateLeftBL[A:ClassTag](source:BinomialLatticeBounded[A], func:((A,A)=
 }
 </code></pre></div>
 
+A couple of supporting functions. _binomialPriceTree_ takes a starting price, date range and volatility and converts it to a binomial lattice. Note this is very similar to the GenerateBL class. The only difference here is that _binomailPriceTree_ converts volatility ot up/down factors. _dicount_ method takes two lattices, one contains the data which needs to be discounted and the second contains the interest rates which will be used to do the discounting.
+
+<div style='overflow:scroll;'>
+<pre><code class="language-scala">
+def binomialPriceTree(days:Int, startVal:Double, annualizedVolatility:Double, probability:Double=0.5):BinomialLatticeBounded[Double] = {
+
+  val businessDaysInYear = 365.0
+  val fractionOfYear = (days* 1.0) divide businessDaysInYear
+  val changeFactorUp = vol2chfactor(annualizedVolatility,fractionOfYear)
+  val process = new GenerateBL(days+1,startVal,changeFactorUp)
+  process
+}
+
+def vol2chfactor(vol:Double, fractionOfYear:Double) = {
+  Math.exp(vol * Math.sqrt(fractionOfYear))
+}
+
+def discount(toDiscount:BinomialLatticeBounded[Double], interestRates:BinomialLattice[Double]):BinomialLatticeBounded[Double] = {
+  val averaged = new PropagateLeftBL[Double](toDiscount, (x,y)=>(x+y) divide 2.0)//assume .5 probability
+  val zipped = averaged.zip(interestRates)
+  zipped.map[Double](avg_ir=>{
+    val avg = avg_ir._1
+    val ir = avg_ir._2
+    avg/(1.0+ir)
+    })
+}
+</code></pre></div>
+
 
 ### Tie them together
-We have seen the contract description language and some gory details of how a binomial lattice is implemented. We don't yet have a path connecting the two.
+We have seen the contract description language and some gory details of how a binomial lattice is implemented. We don't yet have a path connecting the two. Contract and Observable, both, are translated to a lower level abstract layer called PROpt, meaning "process optimization layer." A process, as mentioned earlier, represents a time varying value. Given a date, a process returns a random variable. BinomialLattice implements this, but PROpt is a layer between Contract/Observable and BinomialLattice.
 
 ---
 <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>

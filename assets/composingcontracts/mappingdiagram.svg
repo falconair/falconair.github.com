@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!--svg xmlns="http://www.w3.org/2000/svg" id="mappingdiagram" width="100%" height="100%"-->
+<svg xmlns="http://www.w3.org/2000/svg" id="mappingdiagram" width="850" height="425">
+    <desc>Created with Snap</desc>
+  <defs></defs>
+  <text x="10" y="75" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">Zero</text>
+  <text x="10" y="95" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">One</text>
+  <text x="10" y="115" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">Give</text>
+  <text x="10" y="135" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">Scale</text>
+  <text x="10" y="155" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">And</text>
+  <text x="10" y="175" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">Or</text>
+  <text x="10" y="195" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">Cond</text>
+  <text x="10" y="215" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">When</text>
+  <text x="10" y="235" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">Anytime</text>
+  <text x="10" y="305" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">Const</text>
+  <text x="10" y="325" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">Date</text>
+  <text x="10" y="345" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">Lift</text>
+  <text x="10" y="365" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">Lift2</text>
+  <text x="10" y="385" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">Lookup</text>
+  <text x="250" y="150" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">ConstPR</text>
+  <text x="250" y="170" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">DatePR</text>
+  <text x="250" y="190" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">CondPR</text>
+  <text x="250" y="210" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">LiftPR</text>
+  <text x="250" y="230" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">Lift2PR</text>
+  <text x="250" y="250" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">LookupPR</text>
+  <text x="250" y="270" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">Disc</text>
+  <text x="250" y="290" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">Exch</text>
+  <text x="250" y="310" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">Snell</text>
+  <text x="470" y="180" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">ConstBL</text>
+  <text x="470" y="200" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">PassThrough</text>
+  <text x="470" y="220" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">Generate</text>
+  <text x="470" y="240" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">PropagateLeft</text>
+  <text x="750" y="220" stroke="#073642" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">Value</text>
+  <path d="M60.171875,63.3515625 C110.171875,63.3515625 200,138.3515625 250,138.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M48.125,83.3515625 C98.125,83.3515625 200,278.3515625 250,278.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M60.171875,103.3515625 C110.171875,103.3515625 200,138.3515625 250,138.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M72.21875,123.3515625 C122.21875,123.3515625 200,218.3515625 250,218.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M48.125,143.3515625 C98.125,143.3515625 200,218.3515625 250,218.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M36.09375,163.3515625 C86.09375,163.3515625 200,218.3515625 250,218.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M60.171875,183.3515625 C110.171875,183.3515625 200,178.3515625 250,178.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M60.171875,203.3515625 C110.171875,203.3515625 200,258.3515625 250,258.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M96.296875,223.3515625 C146.296875,223.3515625 200,298.3515625 250,298.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M72.21875,293.3515625 C122.21875,293.3515625 200,138.3515625 250,138.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M60.171875,313.3515625 C110.171875,313.3515625 200,158.3515625 250,158.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M60.171875,333.3515625 C110.171875,333.3515625 200,198.3515625 250,198.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M72.21875,353.3515625 C122.21875,353.3515625 200,218.3515625 250,218.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M84.25,373.3515625 C134.25,373.3515625 200,238.3515625 250,238.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M336.296875,138.3515625 C386.296875,138.3515625 420,168.3515625 470,168.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M324.25,158.3515625 C374.25,158.3515625 420,188.3515625 470,188.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M324.25,178.3515625 C374.25,178.3515625 420,188.3515625 470,188.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M324.25,198.3515625 C374.25,198.3515625 420,188.3515625 470,188.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M336.296875,218.3515625 C386.296875,218.3515625 420,188.3515625 470,188.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M348.328125,238.3515625 C398.328125,238.3515625 420,208.3515625 470,208.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M300.171875,258.3515625 C350.171875,258.3515625 420,228.3515625 470,228.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M300.171875,278.3515625 C350.171875,278.3515625 420,208.3515625 470,208.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M312.21875,298.3515625 C362.21875,298.3515625 420,208.3515625 470,208.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M556.296875,168.3515625 C606.296875,168.3515625 700,208.3515625 750,208.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M604.453125,188.3515625 C654.453125,188.3515625 700,208.3515625 750,208.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M568.328125,208.3515625 C618.328125,208.3515625 700,208.3515625 750,208.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <path d="M628.546875,228.3515625 C678.546875,228.3515625 700,208.3515625 750,208.3515625" fill="none" stroke="#f16369" style="stroke-width: 1px;"></path>
+  <rect x="111.421875" y="61.421875" width="23.296875" height="168.578125" fill="#fdf6e3" style="fill-opacity: 0.5;"></rect>
+  <text x="130" y="230" stroke="fontColor" transform="matrix(0,-1,1,0,-100,360)" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">contractToPR()</text>
+  <rect x="111.421875" y="271.625" width="23.296875" height="108.375" fill="#fdf6e3" style="fill-opacity: 0.5;"></rect>
+  <text x="130" y="380" stroke="fontColor" transform="matrix(0,-1,1,0,-250,510)" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">obsToPR()</text>
+  <rect x="381.421875" y="91.21875" width="23.296875" height="228.78125" fill="#fdf6e3" style="fill-opacity: 0.5;"></rect>
+  <text x="400" y="320" stroke="fontColor" transform="matrix(0,-1,1,0,80,720)" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">binomialValuation()</text>
+  <rect x="631.421875" y="119.375" width="23.296875" height="180.625" fill="#fdf6e3" style="fill-opacity: 0.5;"></rect>
+  <text x="650" y="300" stroke="fontColor" transform="matrix(0,-1,1,0,350,950)" style="font-family: Consolas, Menlo, monospace; font-size: 20px;">.currentValue()</text>
+  <rect x="0" y="0" width="250" height="400" stroke="none" fill="#6e9dae" style="stroke-width: 1px; fill-opacity: 0.3;"></rect>
+  <rect x="0" y="400" width="250" height="20" stroke="#6e9dae" fill="#6e9dae" style="stroke-width: 1px;"></rect>
+  <text x="5" y="415" stroke="#073642" style="stroke-width: 1px; font-family: Consolas, Menlo, monospace;">Domain Specific Language</text>
+  <rect x="250" y="0" width="220" height="400" stroke="none" fill="#f16369" style="stroke-width: 1px; fill-opacity: 0.3;"></rect>
+  <rect x="250" y="400" width="220" height="20" stroke="#f16369" fill="#f16369" style="stroke-width: 1px;"></rect>
+  <text x="265" y="415" stroke="#073642" style="stroke-width: 1px; font-family: Consolas, Menlo, monospace;">Optimization Layer</text>
+  <rect x="470" y="0" width="280" height="400" stroke="none" fill="#6c71c4" style="stroke-width: 1px; fill-opacity: 0.3;"></rect>
+  <rect x="470" y="400" width="280" height="20" stroke="#6c71c4" fill="#6c71c4" style="stroke-width: 1px;"></rect>
+  <text x="520" y="415" stroke="#073642" style="stroke-width: 1px; font-family: Consolas, Menlo, monospace;">Implementation</text>
+  <rect x="750" y="0" width="100" height="400" stroke="none" fill="#2aa198" style="stroke-width: 1px; fill-opacity: 0.3;"></rect>
+  <rect x="750" y="400" width="100" height="20" stroke="#2aa198" fill="#2aa198" style="stroke-width: 1px;"></rect>
+  <text x="765" y="415" stroke="#073642" style="stroke-width: 1px; font-family: Consolas, Menlo, monospace;">Value!</text>
+</svg>

@@ -1,0 +1,191 @@
+<html>
+<head>
+<!--scipt src="snap.svg-min.js"></scipt-->
+<!--scipt src="snap.svg.js"></scipt-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.3.0/snap.svg-min.js"></script>
+<script>
+window.onload = function () {
+s = Snap("100%", "100%");
+
+var c = ['Zero','One','Give','Scale','And','Or','Cond','When','Anytime']
+var o = ['Const','Date','Lift','Lift2','Lookup']
+var p = ['ConstPR','DatePR','CondPR','LiftPR','Lift2PR','LookupPR','Disc','Exch','Snell']
+var b = ['ConstBL','PassThrough','Generate','PropagateLeft']
+var r = ['Value']
+
+var pos = {};
+var conn = {
+    'Zero':'ConstPR',
+    'One':'Exch',
+    'Give':'ConstPR',
+    'Scale':'Lift2PR',
+    'And':'Lift2PR',
+    'Or':'Lift2PR',
+    'Cond':'CondPR',
+    'When':'Disc',
+    'Anytime':'Snell',
+
+    'Const':'ConstPR',
+    'Date':'DatePR',
+    'Lift':'LiftPR',
+    'Lift2':'Lift2PR',
+    'Lookup':'LookupPR',
+
+    'ConstPR':'ConstBL',
+    'DatePR':'PassThrough',
+    'CondPR':'PassThrough',
+    'LiftPR':'PassThrough',
+    'Lift2PR':'PassThrough',
+    'LookupPR':'Generate',
+    'Disc':'PropagateLeft',
+    'Exch':'Generate',
+    'Snell':'Generate',
+
+    'ConstBL':'Value',
+    'PassThrough':'Value',
+    'Generate':'Value',
+    'PropagateLeft':'Value',
+};
+
+var fontSize = 20;
+var textHeight = fontSize;
+var fontColor = "#073642";
+var lineColor = "#F16369";
+
+
+var cX = 10, cY=75;
+for(var i=0; i<c.length;i++){
+  var Y = i*textHeight + cY;
+  var el = s.text(cX, Y, c[i])
+  .attr({
+      'font-family':'Consolas, Menlo, monospace',
+      'font-size': fontSize,
+      'stroke': fontColor
+  });
+    pos[c[i]]=[cX,Y,el.getBBox()];
+  //path(cX,Y,100,100)
+}
+
+var oX = 10, oY=c.length * textHeight+cY+50;
+for(var i=0; i<o.length;i++){
+  var Y = i*textHeight + oY;
+  var el = s.text(oX, Y, o[i])
+  .attr({
+      'font-family':'Consolas, Menlo, monospace',
+      'font-size': fontSize,
+      'stroke': fontColor
+  });
+    pos[o[i]]=[oX,Y,el.getBBox()];
+}
+
+var pX = 250, pY=cY+75;
+for(var i=0; i<p.length;i++){
+  var Y = i*textHeight + pY;
+  var el = s.text(pX, Y, p[i])
+  .attr({
+      'font-family':'Consolas, Menlo, monospace',
+      'font-size': fontSize,
+      'stroke': fontColor
+  });
+    pos[p[i]]=[pX,Y,el.getBBox()];
+}
+
+var bX = 470, bY=pY+30;
+for(var i=0; i<b.length;i++){
+  var Y = i*textHeight + bY;
+  var el = s.text(bX, Y, b[i])
+  .attr({
+      'font-family':'Consolas, Menlo, monospace',
+      'font-size': fontSize,
+      'stroke': fontColor
+  });
+    pos[b[i]]=[bX,Y,el.getBBox()];
+}
+
+var rX = 750, rY=bY+40;
+for(var i=0; i<r.length;i++){
+  var Y = i*textHeight + rY;
+  var el = s.text(rX, Y, r[i])
+  .attr({
+      'font-family':'Consolas, Menlo, monospace',
+      'font-size': fontSize,
+      'stroke': fontColor
+  });
+    pos[r[i]]=[rX,Y,el.getBBox()];
+}
+
+//connecting line
+function path(sX,sY,eX,eY){
+    return s.path("M"+sX+","+sY+" C"+(sX+50)+","+sY+" "+(eX-50)+","+eY+" "+eX+","+eY);
+    //return s.line(sX,sY,eX,eY);
+    //return s.line(sX,eX,sY,eY);
+}
+
+var keys = Object.keys(pos);
+for(var i=0; i<keys.length;i++){
+	//if(i>0)continue;
+	console.log(keys[i]);
+	var startkey = keys[i];
+	var endkey = conn[startkey];
+	if(endkey === undefined) continue;
+
+	var startbbox = pos[startkey][2];
+	var endbbox = pos[endkey][2];
+
+    var sx = pos[startkey][0]+(startbbox.width+2);
+    var sy = pos[startkey][1]-(startbbox.height/2);
+    var ex = pos[endkey][0];
+    var ey = pos[endkey][1]-(endbbox.height/2);
+    path(sx,sy,ex,ey)
+    //path(sx,ex,sy,ey)
+    .attr({
+    	fill:"none",
+    	strokeWidth:1,
+    	stroke:lineColor
+    });
+}
+
+function verticalT(x,y,text){
+	var rot = new Snap.Matrix();
+	rot.rotate(-90, x, y)
+	var el = s.text(x,y,text)
+	.attr({
+      'font-family':'Consolas, Menlo, monospace',
+      'font-size': fontSize,
+      'stroke':"fontColor",
+      'transform':rot
+	});
+	var box = el.getBBox()
+	s.rect(box.x,box.y,box.width,box.height)
+		.attr({'fill':'#FDF6E3', 'fill-opacity':.5}).insertBefore(el);
+	//return el;
+}
+
+verticalT(130,230,"contractToPR()");
+verticalT(130,380,"obsToPR()");
+verticalT(400,320,"binomialValuation()");
+verticalT(650,300,".currentValue()");
+
+s.rect(0,0,pX,400).attr({strokeWidth:"1", stroke:'none',fill:'#6E9DAE','fill-opacity':.3});
+s.rect(0,400,pX,20).attr({strokeWidth:"1", stroke:'#6E9DAE',fill:'#6E9DAE'});
+s.text(0+5,415,"Domain Specific Language").attr({strokeWidth:"1", stroke:fontColor, 'font-family':'Consolas, Menlo, monospace'});
+
+s.rect(pX,0,bX-pX,400).attr({strokeWidth:"1", stroke:'none',fill:'#F16369','fill-opacity':.3});
+s.rect(pX,400,bX-pX,20).attr({strokeWidth:"1", stroke:'#F16369',fill:'#F16369'});
+s.text(pX+15,415,"Optimization Layer").attr({strokeWidth:"1", stroke:fontColor, 'font-family':'Consolas, Menlo, monospace'});
+
+s.rect(bX,0,rX-bX,400).attr({strokeWidth:"1", stroke:'none',fill:'#6C71C4','fill-opacity':.3});
+s.rect(bX,400,rX-bX,20).attr({strokeWidth:"1", stroke:'#6C71C4',fill:'#6C71C4'});
+s.text(bX+50,415,"Implementation").attr({strokeWidth:"1", stroke:fontColor, 'font-family':'Consolas, Menlo, monospace'});
+
+s.rect(rX,0,100,400).attr({strokeWidth:"1", stroke:'none',fill:'#2AA198','fill-opacity':.3});
+s.rect(rX,400,100,20).attr({strokeWidth:"1", stroke:'#2AA198',fill:'#2AA198'});
+s.text(rX+15,415,"Value!").attr({strokeWidth:"1", stroke:fontColor, 'font-family':'Consolas, Menlo, monospace'});
+
+}
+
+</script>
+</head>
+<body>
+</body>
+</html>

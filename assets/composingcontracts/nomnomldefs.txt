@@ -33,3 +33,19 @@
 [Bond]<-[ZeroCoupon|expiration()]
 [Bond]<-[FixedRate|rate();expiration()]
 [Bond]<-[FloatingRate|index();expiration()]
+
+#package diagram
+[<package>Main DSL|
+  [Contract|Zero;One;Give;Scale;...]
+  [Obs|Const;Date;Lift;...]
+]
+[<package>Abstract Process Layer|
+  [PROpt|Const;Date;Lift;Lookup;Disc;Exch;...]
+  [binomialPriceTree()]
+  [discount()]
+]
+[<package>BinomialLattice Layer|
+  [PROpt|Const;PassThrough;Generate;PropagateLeft;;...]
+]
+[Main DSL]->contractToPROpt[Abstract Process Layer]
+[Abstract Process Layer]->binomialValuation[BinomialLattice Layer]
