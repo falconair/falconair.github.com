@@ -119,40 +119,45 @@ This leads to a whole industry of algorithms designed to reduce such market impa
 
 Let's, finally, take a look at some code.
 
+#### Common events
+
 An order book expects to receive three kinds of requests: a request to submit a new order, a request to cancel a previously entered order and a request to amend an existing order.
 
-<div style='overflow:scroll;'>
-<!--pre data-line='3' data-line-offset='-1' -->
-<pre><code class="language-scala">
+```scala
 abstract class OrderBookRequest
 case class NewOrder(timestamp: Long, tradeID: String, symbol: String, qty: Long, isBuy: Boolean, price: Option[Double]) extends OrderBookRequest
 case class Cancel(timestamp: Long, order: NewOrder) extends OrderBookRequest
 case class Amend(timestamp: Long, order:NewOrder, newPrice:Option[Double], newQty:Option[Long]) extends OrderBookRequest
-</code></pre></div>
+```
 
 The order book responds with an acknowledgement of a new order, notification that it was filled (partially or completely), rejected or canceled.
 
-<div style='overflow:scroll;'><pre><code class="language-scala">
+```scala
 abstract class OrderBookResponse
 case class Filled(timestamp: Long, price: Double, qty: Long, order: Array[NewOrder]) extends OrderBookResponse
 case class Acknowledged(timestamp: Long, request: OrderBookRequest) extends OrderBookResponse
 case class Rejected(timestamp: Long, error: String, request: OrderBookRequest) extends OrderBookResponse
 case class Canceled(timestamp: Long, reason: String, order: NewOrder) extends OrderBookResponse
-</code></pre></div>
+```
 
 An order book also needs to notify when an execution occurs or when the best bid or offer changes. In the code below, BBOChange refers to "best bid or offer change."
 
-<div style='overflow:scroll;'><pre><code class="language-scala">
+```scala
 abstract class MarketDataEvent
 case class LastSalePrice(timestamp: Long, symbol: String, price: Double, qty: Long, volume: Long) extends MarketDataEvent
 case class BBOChange(timestamp: Long, symbol: String, bidPrice:Option[Double], bidQty:Option[Long], offerPrice:Option[Double], offerQty:Option[Long]) extends MarketDataEvent
-</code></pre></div>
+```
+
+
+
+#### Order Book ... book keeping
+
 
 The OrderBook class, itself, contains two priority queues, one for bids and one for offers. Naturally, the queues are ordered according to price. The class defines its own 'Order' object. While the requests sent by clients are never modified, the Order object is private to the Order Book class and can be modified.
 
 This class also contains basic infrastructure for keeping track of subscribers to various event types. See note near end regarding Akka, a concurrency library which, among other things, manages subscriptions.
 
-<div style='overflow:scroll;'><pre><code class="language-scala">
+```scala
 class OrderBook(symbol: String) {
   case class Order(timestamp: Long, tradeID: String, symbol: String, var qty: Long, isBuy: Boolean, var price: Option[Double], newOrderEvent:NewOrder)
 
@@ -180,12 +185,13 @@ class OrderBook(symbol: String) {
 
   var transactionObserver: (OrderBookResponse) => Unit = (OrderBookEvent => ())
   var marketdataObserver: (MarketDataEvent) => Unit = (MarketDataEvent => ())
-  </code></pre></div>
+```
+
+#### Process incoming requests
 
 Method 'processOrderBookRequest' is the main method which receives requests sent to this object. In an actor system, this would be the 'receive' method. This method generally delegates all complex logic to other methods in the class.
 
-  <div style='height:500px;overflow:scroll;'><pre><code class="language-scala">
-
+```scala
   def processOrderBookRequest(request: OrderBookRequest): Unit = request match {
     case order: NewOrder => {
 
@@ -235,11 +241,13 @@ Method 'processOrderBookRequest' is the main method which receives requests sent
       }
     }
   }
-  </code></pre></div>
+```
+
+#### Process new orders, the most important kind of orders
 
 'processNewOrder,' as the name implies takes on the task of processing requests to enter new order into the order book.  It does some basic book keeping, such as setting up the order queue, queue of the opposite side, etc. Unless the order needs to be rejected, 'matchOrder' is called to actually carry out the logic of matching orders.
 
-  <div style='overflow:scroll;'><pre><code class="language-scala">
+```scala
   def processNewOrder(orderBookOrder: Order) {
     val currentTime = System.currentTimeMillis
 
@@ -267,12 +275,14 @@ Method 'processOrderBookRequest' is the main method which receives requests sent
   }
 
   private def validateOrder(order: NewOrder): (Boolean, Option[String]) = (true, None)
+```
 
-  </code></pre></div>
+
+#### Order matching logic
 
 Method 'matchOrder' carries out the logic (partially) diagrammed above. Unlike the diagram, it does order size management. For example, if the order size is larger than what is made available by the top buyer or seller, the match needs to occur for the number of shares available and the matching algorithm needs to be called recursively for the remaining shares.
 
-  <div style='overflow:scroll;'><pre><code class="language-scala">
+```scala
   private def matchOrder(order: Order, oppositeQ: PriorityQueue[Order]): Unit = {
     val oppositeOrder = oppositeQ.peek
     val currentTime = System.currentTimeMillis()
@@ -310,11 +320,14 @@ Method 'matchOrder' carries out the logic (partially) diagrammed above. Unlike t
       updateBBO()
     }
   }
-  </code></pre></div>
+```
+
+
+#### Notify the world
 
   Method 'updateBBO' exists to abstract out logic which is repeatedly called all over the code. Whenever the price (or size) of the top seller or buyer changes, OrderBook needs to inform its clients.
 
-  <div style='overflow:scroll;'><pre><code class="language-scala">
+```scala
   private def updateBBO() = {
     val bidHead = Option(bidsQ.peek)
     val offerHead = Option(offersQ.peek)
@@ -346,11 +359,14 @@ Method 'matchOrder' carries out the logic (partially) diagrammed above. Unlike t
     if (order.isBuy) order.price.get >= oppositeOrder.price.get
     else order.price.get <= oppositeOrder.price.get
   }
-  </code></pre></div>
+```
+
+
+#### The main thing...
 
 The following listing is the 'public void main' method of Scala and actually executes a few scenarios.
 
-<div style='overflow:scroll;'><pre><code class="language-scala">
+```scala
 object Main extends App {
   val random = new scala.util.Random
 
@@ -388,8 +404,7 @@ object Main extends App {
       assert(msftBook.offersQ.peek.qty == 50)
 
     }
-</code></pre>
-</div>
+```
 
 Full code available on [github] (https://github.com/falconair/SimpleFinancialExchange)
 
@@ -419,3 +434,7 @@ While writing this code around Christmas, I found people on the #scala irc chann
 I certainly wouldn't recommend Scala for those who are new to programming. Experienced programmers, who have absolutely no experience with functional programming should find that Scala is a great way to start. Unlike Haskell's laziness and purity or lisp's syntax, Scala's 'obscure' features such as algebraic data types, implicits and higher order function heavy libraries can be introduced more gradually.
 
 I'm not sure if Scala will ever be among my favorite languages, but I am certainly looking forward to doing a few more projects in the language. I'm glad to see there are commercial companies forming around the language and that it is gaining more acceptance in industry than Haskell was ever able to.
+
+---
+
+Updated Jan 28, 2015: Added headings to section which describes code.
