@@ -1,6 +1,7 @@
 ---
 layout: post_page
 title: Adventures in financial and software engineering
+excerpt: This post describes how to implement a DSL for pricing financial contracts in Scala
 comments: true
 ---
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
