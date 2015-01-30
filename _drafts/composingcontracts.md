@@ -5,10 +5,6 @@ excerpt: This post describes how to implement a DSL for pricing financial contra
 comments: true
 ---
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-TODO:
--as an alternative to uml, display combinator icons:
-0, 1, +, negate, *, until, anytime
--comment about 'until' replacing eventually and anytime (as in FRP)
 
 Several years ago I read one of the most interesting papers ["How to write a financial contract"] (http://research.microsoft.com/en-us/um/people/simonpj/Papers/financial-contracts/contracts-icfp.htm), by Simon Peyton Jones and Jean-Marc Eber. This paper presents a domain specific language for describing financial instruments such as bonds, options and futures. This subject is bound to be interesting to those in the financial industry; however, the ideas are explained so beautifully that the paper should inspire all programmers. Many academic papers are jargon filled and difficult to comprehend for non-experts. Peyton-Jones and Eber (and Julian Seward in a earlier version of the paper) take the time to motivate the problem and craft explanations as if they actually care about the audience. They also published a [powerpoint slide deck] (http://research.microsoft.com/en-us/um/people/simonpj/Papers/financial-contracts/Options-ICFP.ppt) which further explains the problem of writing composable financial contracts by developing a similar DSL for cupcakes!
 
@@ -107,7 +103,9 @@ LiftX functions may be confusing to non-functional programmers. Say, for whateve
 
 Just for completeness, let's paste the actual scala code here:
 
-```haskell
+#### Scala definition of Contract and Obs(servable)
+
+```scala
 package ComposingContracts {
 
   sealed trait Contract
@@ -163,11 +161,11 @@ If an interest rate or a stock is S today and historically it has moved up by 'u
 
 <img src="/assets/composingcontracts/binomiallattice.svg" >
 
-<img src="/assets/composingcontracts/mappingdiagram.png"/>
-
 If you ask this data structure for today's price, it will give you a single value, since that is already known. If you ask for any future dates, it will give you a range of values. In this specific model, day two will give you two values, day 10 will give you 10 values. The data structure is generally implemented as an list of arrays. If the whole lattice just contains a single number, we don't bother using arrays and just return that constant. A few more such optimizations are made.
 
 Note that with the popularization of machne learning, probabilistic programming has become a hot topic, and with good reason. This is an extremely interesting subject, so much so that I recently enrolled in a Master's degree program at U Of Chicago to study this stuff. However, the existing implementation not not very elegant, general...or even completely correct.
+
+#### Scala definition of the binomial lattice framework
 
 ```scala
 trait BinomialLattice[A]{
@@ -265,6 +263,215 @@ def discount(toDiscount:BinomialLatticeBounded[Double], interestRates:BinomialLa
 
 ### Tie them together
 We have seen the contract description language and some gory details of how a binomial lattice is implemented. We don't yet have a path connecting the two. Contract and Observable, both, are translated to a lower level abstract layer called PROpt, meaning "process optimization layer." A process, as mentioned earlier, represents a time varying value. Given a date, a process returns a random variable. BinomialLattice implements this, but PROpt is a layer between Contract/Observable and BinomialLattice.
+
+
+#### Scala definition of optimization layer
+
+```scala
+abstract class PROpt[A] {
+...
+}
+case class ConstPR[A]       (k: A)                                            extends PROpt[A]
+case class DatePR           ()                                                extends PROpt[LocalDate]
+case class CondPR[A]        (cond: PROpt[Boolean], a: PROpt[A], b: PROpt[A])  extends PROpt[A]
+case class LiftPR[B, A]     (lifted: (B) => A, o: PROpt[B])                   extends PROpt[A]
+case class Lift2PR[C, B, A] (lifted: (C, B) => A, o1: PROpt[C], o2: PROpt[B]) extends PROpt[A]
+case class LookupPR[A]      (lookup:String)                                   extends PROpt[Double]
+
+case class Snell[A]         (date:LocalDate, c: PROpt[Double])                extends PROpt[Double]
+case class Disc[A]          (date:LocalDate, c: PROpt[Double])                extends PROpt[Double]
+case class Absorb[A]        (date:LocalDate, c: PROpt[Double])                extends PROpt[Double]
+case class Exch[A]          (curr: String)                                    extends PROpt[Double]
+
+```
+
+How contracts and observables are mapped to combinators of the optimization layer
+
+```scala
+def contractToPROpt(contract: Contract): PROpt[Double] = contract match {
+  case Zero()                                => ConstPR(0)
+  case One(currency)                         => Exch(currency)
+  case Give(c: Contract)                     => contractToPROpt(Scale(Const(-1), c))
+  case Scale(o: Obs[Double], c: Contract)    => Lift2PR((a: Double, b: Double) => a * b, obsToPROpt(o), contractToPROpt(c))
+  case And(c1: Contract, c2: Contract)       => Lift2PR((a: Double, b: Double) => a + b, contractToPROpt(c1), contractToPROpt(c2))
+  case Or(c1: Contract, c2: Contract)        => Lift2PR((a: Double, b: Double) => Math.max(a, b), contractToPROpt(c1), contractToPROpt(c2))
+  case Cond(o: Obs[Boolean], c1: Contract, c2: Contract) => CondPR(obsToPROpt(o), contractToPROpt(c1), contractToPROpt(c2))
+  case When(date: LocalDate, c: Contract)    => Disc(date, contractToPROpt(c))
+  case Anytime(date: LocalDate, c: Contract) => Snell(date, contractToPROpt(c))
+}
+
+def obsToPROpt[A](observable: Obs[A]): PROpt[A] = observable match {
+  case Const(k)              => ConstPR(k)
+  case Lift(func, o: Obs[A]) => LiftPR(func, obsToPROpt(o))
+  case Lift2(func, o1, o2)   => Lift2PR(func, obsToPROpt(o1), obsToPROpt(o2))
+  case DateObs()             => DatePR()
+  case Lookup(lookup)        => LookupPR(lookup)
+}
+```
+
+#### Translate optimization layer to binomial lattice
+
+```scala
+def binomialValuation[A](pr: PROpt[A], marketData: Environment): BinomialLattice[A] = pr match {
+  case ConstPR(k) => new ConstantBL(k)
+  case DatePR() => new PassThroughBL((date:LocalDate)=>(idx:Int)=>date)
+  case CondPR(cond: PROpt[Boolean], a: PROpt[A], b: PROpt[A]) => {
+    val o = binomialValuation(cond, marketData)
+    val ca = binomialValuation(a, marketData)
+    val cb = binomialValuation(b, marketData)
+
+    new PassThroughBL[A](
+      (date: LocalDate) => (idx: Int) => if (o(date)(idx)) ca(date)(idx) else cb(date)(idx)
+      )
+  }
+  case LiftPR(lifted, o) => {
+    val obs = binomialValuation(o, marketData)
+    new PassThroughBL[A](
+      (date: LocalDate) => (idx: Int) => lifted(obs(date)(idx))
+      )
+    }
+    case Lift2PR(lifted, o1, o2) => {
+      val obs1 = binomialValuation(o1, marketData)
+      val obs2 = binomialValuation(o2, marketData)
+      new PassThroughBL[A](
+        (date: LocalDate) => (idx: Int) => lifted(obs1(date)(idx), obs2(date)(idx))
+        )
+    }
+    case LookupPR(lookup) => {
+      marketData.lookup(lookup)
+    }
+    case Exch(curr: String) => {
+      val exchangeRate = marketData.exchangeRates(curr)
+      new PassThroughBL[A](
+        (date: LocalDate) => (idx: Int) => exchangeRate(date)(idx)
+        )
+    }
+    case Disc(date: LocalDate, c: PROpt[Double]) => {
+      val daysUntilMaturity = ChronoUnit.DAYS.between(LocalDate.now(), date).toInt
+      val con = binomialValuation(c, marketData)
+      val interestRates = marketData.interestRate
+
+      val _process = new PassThroughBoundedBL[Double]((date:LocalDate)=>(idx:Int)=>con(date)(idx),daysUntilMaturity+1)//daysUntilMaturity+1 because if contract matures today, it still needs today's valuation
+      discount(_process,interestRates)
+    }
+    case Snell(date: LocalDate, c: PROpt[Double]) => {
+      /*
+      Take final column of the tree, discount it back one step. Take max of the discounted column and the original column, repeat.
+      */
+      val daysUntilMaturity = ChronoUnit.DAYS.between(LocalDate.now(), date).toInt
+      val con = binomialValuation(c, marketData)
+      val interestRates = marketData.interestRate
+
+      val _process:BinomialLatticeBounded[Double] = new PassThroughBoundedBL[Double]((date:LocalDate)=>(idx:Int)=>con(date)(idx),daysUntilMaturity+1)//daysUntilMaturity+1 because if contract matures today, it still needs today's valuation
+      var result = _process
+      for(i <- 0 to _process.size()){
+        val discounted:BinomialLatticeBounded[Double] = discount(result,interestRates)
+        val contractAndDiscounted:BinomialLatticeBounded[(Double,Double)] = discounted.zip(_process)
+        result = contractAndDiscounted.map[Double]((cNd)=>{
+          val c = cNd._1
+          val d = cNd._2
+          Math.max(c,d)
+        })
+      }
+      result
+    }
+  }
+
+```
+
+#### Run a test
+
+```scala
+object Main extends App {
+  //Required for doing LocalDate comparisons...a scalaism
+  implicit val LocalDateOrdering = scala.math.Ordering.fromLessThan[java.time.LocalDate]{case (a,b) => (a compareTo b) < 0}
+
+  //custom contract
+  def usd(amount:Double) = Scale(Const(amount),One("USD"))
+  def buy(contract:Contract, amount:Double) = And(contract,Give(usd(amount)))
+  def sell(contract:Contract, amount:Double) = And(Give(contract),usd(amount))
+  def zcb(maturity:LocalDate, notional:Double, currency:String) = When(maturity, Scale(Const(notional),One(currency)))
+  def option(contract:Contract) = Or(contract,Zero())
+  def europeanCallOption(at:LocalDate, c1:Contract, strike:Double) = When(at, option(buy(c1,strike)))
+  def europeanPutOption(at:LocalDate, c1:Contract, strike:Double) = When(at, option(sell(c1,strike)))
+  def americanCallOption(at:LocalDate, c1:Contract, strike:Double) = Anytime(at, option(buy(c1,strike)))
+  def americanPutOption(at:LocalDate, c1:Contract, strike:Double) = Anytime(at, option(sell(c1,strike)))
+
+  //custom observable
+  def stock(symbol:String) = Scale(Lookup(symbol),One("USD"))
+  val msft = stock("MSFT")
+
+
+  //Tests
+  val exchangeRates = collection.mutable.Map(
+    "USD" -> LatticeImplementation.binomialPriceTree(365,1,0),
+    "GBP" -> LatticeImplementation.binomialPriceTree(365,1.55,.0467),
+    "EUR" -> LatticeImplementation.binomialPriceTree(365,1.21,.0515)
+    )
+  val lookup = collection.mutable.Map(
+    "MSFT" -> LatticeImplementation.binomialPriceTree(365,45.48,.220),
+    "ORCL" -> LatticeImplementation.binomialPriceTree(365,42.63,.1048),
+    "EBAY" -> LatticeImplementation.binomialPriceTree(365,53.01,.205)
+  )
+  val marketData = Environment(
+    LatticeImplementation.binomialPriceTree(365,.15,.05), //interest rate (use a universal rate for now)
+    exchangeRates, //exchange rates
+    lookup
+  )
+
+  //portfolio test
+  val portfolio = Array(
+    One("USD")
+    ,stock("MSFT")
+    ,buy(stock("MSFT"),45)
+    ,option(buy(stock("MSFT"),45))
+    ,americanCallOption(LocalDate.now().plusDays(5),stock("MSFT"),45)
+  )
+
+  for(contract <- portfolio){
+    println("===========")
+    val propt = LatticeImplementation.contractToPROpt(contract)
+    val rp = LatticeImplementation.binomialValuation(propt, marketData)
+    println("Contract: "+contract)
+    println("Random Process(for optimization): "+propt)
+    println("Present val: "+rp.startVal())
+    println("Random Process: \n"+rp)
+  }
+
+}
+```
+
+#### Take a step back
+
+Let's get an overview of what we've actually done
+
+<img src="/assets/composingcontracts/mappingdiagram.png"/>
+
+#### Work left undone
+
+The paper shows how to do some basic optimization. For example, Give(Give(One("USD"))) is the same as One("USD") and exchange rate of USD to USD is constant. As I write this, I have not implemented these optimizations. As I mentioned earlier, I also didn't implement the Until contract combinator, and consequently, the Absorb combinator in the optimization layer. In order to get this post out in time, I decided to leave some features aside.
+
+### Future direction
+
+If I ever get back to this code, I'll be particularly interested in exploring some interesting ideas not mentioned in the paper.
+
+I mentioned earlier that Contract combinators seem to correspond roughly to basic operator from algebra. Zero, One, +, *, negate, etc. I have no training in abstract math so I don't know if this dsl actually forms an interesting structure from mathematics. However, if it does, what might that mean? I'm reminded of correspondence between computer science type theory and algebra. For example, [this] (http://chris-taylor.github.io/blog/2013/02/10/the-algebra-of-algebraic-data-types/) post by Chris Taylor (and the linked YouTube talk) shows how data types can be thought of as a kind of algebra, complete with equations the ability to do calculus! Thinking of types at the level of algebra leads to interesting benefits such as discovery of the zipper data structure. What might it mean to solve for an unknown variable in the language we have developed here? What might it mean to do calculus on expressions of this language?
+
+The paper mentions that this langauge uses some concepts from Conal Elliott's [Fran] (http://conal.net/fran/) language. Fran was one of the first langauges to introduce (or popularize) Functional Reactive Programming. In recent years, FRP's semantics have been described using temporal logic, using operators 'always' and 'eventually.' Unfortunately even the abstracts of these papers make no sense to me. However, Could When and Anytime be re-written in terms of 'always' and 'eventually' from temporal logic? The language introduced in composing contracts is so interesting because someone took the time to break apart conventional thinking about financial instruments and put the pieces back together in an, arguably, more expressive and elegant manner. What if there are yet more expressive and general combinators? [This] (http://www.ioc.ee/~wolfgang/research/plpv-2013-paper.pdf) paper by Wolfgang Jeltsch might provide a hint. The paper shows how 'always' and 'eventually,' used in semantics of FRP can be generalized further with an 'until' operator! At least what I think the paper is saying.
+
+Closer to my skills, how else could this langauge be used? Couldn't we build a 'universal' exchange, which knows how to trade any financial instrument and even correlated products? Couldn't this language be used to automatically figure out correct hedges, even for complex portfolios? Since this language describes contracts in a declarative manner, couldn't we use something like genetic programming to evolve ever more profitable contracts? About that...
+
+### "Beware of geeks bearing formulas" - Warren Buffet
+The 2007-2008 market crash was blamed, in large part, on financial contracts so complex that no one really understood their consequences. These contracts and the mathematical models behind them, made assumptions that just didn't hold. Countless people lived in misery for years, many still do. A misunderstood assumption in the financial markets can cause real-world pain. Be careful with this stuff.
+
+### Gratitude
+Writing code for this paper was very enjoyable indeed. In the process I kicked the tires a bit more on Scala and came away impressed. The whole implementation comes in at less than 500 lines.
+
+I want to thank Simon Peyton-Jones and Jean-Marc Eber, not only for writing this awesome paper, but also for answering my questions! Mr. Eber, who must be very busy running a successful company, [Lexifi](http://www.lexifi.com/), based on the principles outlined in this paper actually replied to my queries in a very thoughtful and generous manner.
+
+Soon after I first read this paper, I was lucky enough to attend Anton Van Straaten's talk on the topic in New York City. Although his code no longer seems to be available, his Haskell implementation was short and beautiful (from what I recall, he even used a charting package to show how these instruments' prices change). I obviously don't remember much from that presentation anymore, but his talk gave me confidence that this stuff was actually implementable.
+
+This being my second project in Scala, _tpolecat_, _Kristien_ and _OlegYch_ on #scala chat room on freenode helped me immensely. If it wasn't for their help, I would have strugled for weeks to solve scala related problems.
 
 ---
 <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
