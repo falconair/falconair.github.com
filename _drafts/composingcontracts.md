@@ -441,6 +441,8 @@ object Main extends App {
 }
 ```
 
+Full code is available at [https://github.com/falconair/ComposingContracts](https://github.com/falconair/ComposingContracts)
+
 #### Take a step back
 
 Let's get an overview of what we've actually done
