@@ -42,7 +42,7 @@ The diagram below, while overly simplified, isn't completely unknown to financia
 However, what happens if we want to add custom contracts?
 <img src="/assets/composingcontracts/composingcontractsumlwunknowns.png">
 
-Notice that the root Instrument object contains a 'value' method, which returns its current value. In most casses, each class will implement it's own valuation function. If, tomorrow, we discover a generelization, say Bond and anohter set of instruments can nicely fit under 'Fixed Incom' class, we will either be forced to break the existing hierarchy or ignore the new generelization.
+Notice that the root Instrument object contains a 'value' method, which returns its current value. In most casses, each class will implement it's own valuation function. If, tomorrow, we discover a generalization, say Bond and another set of instruments can nicely fit under 'Fixed Income' class, we will either be forced to break the existing hierarchy or ignore the new generalization.
 
 ### The combinator way
 Peyton-Jones and Eber propose a completely different way of describing these contracts. They break up existing contracts into smaller components to find much more general and expressive pieces. When  combined, not only do these smaller units describe existing contracts, but are surprisingly effective at describing many custom and ad-hoc contracts.
@@ -142,7 +142,7 @@ package ComposingContracts {
 
 
 ### I'll buy a One
-Contracts and observables are all the end user sees. This domain specific language is enough to describe a large number of existing financial contracts, standardized as well us bespoke (or so the paper claims, assuming my own simplifications or errors didn't render this useless). Note that the claim is NOT that this lanuauge will describe ALL financial contracts. For example, ["Certified Symbolic Management of Financial Contracts"] (http://www.pa-ba.net/pubs/entries/bahr14nwpt.html) by Bahr, Berthold and Elsman extends this language with an accumulator combinator to allow pricing of Asian options.
+Contracts and observables are all the end user sees. This domain specific language is enough to describe a large number of existing financial contracts, standardized as well us bespoke (or so the paper claims, assuming my own simplifications or errors didn't render this useless). Note that the claim is NOT that this language will describe ALL financial contracts. For example, ["Certified Symbolic Management of Financial Contracts"] (http://www.pa-ba.net/pubs/entries/bahr14nwpt.html) by Bahr, Berthold and Elsman extends this language with an accumulator combinator to allow pricing of Asian options.
 
 
 ### What about computation?
@@ -150,7 +150,7 @@ I have talked a lot about representing contracts. As Peyton-Jones and Eber point
 
 Before we get any further in the actual computation, let's emphasize one point. The language which represents our universe of contracts has already been described. Nothing in the rest of this post will extend or modify that language. We now start the process of implementing the machinery which will price these contracts. Not only will the constructs of this machinery be invisible to end-users, we can swap out the existing implementation with a completely different mathematical model.
 
-As the paper mentions, there are several popular ways of pricing financial contracts, including the lattice model, monte carlo and finite differences. I have only implemented the lattice model. I chose this, in part because the paper itself describes it in greater detail than the other two methods, and because I was able to understand this method better than other models (remember, I have no training in financial engineering).
+As the paper mentions, there are several popular ways of pricing financial contracts, including the lattice model, monte-carlo and finite differences. I have only implemented the lattice model. I chose this, in part because the paper itself describes it in greater detail than the other two methods, and because I was able to understand this method better than other models (remember, I have no training in financial engineering).
 
 ### What's it worth?
 Before we get to the code, let's delve a bit deeper into a fundamental concept, how to find a fair price for financial contracts. Wall Street employs so many people with math and science backgrounds that they have their own name: quants. People have won nobel prizes and earned billions of dollars by answering the question of pricing these contracts. Naturally, we will discuss only the most basic concepts.
@@ -297,7 +297,7 @@ case class Exch[A]          (curr: String)                                    ex
 
 ```
 
-How contracts and observables are mapped to combinators of the optimization layer. Note that the code below is essentially maping objects form higher level language to lower level language. For example:
+How contracts and observables are mapped to combinators of the optimization layer. Note that the code below is essentially mapping objects form higher level language to lower level language. For example:
 
 ```scala
 Zero() => ConstPR(0)
