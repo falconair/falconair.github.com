@@ -510,6 +510,8 @@ Soon after I first read this paper, I was lucky enough to attend Anton Van Straa
 
 This being my second project in Scala, _tpolecat_, _Kristien_ and _OlegYch_ on #scala chat room on freenode helped me immensely. If it wasn't for their help, I would have struggled for weeks to solve scala related problems.
 
+Finally, thanks to my colleague Amit Pandey for helping me understand the Snell operator.
+
 ---
 <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
 
