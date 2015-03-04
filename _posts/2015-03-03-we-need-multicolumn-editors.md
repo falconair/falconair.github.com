@@ -17,6 +17,6 @@ Over a year ago, I bought a 4k, 55 inch "tv" which looks like this when I maximi
 
 The amount of screen space wasted is just silly.
 
-Programmers need better ways of navigating their code. Once of the best ways is to show more of it on screen at the same time. We have had screen real-estate for a few years now, but editors haven't caught up.
+Programmers need better ways of navigating their code. Once of the best ways is to show more of it on screen at the same time. We have had this much screen real-estate for a few years now, but editors haven't caught up.
 
 So, editor gurus, please write plug-ins or bake it into your products. Just let me see more of my code and allow me to scroll horizontally instead of vertically.
