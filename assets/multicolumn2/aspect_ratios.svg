@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 17.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" id="neworder1" width="100%" height="550px">
+
+  <rect x="0" y="0" width="125" height="100" style="fill:none;stroke-width:2;stroke:#5B7C7D"></rect>
+  <text x="40" y="55" fill="#5B7C7D" font-size="25">5:4</text>
+
+  <rect x="0" y="110" width="133" height="100" style="fill:none;stroke-width:2;stroke:#5B7C7D"></rect>
+  <text x="40" y="165" fill="#5B7C7D" font-size="25">4:3</text>
+
+  <rect x="0" y="220" width="160" height="100" style="fill:none;stroke-width:2;stroke:#5B7C7D"></rect>
+  <text x="40" y="275" fill="#5B7C7D" font-size="25">16:10</text>
+
+  <rect x="0" y="330" width="177" height="100" style="fill:none;stroke-width:2;stroke:#5B7C7D"></rect>
+  <text x="50" y="385" fill="#5B7C7D" font-size="25">16:9</text>
+
+  <rect x="0" y="440" width="233" height="100" style="fill:none;stroke-width:2;stroke:#EF3E38"></rect>
+  <text x="90" y="495" fill="#EF3E38" font-size="25">21:9</text>
+
+
+ </svg>
