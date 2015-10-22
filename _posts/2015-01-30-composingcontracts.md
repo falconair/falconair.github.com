@@ -25,16 +25,16 @@ A stock gives you (a very small fraction of) ownership in a company. What's impo
 A future is a promise to do a transaction at a later date. If you are a farmer, you may decide to sell your crop before you have harvested it at a fixed price. Doing this limits your risk, in case actual price drops, but also limits your profits, in case actual price rises. Note that a future contract does not mean anything by itself. A 'future' has to refer to and 'underlying' product which will be bought or sold at a later time.
 
 <img src="/assets/composingcontracts/man268.svg" height="42" width="42">
-An option is similar to a future, but adds 'optionality.' In other words, while a future binds you to a purchase or a sale, an option gives you the option to refuse a transaction. If you can only exercise your option on a pre-arranged date, such as option is referred to as a European option. If you can exercise the option at anytime between now until some future date, such contract is called an American option. There are a number of other variations, which will ignore for the sake of simplicity.
+An option is similar to a future, but adds 'optionality.' In other words, while a future binds you to a purchase or a sale, an option gives you the option to refuse a transaction. If you can only exercise your option on a pre-arranged date, such an option is referred to as a European option. If you can exercise the option at anytime between now until some future date, such contract is called an American option. There are a number of other variations, which will ignore for the sake of simplicity.
 
 <img src="/assets/composingcontracts/student23.svg" height="42" width="42">
-While there are many standardized contracts, investment banks often issue custom contracts. If a client is be looking for exposure to one financial variable or hedge another and his or her need is not met by existing contracts, banks will often create new one to meet demand. These custom contracts can often be described in terms of existing contracts.
+While there are many standardized contracts, investment banks often issue custom contracts. If a client is looking for exposure to one financial variable or hedge another and his or her need is not met by existing contracts, banks will often create a new one to meet demand. These custom contracts can often be described in terms of existing contracts.
 
 A bank, a hedge fund, your retirement or mutual fund or even your personal portfolio may contain contracts or instruments such as these. How would you write software to get their value?
 
 ### What does this look like in software?
 
-The diagram below, while overly simplified, isn't completely unknown to financial programmers. It takes well established definitions and hierarchies and translates them into a uml diagram.
+The diagram below, while overly simplified, isn't completely unknown to financial programmers. It takes well established definitions and hierarchies and translates them into a UML diagram.
 
 <img src="/assets/composingcontracts/composingcontractsuml.png">
 
@@ -42,10 +42,10 @@ The diagram below, while overly simplified, isn't completely unknown to financia
 However, what happens if we want to add custom contracts?
 <img src="/assets/composingcontracts/composingcontractsumlwunknowns.png">
 
-Notice that the root Instrument object contains a 'value' method, which returns its current value. In most casses, each class will implement it's own valuation function. If, tomorrow, we discover a generalization, say Bond and another set of instruments can nicely fit under 'Fixed Income' class, we will either be forced to break the existing hierarchy or ignore the new generalization.
+Notice that the root Instrument object contains a 'value' method, which returns its current value. In most cases, each class will implement it's own valuation function. If, tomorrow, we discover a generalization, say Bond and another set of instruments can nicely fit under 'Fixed Income' class, we will either be forced to break the existing hierarchy or ignore the new generalization.
 
 ### The combinator way
-Peyton-Jones and Eber propose a completely different way of describing these contracts. They break up existing contracts into smaller components to find much more general and expressive pieces. When  combined, not only do these smaller units describe existing contracts, but are surprisingly effective at describing many custom and ad-hoc contracts.
+Peyton-Jones and Eber propose a completely different way of describing these contracts. They break up existing contracts into smaller components to find much more general and expressive pieces. When  combined, not only do these smaller units describe existing contracts, but they are surprisingly effective at describing many custom and ad-hoc contracts.
 
 Here are some examples:
 
@@ -64,7 +64,7 @@ def americanPutOption(at, c1, strike) = Anytime(at, option(sell(c1,strike)))
 val msft = stock("MSFT")
 ```
 
-The paper describes a new language, made up of two types of combinators: contracts and observbales. These combinators can be combined, as shown above, to describe instruments in one line, what may have taken days, weeks or even months to implement using typical methods.
+The paper describes a new language, made up of two types of combinators: contracts and observables. These combinators can be combined, as shown above, to describe instruments in one line, what may have taken days, weeks or even months to implement using typical methods.
 
 ### Implementation
 
