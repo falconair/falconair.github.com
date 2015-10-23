@@ -25,10 +25,10 @@ A stock gives you (a very small fraction of) ownership in a company. What's impo
 A future is a promise to do a transaction at a later date. If you are a farmer, you may decide to sell your crop before you have harvested it at a fixed price. Doing this limits your risk, in case actual price drops, but also limits your profits, in case actual price rises. Note that a future contract does not mean anything by itself. A 'future' has to refer to and 'underlying' product which will be bought or sold at a later time.
 
 <img src="/assets/composingcontracts/man268.svg" height="42" width="42">
-An option is similar to a future, but adds 'optionality.' In other words, while a future binds you to a purchase or a sale, an option gives you the option to refuse a transaction. If you can only exercise your option on a pre-arranged date, such as option is referred to as a European option. If you can exercise the option at anytime between now until some future date, such contract is called an American option. There are a number of other variations, which will ignore for the sake of simplicity.
+An option is similar to a future, but adds 'optionality'. In other words, while a future binds you to a purchase or a sale, an option gives you the option to refuse a transaction. If you can only exercise your option on a pre-arranged date, such as option is referred to as a European option. If you can exercise the option at anytime between now until some future date, such contract is called an American option. There are a number of other variations, which we will ignore for the sake of simplicity.
 
 <img src="/assets/composingcontracts/student23.svg" height="42" width="42">
-While there are many standardized contracts, investment banks often issue custom contracts. If a client is be looking for exposure to one financial variable or hedge another and his or her need is not met by existing contracts, banks will often create new one to meet demand. These custom contracts can often be described in terms of existing contracts.
+While there are many standardized contracts, investment banks often issue custom contracts. If a client is looking for exposure to one financial variable or hedging another and his or her need is not met by existing contracts, banks will often create new one to meet demand. These custom contracts can often be described in terms of existing contracts.
 
 A bank, a hedge fund, your retirement or mutual fund or even your personal portfolio may contain contracts or instruments such as these. How would you write software to get their value?
 
