@@ -4,7 +4,7 @@ title: Simulating a financial exchange in Scala
 excerpt: This post describes how to build a financial exchange in Scala
 comments: true
 ---
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="/css/font-awesome.css" rel="stylesheet">
 
 > There are two hard things in computer science: cache invalidation, naming things, and off-by-one errors -- [Phil Karlton] (http://martinfowler.com/bliki/TwoHardThings.html)
 

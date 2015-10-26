@@ -12,3 +12,7 @@
 .black {
   color: #000;
 }
+
+body {
+  text-align: justify;
+}
