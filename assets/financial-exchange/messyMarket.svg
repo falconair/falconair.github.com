@@ -6,7 +6,7 @@
       <style type="text/css">
         @font-face {
           font-family: 'FontAwesome';
-          src: url(data:font/opentype;base64,[...]) format('opentype');
+          src:url('http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.eot?v=4.3.0');
         }
       </style>
     </defs>
