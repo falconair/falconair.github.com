@@ -26,28 +26,28 @@ Let's strain this analogy between farmers' market and a stock market a bit. Assu
 Think of a stock exchange similarly. A large number of buyers and sellers gather to buy or sell AAPL, GOOG, MSFT, IBM or any other stock. Instead of hundreds of buyers and sellers, what if there were tens of thousands? Given that one share of AAPL common stock is the same as any other, what would you do, as the stock market organizer, to facilitate the greatest number of transactions (meaning as many buyers are able to buy and as many sellers are able to sell as possible)?
 
 <div>
-<img src="/assets/financial-exchange/messyMarket.svg" width="100%">
+<img src="/assets/financial-exchange/messyMarket.png" width="100%">
 </div>
 > ###### Market where nothing is organized, all stocks are trading together
 
 First, let's move each stock to its own area. MSFT buyers and sellers in room 1A, IBM buyers and sellers in room 3C, etc. This makes it much simpler to compare prices.
 
 <div>
-<img src="/assets/financial-exchange/filteredMessyMarket.svg" width="100%">
+<img src="/assets/financial-exchange/filteredMessyMarket.png" width="100%">
 </div>
 > ###### Only Reddit "stock" being traded here
 
 Next, let's create two lines, one of buyers and one of sellers. Have them stand in order of the price at which they are willing to do the transaction. Buyers stand in ascending order (the higher the price you are willing to pay, closer you are to the head of the line). Sellers stand in descending order (the lower the price at which you are willing to sell, closer you are to the head). People are welcome to get ahead or move behind by changing their price.
 
 <div>
-<img src="/assets/financial-exchange/messyMarketOrganized.svg" width="100%">
+<img src="/assets/financial-exchange/messyMarketOrganized.png" width="100%">
 </div>
 > ###### Buyers and sellers in the own lines, standing in order of price
 
 Notice that buyers stand in line in a way that prices increase closer to the head of the line. Sellers, however, stand in opposite order. Their prices decrease closer to the head of the line. The two, in a manner of speaking, meet in the middle. The bids (prices buyers are willing to pay) are always less than the offers (prices at which sellers are willing to sell). This is the natural consequence of what markets are. If a bid was equal to or higher than an offer, the buyer and the seller would immediately do the transaction and disappear from the picture. Let's visualize the crowd along a single line of increasing prices, from left to right.
 
 <div>
-<img src="/assets/financial-exchange/singleMarket.svg" width="100%">
+<img src="/assets/financial-exchange/singleMarket.png" width="100%">
 </div>
 > ###### Single line with prices, more naturally shows how buyers and sellers line up
 
@@ -57,21 +57,21 @@ Let's step through how an order is matched.
 
 
 <div style="margin: 0 auto;width: 400px;">
-<img src="/assets/financial-exchange/neworder1.svg" width="100%">
+<img src="/assets/financial-exchange/neworder1.png" width="100%">
 </div>
 > ###### Buyer's order isn't matched so she takes her place in line
 
 If a new buyer comes into the market and wants to buy a stock for $34.35, but the lowest price at which it is being offered is $34.38, there is no match and the buyer gets in line among the buyers.
 
 <div style="margin: 0 auto;width: 400px;">
-<img src="/assets/financial-exchange/neworder3.svg" width="100%">
+<img src="/assets/financial-exchange/neworder3.png" width="100%">
 </div>
 > ###### Seller's order isn't matched, so she takes her place in line
 
 Similarly, if a new seller wants to sell their stock at no less than $34.43, but there are no buyers at that price, the seller gets in line.
 
 <div style="margin: 0 auto;width: 400px;">
-<img src="/assets/financial-exchange/neworder2.svg" width="100%">
+<img src="/assets/financial-exchange/neworder2.png" width="100%">
 </div>
 > ###### Buyer is willing to pay what a seller is charging, matched!
 
@@ -101,7 +101,7 @@ We have seen investors and speculators. There is yet another group which focuses
 ### How do prices change?
 
 <div style="margin: 0 auto;width: 400px;">
-<img src="/assets/financial-exchange/neworder4.svg" width="100%">
+<img src="/assets/financial-exchange/neworder4.png" width="100%">
 </div>
 > ###### Buyer is willing to pay what a seller is charging, matched!
 
