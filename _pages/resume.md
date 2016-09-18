@@ -2,12 +2,12 @@
 layout: page
 permalink: /resume
 title: Resume
-tagline: Resume
+tagline: Trading system developer and machine learning enthusiast
 description: Resume
 ---
 
 # Shahbaz Chaudhary
-### Automated Trading System Developer
+### Automated Trading System Developer And Machine Learning Enthusiast
 ### shahbazc@gmail.com
 ### 201-736-0282
 
