@@ -1,6 +1,6 @@
 ---
 layout: page
-permalink: /
+permalink: /resume
 title: Resume
 tagline: Resume
 description: Resume
