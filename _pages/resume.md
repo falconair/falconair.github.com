@@ -7,6 +7,7 @@ description: Resume
 ---
 
 # Shahbaz Chaudhary
+
 ### Automated Trading System Developer And Machine Learning Enthusiast
 ### shahbazc@gmail.com
 ### 201-736-0282
