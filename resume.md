@@ -6,22 +6,20 @@
 ### Profile
 Experienced financial systems developer with an interest in non-mainstream solutions, data analytics, machine learning and programming language theory
 
-### Open Source Contributions
-- Tag library to make it easy for end-users to display statistical charts on the web (https://github.com/falconair/dimple-chart )
-- Various open source FIX engines at https://github.com/falconair/[nodefix,fix.js,lowlevelfix]
-- Submitted an experimental Qpid (http://qpid.apache.org) to Excel bridge.  This C# code implemented Excel’s RTD interface
-- Various open source projects at https://github.com/falconair
-
-### Internet Applications
-- http://fixparser.targetcompid.com
+### Projects
+- Internet app: http://fixparser.targetcompid.com
 Well regarded application to parse FIX messages into a human readable format. Does intelligent detection of delimiter (\01, pipe, comma, etc.), maintains order relationships, allows filters, etc.
-- http://datafa.me 
+- Internet app: http://datafa.me 
 Web application to make it easy for users to analyze data. Maps data attributes to x and y axis, color, size, etc.
-- http://rule605.targetcompid.com
+- Internet app: http://rule605.targetcompid.com
 A major website which will display data collected due to SEC rule 605: statistics for broker order information.
 
-### Dev blog
-http://falconair.github.com
+- Open source: Tag library to make it easy for end-users to display statistical charts on the web (https://github.com/falconair/dimple-chart )
+- Open source: Various open source FIX engines at https://github.com/falconair/[nodefix,fix.js,lowlevelfix]
+- Open source: Submitted an experimental Qpid (http://qpid.apache.org) to Excel bridge.  This C# code implemented Excel’s RTD interface
+- Open source: Various open source projects at https://github.com/falconair
+
+- Blog: http://falconair.github.com
 
 ### Experience
 - Software Engineer| Wolverine Trading| Chicago, IL| May ‘15-Present
