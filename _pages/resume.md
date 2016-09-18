@@ -1,3 +1,10 @@
+---
+layout: page
+title: Resume
+tagline: Resume
+description: Resume
+---
+
 # Shahbaz Chaudhary
 ### Automated Trading System Developer
 ### shahbazc@gmail.com
