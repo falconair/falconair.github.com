@@ -49,9 +49,7 @@ All programming in C++
   - Wrote and contributed to trading strategies in Java, such as VWAP, TWAP, IS
   - Contributed code to Fidessa's Java (Bluebox) interface between Fidessa OMS and in-house algo engine
 
-- Independent Consultancy | Term Structure Inc. | Dec ’03 - Dec'09
-
-- Medium Frequency Trading System Designer/Implementer/Trader | Marco Polo/Omega| New York, NY| Sept’07 - Dec'09
+- Term Structure Consultant | Marco Polo/Omega| New York, NY| Sept’07 - Dec'09
   - Designed and implemented a complete Java based trading system: broker interface (FIX 4.2, off-the-shelf order router, Interactive Brokers), market data interface (Bloomberg and Interactive Brokers), trading strategy infrastructure, several strategies and remote user interface to control/manage/monitor the trading system.
   - Traded the arbitrage strategy using the designed system.  Manually intervened on occasion.
   - Did post trade analysis
@@ -65,26 +63,26 @@ All programming in C++
   - Experimented with a (partially successful) C# interface to Excel’s RTD interface
   - Wrote a Java and a C# interface to Bloomberg’s market data feed and two market data feeders for proprietary OMSs
 
-- Algorithmic Trading Engine Developer | Wachovia Securities | Jersey City, NJ | Oct’06 – Sept’07
+- Term Structure Consultant | Wachovia Securities | Jersey City, NJ | Oct’06 – Sept’07
   - Implemented and maintained execution strategies for customer orders, along with a team of fellow developers
   - Helped maintain an execution strategy engine: a multi-threaded and event based java engine interfacing OMSs through the FIX protocol w/ custom fields
   - Worked with traders to resolve issues or potential bugs
 
-- Contract Developer | Goldman Sachs | Jersey City, NJ | Nov ’05 - May ’06
+- Term Structure Consultant | Goldman Sachs | Jersey City, NJ | Nov ’05 - May ’06
   - Changed GS’s client reporting infrastructure from one requiring java/sql/config edits for each new report to a more generic framework requiring a single config file,  enabling better scalability
   - Amended SWIFT reports to allow better and more reliable transmission of derivatives and debt data
 
-- Contract Project Implementer | Jefferies Inc. | Jersey City, NJ | Sep ’04 - June ’05
+- Term Structure Consultant | Jefferies Inc. | Jersey City, NJ | Sep ’04 - June ’05
   - Customized a P&L calculation algorithm: converted it from PL/SQL to T-SQL and adjusted it for the business environment at Jefferies (Brass equities trading system).
   - This P&L was calculated using a custom algorithm which used daily trades, security positions and firm P&L.  The same P&L was used by the top management (head-traders) on a daily basis to determine which customers contribute most or least profit to the firm's overall bottom line.
   - Wrote an ASP.NET web application to allow analysis of the calculated P&L.
   - Spent half the time speaking to business managers while the other half was spent implementing the algorithm (customized with their feedback), writing the web application and managing the database
 
-- Contract Developer | FXAll | New York, NY | Feb ’04 - Aug ’04
+- Term Structure Consultant | FXAll | New York, NY | Feb ’04 - Aug ’04
   - Wrote a Swing based quote monitor to display fast moving data in real-time with 'master-detail' data organization
   - Re-architected an existing Swing application to make it scale to rapidly increasing quantity of data.
 
-- Contract Developer | Bank Of America | New York, NY | Dec '03 - Feb '04
+- Term Structure Consultant | Bank Of America | New York, NY | Dec '03 - Feb '04
   - Wrote a message driven bean (JMS EJB on Weblogic) to allow parallel execution of tasks which sped up performance several fold.
 Did detailed performance analysis of existing J2EE architecture and suggested points of improvement.
 
