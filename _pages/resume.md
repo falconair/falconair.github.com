@@ -34,17 +34,18 @@ A major website which will display data collected due to SEC rule 605: statistic
 
 ### Experience
 - Software Engineer| Wolverine Trading| Chicago, IL| May ‘15-Present
-  - All programming in C++
   - Built a set of tools to latency and functional testing. Included components to pretend to by any exchange
   - Led a team which expanded this tool substantially
   - Introduced Hadoop/Spark to company for approximately 4 TB of data collected every day (given as first project to a newly formed team)
   - Part of market making engine team
   - Wrote tool to visualize complex strategies
+  - All programming in C++
 
 - Contractor | Bank Of America | Charlotte, NC | Sept’13-May ‘15
   - One of two software engineers in team of quants
   - Responsible for helping migrate processes from existing SQL/Java codebase to BofA’s proprietary Quartz system (derivative of Goldman Sachs’ SecDB/Slang)
   - Wrote reference data manager for corporate issued bonds and hedges (Fas133)
+  - Used BofA's Quartz system (witten in python)
 
 - Senior Developer | StreamingEdge | NY, NY | Apr’13-Aug’13
   - Responsible for Interest Rate Swap matching engine
