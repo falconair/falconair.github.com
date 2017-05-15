@@ -1,9 +1,15 @@
 name: Blog of Shahbaz Chaudhary
 description: Posts about financial and trading software and other experiments
 url: http://falconair.github.io/
+#markdown: redcarpet
 markdown: kramdown
+kramdown:
+  input: GFM
+highlighter: pygments
+#highlighter: rouge
 paginate: 10 # pagination basted on number of posts
 #exclude: ["Gemfile", "Gemfile.lock", "README.md", 'sass', 'watch.sh', 'style.scss'] # files to exclude
 include: ['_pages']
+gems: ["jekyll-paginate"]
 jobnotice: true
 forum_targetcompid_notice: true
