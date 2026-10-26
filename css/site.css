@@ -1,13 +1,14 @@
 /* Site styles. No web fonts, no frameworks: system fonts keep pages fast. */
 :root {
-  --bg: #fbfaf7;
+  --bg: #fdfdfc;
   --surface: #ffffff;
-  --text: #1d1d1f;
-  --muted: #5f6368;
-  --line: #e4e1da;
-  --accent: #0b5f75;
-  --accent-soft: #e5f1f4;
-  --code-bg: #f3f1ec;
+  --text: #222222;
+  --muted: #5c5c5c;
+  --line: #e6e6e6;
+  --accent: #0a6aa1;
+  --accent-soft: #edf3f8;
+  --code-bg: #f5f5f5;
+  --ink: #111111; /* the black strip and footer of the old theme */
   --serif: "Iowan Old Style", "Charter", "Georgia", "Times New Roman", serif;
   --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
@@ -19,9 +20,10 @@
     --text: #e8e6e1;
     --muted: #a3a7ad;
     --line: #2e3238;
-    --accent: #6cc4dc;
-    --accent-soft: #1d3138;
+    --accent: #6cb6e6;
+    --accent-soft: #1c2c38;
     --code-bg: #1f2227;
+    --ink: #0b0c0e;
   }
 }
 
@@ -32,6 +34,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font: 17px/1.6 var(--sans);
+  border-top: 8px solid var(--ink);
 }
 a { color: var(--accent); }
 img, svg, video { max-width: 100%; height: auto; }
@@ -115,7 +118,9 @@ pre { background: var(--code-bg); padding: 1rem 1.1rem; border-radius: 8px; over
 .page { max-width: 46rem; padding-bottom: 2rem; }
 
 /* Footer */
-.site-footer { margin-top: 4rem; border-top: 1px solid var(--line); padding: 1.5rem 0 2.5rem; color: var(--muted); font-size: .9rem; }
+.site-footer { margin-top: 4rem; background: var(--ink); padding: 1.75rem 0 2.5rem; color: #c8c8c8; font-size: .9rem; }
+.site-footer .social a { color: #c8c8c8; }
+.site-footer .social a:hover { color: #fff; }
 .site-footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; align-items: center; }
 .site-footer p { margin: 0; }
 
