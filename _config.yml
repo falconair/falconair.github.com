@@ -1,15 +1,37 @@
-name: Blog of Shahbaz Chaudhary
-description: Posts about financial and trading software and other experiments
-url: http://falconair.github.io/
-#markdown: redcarpet
+title: Shahbaz Chaudhary
+tagline: Software for trading systems, data science and teaching
+description: >-
+  Shahbaz Chaudhary builds tools for trading-system developers, data scientists
+  and teachers, including FIX Parser, Agent Debugger and Class Planner.
+url: https://falconair.github.io
+lang: en_US
+
+author:
+  name: Shahbaz Chaudhary
+  email: shahbazc@gmail.com
+  job_title: Software developer and University of Chicago lecturer
+  same_as:
+    - https://github.com/falconair
+    - https://www.linkedin.com/pub/shahbaz-chaudhary/2/427/25a
+
+# Default image for link previews (Open Graph, Twitter)
+og_image: /img/og-default.png
+
 markdown: kramdown
 kramdown:
   input: GFM
-highlighter: pygments
-#highlighter: rouge
-paginate: 10 # pagination basted on number of posts
-#exclude: ["Gemfile", "Gemfile.lock", "README.md", 'sass', 'watch.sh', 'style.scss'] # files to exclude
+highlighter: rouge
+
+permalink: /:year/:month/:day/:title.html
+
+plugins:
+  - jekyll-sitemap
+
 include: ['_pages']
-gems: ["jekyll-paginate"]
-jobnotice: true
-forum_targetcompid_notice: true
+exclude: ['Gemfile', 'Gemfile.lock', 'vendor', 'README.md', 'css/sass', 'css/style.scss']
+
+defaults:
+  - scope: { path: "", type: posts }
+    values: { layout: post_page }
+  - scope: { path: "assets" }
+    values: { sitemap: false }

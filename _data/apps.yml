@@ -1,0 +1,43 @@
+# Apps on the home page, in the order shown.
+- name: FIX Parser
+  url: https://fixparser.targetcompid.com
+  tag: Trading
+  description: >-
+    Paste FIX messages or drop a log file and read every tag by name, in a
+    timeline of orders and executions. Parsed in your browser, so logs stay on
+    your computer.
+
+- name: Agent Debugger
+  url: https://agentdebugger.sh
+  tag: AI tools
+  description: >-
+    See what your coding agent actually did: every read, retry and wasted step
+    in a Claude Code, Codex or GitHub Copilot session.
+
+- name: Class Planner
+  url: https://classplanner.io
+  tag: Teaching
+  description: >-
+    Plan a course by what depends on what. The schedule flags any topic taught
+    before its prerequisites, or a class that runs over time.
+
+- name: postcell.io
+  url: https://postcell.io
+  tag: Teaching
+  description: >-
+    Real-time feedback for Jupyter classes. A cell magic sends each student's
+    code to the instructor, who sees every latest attempt live.
+
+- name: Interactive Trainer
+  url: https://interactive-trainer-app.web.app
+  tag: Data science
+  description: >-
+    Build training labels when there is no ground truth. Mark a few examples on
+    a 2D map of your data and it ranks every remaining row for review.
+
+- name: Lecture notes
+  url: https://github.com/falconair/lectures
+  tag: Open source
+  description: >-
+    Jupyter notebooks from my University of Chicago classes: Python, pandas,
+    time series, machine learning, the shell and git.

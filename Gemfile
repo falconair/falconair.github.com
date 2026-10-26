@@ -1,5 +1,5 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-gem 'sass'
-gem 'jekyll'
-gem 'nokogiri'
+# Same gems and versions GitHub Pages uses to build the site
+gem "github-pages", group: :jekyll_plugins
+gem "webrick"
