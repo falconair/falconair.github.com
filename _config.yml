@@ -3,7 +3,9 @@ tagline: Software for trading systems, data science and teaching
 description: >-
   Shahbaz Chaudhary builds tools for trading-system developers, data scientists
   and teachers, including FIX Parser, Agent Debugger and Class Planner.
-url: https://falconair.github.io
+url: https://shahbaz.sh
+repository: falconair/falconair.github.com
+baseurl: ""
 lang: en_US
 
 author:
