@@ -1,0 +1,59 @@
+# Apps on the home page, in the order shown.
+# image: an 800x500 screenshot in img/apps/
+- name: FIX Parser
+  url: https://fixparser.targetcompid.com
+  image: /img/apps/fix-parser.webp
+  tag: Trading
+  description: >-
+    Paste FIX messages or drop a log file and read every tag by name, in a
+    timeline of orders and executions. Parsed in your browser, so logs stay on
+    your computer.
+
+- name: FIX Tester
+  url: https://fixtester.targetcompid.com
+  image: /img/apps/fix-tester.webp
+  tag: Trading
+  description: >-
+    A hosted FIX server to test your FIX engine against. Point your engine at
+    it, log on, send test orders, and acknowledge, fill or reject them from the
+    page.
+
+- name: Agent Debugger
+  url: https://agentdebugger.sh
+  image: /img/apps/agent-debugger.webp
+  tag: AI tools
+  description: >-
+    See what your coding agent actually did: every read, retry and wasted step
+    in a Claude Code, Codex or GitHub Copilot session.
+
+- name: Class Planner
+  url: https://classplanner.io
+  image: /img/apps/class-planner.webp
+  tag: Teaching
+  description: >-
+    Plan a course by what depends on what. The schedule flags any topic taught
+    before its prerequisites, or a class that runs over time.
+
+- name: postcell.io
+  url: https://postcell.io
+  image: /img/apps/postcell.webp
+  tag: Teaching
+  description: >-
+    Real-time feedback for Jupyter classes. A cell magic sends each student's
+    code to the instructor, who sees every latest attempt live.
+
+- name: Interactive Trainer
+  url: https://trainingdata.fit
+  image: /img/apps/interactive-trainer.webp
+  tag: Data science
+  description: >-
+    Build training labels when there is no ground truth. Mark a few examples on
+    a 2D map of your data and it ranks every remaining row for review.
+
+- name: Lecture notes
+  url: https://github.com/falconair/lectures
+  image: /img/apps/lectures.webp
+  tag: Open source
+  description: >-
+    Jupyter notebooks from my University of Chicago classes: Python, pandas,
+    time series, machine learning, the shell and git.

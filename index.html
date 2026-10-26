@@ -1,82 +1,42 @@
 ---
 layout: default
-title: Blog of Shahbaz Chaudhary
 ---
-<!-- Content
-    ================================================== -->
-  <div class="top-strip"></div>
-  <div class="content">
-    <main class="container">
-    	<div class="row-fluid">
-    		<section class="content">
-    		  <h1>Blog of Shahbaz Chaudhary</h1>
-    		</section>
-        <div style="text-align: center">
-          <a href="mailto:shahbazc@gmail.com"><i class="icon-envelope-alt black"></i></a>
-          <a href="https://github.com/falconair"><i class="icon-github-alt black"></i></a>
-          <a href="https://www.linkedin.com/pub/shahbaz-chaudhary/2/427/25a"><i class="icon-linkedin-sign black"></i></a>
-          <a href="http://targetcompid.com"><i class="icon-signal black"></i></a>
-          <a href="http://feeds.feedburner.com/BlogOfShahbazChaudhary" rel="alternate" type="application/rss+xml"><i class="icon-rss black"></i></a>
+<section class="hero wrap">
+  <h1>{{ site.title }}</h1>
+  <p class="lede">I build tools for people who write trading software, work with data, or teach programming. I teach Python and software tools at the University of Chicago, and before that built trading systems at banks and trading firms.</p>
+  {% include social.html %}
+</section>
+
+<section id="apps" class="wrap" aria-labelledby="apps-title">
+  <h2 id="apps-title">Apps</h2>
+  <ul class="apps">
+    {% for app in site.data.apps %}
+    <li class="app">
+      <a href="{{ app.url }}">
+        {% if app.image %}<img class="app-shot" src="{{ app.image | relative_url }}" alt="Screenshot of {{ app.name }}" width="800" height="500"{% if forloop.index > 3 %} loading="lazy"{% endif %} decoding="async">{% endif %}
+        <div class="app-body">
+          <span class="app-tag">{{ app.tag }}</span>
+          <h3>{{ app.name }}</h3>
+          <p>{{ app.description }}</p>
+          <span class="app-url">{{ app.url | remove: "https://" | remove: "www." }} →</span>
         </div>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
 
-    		<ul class="entries">
-          {% for post in paginator.posts %}
-    		  <li>
-    		    <a href="{{ post.url }}">
-                      <span>{{ post.date | date: "%d %B %Y" }}</span>
-    		        <h3>{{ post.title }}</h3>
-                      <div>{{ post.content |truncatehtml | truncatewords: 30 }}</div>
-    		    </a>
-    		  </li>
-    		{% endfor %}
-    		</ul>
-    	</div>
-      <hr>
-      <div id="post-pagination">
-        {% if paginator.previous_page %}
-        <p class="prev">
-          {% if paginator.previous_page == 1 %}
-          <a href="/">Previous</a>
-          {% else %}
-          <a href="/page{{paginator.previous_page}}"> Previous</a>
-          {% endif %}
-        </p>
-        {% else %}
-<!--         <p class="prev disabled">
-          <span>Previous</span>
-        </p> -->
-        {% endif %}
-
-        <ul class="pages">
-          <li class="page">
-            {% if paginator.page == 1 %}
-<!--             <span class="current-page">1</span> -->
-            {% else %}
-            <a href="/">1</a>
-            {% endif %}
-          </li>
-
-          {% for count in (2..paginator.total_pages) %}
-          <li class="page">
-            {% if count == paginator.page %}
-            <span class="current-page">{{count}}</span>
-            {% else %}
-            <a href="/page{{count}}">{{count}}</a>
-            {% endif %}
-          </li>
-          {% endfor %}
-        </ul>
-
-        {% if paginator.next_page %}
-        <p class="next">
-          <a href="/page{{paginator.next_page}}">Next</a>
-        </p>
-        {% else %}
-<!--         <p class="next disabled">
-          <span>Next</span>
-        </p> -->
-        {% endif %}
+<section id="writing" class="wrap" aria-labelledby="writing-title">
+  <h2 id="writing-title">Writing</h2>
+  <ul class="posts">
+    {% for post in site.posts %}
+    <li>
+      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %Y" }}</time>
+      <div>
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        {% if post.excerpt %}<p>{{ post.excerpt | strip_html | truncatewords: 28 }}</p>{% endif %}
       </div>
-
-    </main>
-  </div>
+    </li>
+    {% endfor %}
+  </ul>
+</section>

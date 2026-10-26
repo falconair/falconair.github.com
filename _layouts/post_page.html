@@ -1,46 +1,19 @@
 ---
 layout: default
 ---
+<article class="post wrap">
+  <header class="post-header">
+    <p class="post-date"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%-d %B %Y" }}</time></p>
+    <h1>{{ page.title }}</h1>
+  </header>
 
-<div class="top-strip"></div>
-<main class="content">
-    <section class="container">
-    	<div class="row-fluid">
-    		<article class="home-icon">
-          <a href="/"><i class="icon-home"></i></a>
-			  </article>
-      </br></br>
-      <div style="text-align: center">
-        <a href="mailto:shahbazc@gmail.com"><i class="icon-envelope-alt black"></i></a>
-        <a href="https://github.com/falconair"><i class="icon-github-alt black"></i></a>
-        <a href="https://www.linkedin.com/pub/shahbaz-chaudhary/2/427/25a"><i class="icon-linkedin-sign black"></i></a>
-        <a href="http://targetcompid.com"><i class="icon-signal black"></i></a>
-        <a href="http://feeds.feedburner.com/BlogOfShahbazChaudhary" rel="alternate" type="application/rss+xml"><i class="icon-rss black"></i></a>
-      </div>
-			<article class="post">
-				<h5>{{ page.date | date: "%d %B %Y" }}</h5>
-				<h2 class="content">{{page.title}}</h2>
-				<section>
-					{{ content }}
-					<hr>
-				</section>
+  <div class="post-body">
+    {{ content }}
+  </div>
 
-        <div class="row-fluid" style="color:#905">
-          {% include jobnotice.html %}
-          {% include forum_targetcompid_notice.html %}
-        </div>
-				<section style="font-weight:bold; margin-bottom: 2em;">
-					{% if page.previous %}
-							<a rel="prev" class="a-hover"href="{{ page.previous.url }}"><i class="icon-double-angle-left"></i> {{ page.previous.title }}</a>
-						{% endif %}
-						{% if page.next %}
-							<a rel="next" style="float:right" class="a-hover"href="{{ page.next.url }}">{{ page.next.title }} <i class=" icon-double-angle-right"></i></a>
-					{% endif %}
-				</section>
-			</article>
-		</div>
-    <div class="row-fluid">
-      {% include disqus.html %}
-    </div>
-	</section>
-</main>
+  <nav class="post-nav" aria-label="More posts">
+    {% if page.previous %}<a rel="prev" href="{{ page.previous.url | relative_url }}">← {{ page.previous.title }}</a>{% else %}<span></span>{% endif %}
+    {% if page.next %}<a rel="next" href="{{ page.next.url | relative_url }}">{{ page.next.title }} →</a>{% endif %}
+  </nav>
+
+</article>

@@ -18,7 +18,7 @@ If book on Amazon are an indication, "trading system" often means strategies use
 Finally, I hope readers understand the code shown here, written over a few nights, shouldn't be used to trade actual money. Monitor your trades, calculate P&L, measure ack times, sure. Don't trade money (your own or your clients').
 
 ### FIX protocol
-In trading environments, much of what developers do involves streaming data such as prices of assets and order status updates such as fills, cancels, rejections and the like. An earlier [post] (http://falconair.github.io/2015/01/05/financial-exchange.html) of mine describes financial exchanges from a developer's perspective and may be informative to you. Another earlier [post](http://targetcompid.tumblr.com/post/39879066034/what-is-fix-protocol) describes the FIX protocol in greater detail, although I will go over the basics here again.
+In trading environments, much of what developers do involves streaming data such as prices of assets and order status updates such as fills, cancels, rejections and the like. An earlier [post](http://falconair.github.io/2015/01/05/financial-exchange.html) of mine describes financial exchanges from a developer's perspective and may be informative to you. Another earlier [post](http://targetcompid.tumblr.com/post/39879066034/what-is-fix-protocol) describes the FIX protocol in greater detail, although I will go over the basics here again.
 
 FIX or Financial Exchange Protocol is a text based TCP/IP protocol which has been in use for over 25 years<sup>[1](#footnote1)</sup>. It is a set of set of tag, value pairs separated by a delimiter (actual delimiter is the non-printable character SOH, not ';' as shown below).
 
