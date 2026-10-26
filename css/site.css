@@ -63,13 +63,14 @@ section > h2 { font-size: 1.6rem; margin: 3.5rem 0 1.25rem; padding-bottom: .5re
 /* Home: app cards */
 .apps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: 1rem; }
 .app a {
-  display: flex; flex-direction: column; height: 100%;
-  padding: 1.25rem 1.25rem 1rem;
+  display: flex; flex-direction: column; height: 100%; overflow: hidden;
   background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
   color: var(--text); text-decoration: none;
   transition: border-color .15s, transform .15s, box-shadow .15s;
 }
 .app a:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.06); }
+.app-shot { display: block; width: 100%; aspect-ratio: 8 / 5; object-fit: cover; object-position: top left; border-bottom: 1px solid var(--line); background: var(--code-bg); }
+.app-body { display: flex; flex-direction: column; flex: 1; padding: 1rem 1.25rem 1rem; }
 .app h3 { font-size: 1.3rem; margin: .5rem 0 .4rem; }
 .app p { margin: 0 0 1rem; color: var(--muted); font-size: .95rem; flex: 1; }
 .app-tag { align-self: flex-start; font-size: .72rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); padding: .15rem .5rem; border-radius: 99px; }
