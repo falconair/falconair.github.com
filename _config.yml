@@ -17,7 +17,7 @@ author:
     - https://www.linkedin.com/in/shahbaz-chaudhary/
 
 # Google Analytics 4 measurement ID (G-XXXXXXXXXX). Only added to production builds.
-google_analytics:
+google_analytics: G-D2C5VWPGQ7
 
 # Default image for link previews (Open Graph, Twitter)
 og_image: /img/og-default.png
