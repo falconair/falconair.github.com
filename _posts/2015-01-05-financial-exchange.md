@@ -6,7 +6,7 @@ comments: true
 ---
 <link href="/css/font-awesome.css" rel="stylesheet">
 
-> There are two hard things in computer science: cache invalidation, naming things, and off-by-one errors -- [Phil Karlton] (http://martinfowler.com/bliki/TwoHardThings.html)
+> There are two hard things in computer science: cache invalidation, naming things, and off-by-one errors -- [Phil Karlton](http://martinfowler.com/bliki/TwoHardThings.html)
 
 Picking the right project to learn a new language can be a frustrating experience. "Hello world" is an old tradition but to really get a feel for a new language, a project has to be large enough to touch various language structures, but small enough to be written in a few days. My first project in Scala implements a core part of a financial exchange called an order book.
 
@@ -407,7 +407,7 @@ object Main extends App {
     }
 ```
 
-Full code available on [github] (https://github.com/falconair/SimpleFinancialExchange)
+Full code available on [github](https://github.com/falconair/SimpleFinancialExchange)
 
 #### CTRL+F and no mention of concurrency
 
@@ -420,7 +420,7 @@ One of the reasons I took up this project was to build a foundation in Scala to 
 I'll leave experiments with Akka to another time, perhaps after a couple more projects with serial code. Learning the syntax, new programming paradigms, new libraries, etc. is quite enough for a first project.
 
 ### So, is Scala good?
-I first looked at Scala years ago, probably around the time it was first released. I had discovered functional programming and programming language theory at [Lambda The Ultimate] (http://lambda-the-ultimate.org) and was trying to make sense of Haskell, O'Caml, Oz, Scheme/Lisp, Erlang, etc. Back then I did't much like the syntax of the language and moved on. In the intervening years Scala has started to pop up every where, including the trading industry (in non-performance critical systems, in my experience).
+I first looked at Scala years ago, probably around the time it was first released. I had discovered functional programming and programming language theory at [Lambda The Ultimate](http://lambda-the-ultimate.org) and was trying to make sense of Haskell, O'Caml, Oz, Scheme/Lisp, Erlang, etc. Back then I did't much like the syntax of the language and moved on. In the intervening years Scala has started to pop up every where, including the trading industry (in non-performance critical systems, in my experience).
 
 While poking around Scala, I gained a great deal of respect for the experts working on the language. They were combining ideas from the very academic side of computer science to the very practical side of industry (the jvm!). Years ago I read a tutorial called "Scala By Example," by the author of the language, Martin Odersky. One of the chapters of the 100 or so page booklet was on concurrency. He started with the most basic locks and built layer upon layer, until he presented an implementation of the Actor library. Other chapters included an implementation of the Hindley/Milner type inference system and a chapter on parser combinators (although this chapter is no longer in the latest versions). This was one of the best programming language books I had read, certainly better than most other giant texts introducing languages.
 

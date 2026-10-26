@@ -112,7 +112,6 @@ pre { background: var(--code-bg); padding: 1rem 1.1rem; border-radius: 8px; over
 .post-nav { display: flex; justify-content: space-between; gap: 1rem; margin: 3rem 0 2rem; padding-top: 1.25rem; border-top: 1px solid var(--line); font-size: .95rem; }
 .post-nav a { text-decoration: none; }
 .post-nav a[rel="next"] { text-align: right; }
-.comments { margin: 2rem 0; }
 
 /* Plain pages (resume) */
 .page { max-width: 46rem; padding-bottom: 2rem; }

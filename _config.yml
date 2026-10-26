@@ -14,7 +14,10 @@ author:
   job_title: Software developer and University of Chicago lecturer
   same_as:
     - https://github.com/falconair
-    - https://www.linkedin.com/pub/shahbaz-chaudhary/2/427/25a
+    - https://www.linkedin.com/in/shahbaz-chaudhary/
+
+# Google Analytics 4 measurement ID (G-XXXXXXXXXX). Only added to production builds.
+google_analytics:
 
 # Default image for link previews (Open Graph, Twitter)
 og_image: /img/og-default.png
