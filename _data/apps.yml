@@ -49,11 +49,3 @@
   description: >-
     Build training labels when there is no ground truth. Mark a few examples on
     a 2D map of your data and it ranks every remaining row for review.
-
-- name: Lecture notes
-  url: https://github.com/falconair/lectures
-  image: /img/apps/lectures.webp
-  tag: Open source
-  description: >-
-    Jupyter notebooks from my University of Chicago classes: Python, pandas,
-    time series, machine learning, the shell and git.
