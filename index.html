@@ -9,21 +9,12 @@ layout: default
 
 <section id="apps" class="wrap" aria-labelledby="apps-title">
   <h2 id="apps-title">Apps</h2>
-  <ul class="apps">
-    {% for app in site.data.apps %}
-    <li class="app">
-      <a href="{{ app.url }}">
-        {% if app.image %}<img class="app-shot" src="{{ app.image | relative_url }}" alt="Screenshot of {{ app.name }}" width="800" height="500"{% if forloop.index > 3 %} loading="lazy"{% endif %} decoding="async">{% endif %}
-        <div class="app-body">
-          <span class="app-tag">{{ app.tag }}</span>
-          <h3>{{ app.name }}</h3>
-          <p>{{ app.description }}</p>
-          <span class="app-url">{{ app.url | remove: "https://" | remove: "www." }} →</span>
-        </div>
-      </a>
-    </li>
-    {% endfor %}
-  </ul>
+  {% include cards.html items=site.data.apps %}
+</section>
+
+<section id="open-source" class="wrap" aria-labelledby="open-source-title">
+  <h2 id="open-source-title">Open source</h2>
+  {% include cards.html items=site.data.open_source %}
 </section>
 
 <section id="writing" class="wrap" aria-labelledby="writing-title">

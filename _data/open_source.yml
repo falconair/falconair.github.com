@@ -1,0 +1,26 @@
+# Open source projects on the home page, in the order shown.
+# image is optional: an 800x500 screenshot in img/apps/
+# language marks a code library (for search engines); leave it out otherwise
+- name: fix.js
+  url: https://github.com/falconair/fix.js
+  tag: Node.js
+  language: TypeScript
+  description: >-
+    A FIX protocol library for building trading tools. Client and server
+    sessions with logon, heartbeats and resends handled, and messages with FIX
+    names. Tested against QuickFIX/J.
+
+- name: sklearn-embeddings
+  url: https://github.com/falconair/sklearn-embeddings
+  tag: Python
+  language: Python
+  description: >-
+    Sentence-transformer embeddings as a scikit-learn pipeline step, so a text
+    classifier encodes, fits, predicts and saves as one model. On PyPI.
+
+- name: Lecture notes
+  url: https://github.com/falconair/lectures
+  tag: Jupyter
+  description: >-
+    Jupyter notebooks from my University of Chicago classes: Python, pandas,
+    time series, machine learning, the shell and git.
