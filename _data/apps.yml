@@ -1,9 +1,12 @@
 # Apps on the home page, in the order shown.
 # image: an 800x500 screenshot in img/apps/
+# since is optional: the year the work really began, not the age of a repo.
+# Leave it out for anything built in 2026.
 - name: FIX Parser
   url: https://fixparser.targetcompid.com
   image: /img/apps/fix-parser.webp
   tag: Trading
+  since: 2012
   description: >-
     Paste FIX messages or drop a log file and read every tag by name, in a
     timeline of orders and executions. Parsed in your browser, so logs stay on
@@ -38,6 +41,7 @@
   url: https://postcell.io
   image: /img/apps/postcell.webp
   tag: Teaching
+  since: 2020
   description: >-
     Real-time feedback for Jupyter classes. A cell magic sends each student's
     code to the instructor, who sees every latest attempt live.

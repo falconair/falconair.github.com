@@ -4,7 +4,10 @@
     <a href="{{ app.url }}">
       {% if app.image %}<img class="app-shot" src="{{ app.image | relative_url }}" alt="Screenshot of {{ app.name }}" width="800" height="500"{% if forloop.index > 3 %} loading="lazy"{% endif %} decoding="async">{% endif %}
       <div class="app-body">
-        <span class="app-tag">{{ app.tag }}</span>
+        <div class="app-meta">
+          <span class="app-tag">{{ app.tag }}</span>
+          {% if app.since %}<span class="app-since">Since {{ app.since }}{% if app.rewritten %}, rewritten {{ app.rewritten }}{% endif %}</span>{% endif %}
+        </div>
         <h3>{{ app.name }}</h3>
         <p>{{ app.description }}</p>
         <span class="app-url">{{ app.url | remove: "https://" | remove: "www." }} →</span>
