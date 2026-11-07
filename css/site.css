@@ -76,6 +76,8 @@ section > h2 { font-size: 1.6rem; margin: 3.5rem 0 1.25rem; padding-bottom: .5re
 .app-body { display: flex; flex-direction: column; flex: 1; padding: 1rem 1.25rem 1rem; }
 .app h3 { font-size: 1.3rem; margin: .5rem 0 .4rem; }
 .app p { margin: 0 0 1rem; color: var(--muted); font-size: .95rem; flex: 1; }
+.app-meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .25rem .75rem; }
+.app-since { font-size: .8rem; color: var(--muted); white-space: nowrap; }
 .app-tag { align-self: flex-start; font-size: .72rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); padding: .15rem .5rem; border-radius: 99px; }
 .app-url { font-size: .85rem; color: var(--accent); font-family: var(--mono); overflow-wrap: anywhere; }
 
