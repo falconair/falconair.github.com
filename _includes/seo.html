@@ -35,7 +35,7 @@
 <meta name="twitter:description" content="{{ seo_description | escape }}">
 <meta name="twitter:image" content="{{ seo_image }}">
 {%- capture person -%}
-{"@type":"Person","@id":"{{ "/#person" | absolute_url }}","name":{{ site.author.name | jsonify }},"url":"{{ "/" | absolute_url }}","jobTitle":{{ site.author.job_title | jsonify }},"sameAs":{{ site.author.same_as | jsonify }}}
+{"@type":"Person","@id":"{{ "/#person" | absolute_url }}","name":{{ site.author.name | jsonify }},"url":"{{ "/" | absolute_url }}","jobTitle":{{ site.author.job_title | jsonify }},"sameAs":{{ site.author.same_as | jsonify }},"knowsAbout":{{ site.author.knows_about | jsonify }},"worksFor":[{% for org in site.author.works_for %}{"@type":"Organization","name":{{ org | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}],"alumniOf":[{% for school in site.author.alumni_of %}{"@type":"CollegeOrUniversity","name":{{ school | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}]}
 {%- endcapture %}
 <script type="application/ld+json">
 {%- if page.layout == "post_page" %}

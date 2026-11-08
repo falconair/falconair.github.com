@@ -11,10 +11,32 @@ lang: en_US
 author:
   name: Shahbaz Chaudhary
   email: shahbazc@gmail.com
-  job_title: Software developer and University of Chicago lecturer
+  # Same titles as the resume, in the same order as works_for below
+  job_title:
+    - Senior Manager, Data Science
+    - Adjunct Associate Professor
   same_as:
     - https://github.com/falconair
     - https://www.linkedin.com/in/shahbaz-chaudhary/
+  # Topics for schema.org knowsAbout, read by search engines and LLM crawlers
+  knows_about:
+    - FIX protocol
+    - Electronic trading systems
+    - Algorithmic trading
+    - Market data
+    - Low-latency systems
+    - Data science
+    - Machine learning
+    - Natural language processing
+    - AI agents
+    - Python
+    - Teaching programming
+  works_for:
+    - Charles Schwab
+    - University of Chicago
+  alumni_of:
+    - University of Chicago
+    - University of Michigan
 
 # Google Analytics 4 measurement ID (G-XXXXXXXXXX). Only added to production builds.
 google_analytics: G-D2C5VWPGQ7
