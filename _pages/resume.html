@@ -1,0 +1,325 @@
+---
+layout: page
+permalink: /resume
+title: Resume
+description: Resume of Shahbaz Chaudhary, software engineer and data scientist
+---
+<!-- Generated from resume.yml by tools/build.py; edit resume.yml, not this file. -->
+<style>
+  .resume { font-family: var(--sans); font-size: 1rem; line-height: 1.55; overflow-wrap: normal; }
+  .resume h1 { font-family: var(--serif); font-size: clamp(2rem, 5vw, 2.8rem); margin: 2.5rem 0 .3rem; }
+  .resume .tagline { color: var(--muted); font-size: 1.15rem; margin: 0 0 .6rem; }
+  .resume .contact { display: flex; flex-wrap: wrap; gap: .2rem 1.1rem; color: var(--muted); font-size: .95rem; margin: 0; }
+  .resume h2 { font-family: var(--serif); font-size: 1.45rem; margin: 2.6rem 0 1rem; padding-bottom: .4rem; border-bottom: 1px solid var(--line); }
+  .resume p { margin: 0 0 .6rem; }
+  .resume ul { margin: .35rem 0 0; padding-left: 1.2rem; }
+  .resume li { margin: .25rem 0; }
+  .resume li ul { margin-top: .2rem; }
+  .resume .entry { margin: 0 0 1.6rem; }
+  .resume .entry-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0 1rem; }
+  .resume .entry-head h3 { font-family: var(--sans); font-size: 1.05rem; font-weight: 600; margin: 0; }
+  .resume .org { font-weight: 400; }
+  .resume .dates, .resume .when { color: var(--muted); font-size: .9rem; white-space: nowrap; }
+  .resume .subtitle { color: var(--muted); font-style: italic; font-size: .95rem; margin: .15rem 0 .35rem; }
+  .resume .clients { margin: .9rem 0 0 .3rem; padding-left: 1.1rem; border-left: 2px solid var(--line); }
+  .resume .clients .entry { margin-bottom: 1.2rem; }
+  .resume .items > li { margin: .45rem 0; }
+  @media print {
+    .site-header, .site-footer, .skip { display: none; }
+    body { border-top: 0; }
+    .resume h1 { margin-top: 0; }
+  }
+</style>
+
+<div class="resume">
+  <h1>Shahbaz Chaudhary</h1>
+  <p class="tagline">Builder of foundational tools, as a software engineer and as a data scientist, with deep roots in financial markets</p>
+  <p class="contact">
+    <span>Chicago, IL</span>
+    <a href="mailto:shahbazc@gmail.com">shahbazc@gmail.com</a><a href="https://shahbazac.com">shahbazac.com</a><a href="https://github.com/falconair">github.com/falconair</a>  </p>
+
+  <h2>Summary</h2>
+  <p>Software engineer and data scientist with over 25 years in financial services: about 15 years as a software engineer, including real-time, concurrent, low-latency trading systems at Wolverine Trading, S. J. Levinson, Wachovia and Marco Polo, then about ten years in data science and AI, mostly at Charles Schwab, including a patented NLP algorithm. Adjunct Associate Professor at the University of Chicago, and the builder of software tools used by thousands of people every month.</p>
+
+  <h2 id="apps">Applications</h2>
+  <ul class="items">
+    <li><strong><a href="https://fixparser.targetcompid.com">FIX Parser</a></strong> <span class="when">(since 2012)</span>: a well-known, highly regarded tool for reading FIX messages, used by thousands of people every month: detects the delimiter automatically (SOH, pipe, comma, etc.), preserves message order and supports filters.</li>
+    <li><strong><a href="https://fixtester.targetcompid.com">FIX Tester</a></strong>: a hosted FIX server to test a FIX engine against. Users log on, send test orders, and acknowledge, fill or reject them from the page.</li>
+    <li><strong><a href="https://agentdebugger.sh">Agent Debugger</a></strong>: shows what a coding agent actually did, with every read, retry and wasted step in a Claude Code, Codex or GitHub Copilot session.</li>
+    <li><strong><a href="https://shahbazac.com/skills/">Skill Tracer</a></strong>: a reference to how professionals write agent skills. Over 900 skills, each annotated with what triggers it and how it connects to the others; a model drafts the notes, and every quote is checked against the skill&#39;s own text.</li>
+    <li><strong><a href="https://trainingdata.fit">Interactive Trainer</a></strong>: builds training labels when there is no ground truth. The user marks a few examples on a 2D map of the data, and it ranks every remaining row for review.</li>
+    <li><strong><a href="https://classplanner.io">Class Planner</a></strong>: plans a course by what depends on what, flagging any topic taught before its prerequisites and any class that runs over time.</li>
+    <li><strong><a href="https://postcell.io">postcell.io</a></strong> <span class="when">(since 2020)</span>: a Jupyter plugin and website for real-time review of, and feedback on, students&#39; in-class assignments.</li>
+    <li><strong><a href="http://sqlforever.com">SQL Forever</a></strong> <span class="when">(since 2020)</span>: lets students practice SQL without installing a database on their own machines.</li>
+  </ul>
+
+  <h2 id="open-source">Open Source</h2>
+  <ul class="items">
+    <li><a href="https://github.com/falconair/fix.js">fix.js</a> <span class="when">(since 2012, rewritten in 2026)</span>: a FIX protocol library for building trading tools; tested against QuickFIX/J</li>
+    <li><a href="https://github.com/falconair/sklearn-embeddings">sklearn-embeddings</a> <span class="when">(since 2025)</span>: sentence-transformer embeddings as a scikit-learn pipeline step, so a text classifier encodes, fits, predicts and saves as one model; published on PyPI</li>
+    <li><a href="https://github.com/falconair/nodefix">nodefix</a> <span class="when">(2010; archived)</span>: a FIX engine for Node.js</li>
+    <li><a href="https://github.com/falconair/lowlevelfix">lowlevelfix</a> <span class="when">(2010; archived)</span>: low-level modules for the FIX protocol</li>
+    <li><a href="https://qpid.apache.org">Qpid–Excel bridge</a> <span class="when">(2008; archived)</span>: an experimental bridge from Apache Qpid to Excel, in C#, implementing Excel&#39;s RTD interface</li>
+    <li><a href="https://github.com/falconair/dimple-chart">dimple-chart</a> <span class="when">(2014; archived)</span>: makes it easy for end users to display statistical charts on the web</li>
+    <li>Other projects at <a href="https://github.com/falconair">github.com/falconair</a></li>
+  </ul>
+
+  <h2 id="writing">Dev Blog</h2>
+  <p><strong><a href="https://shahbazac.com">shahbazac.com</a></strong>: each post is essentially a month-long, code-heavy project.</p>
+  <ul>
+    <li>Writing trading utilities in JavaScript <span class="when">(2017)</span></li>
+    <li>Simulating a financial exchange in Scala <span class="when">(2015)</span></li>
+    <li>Pricing financial instruments with a combinator-based approach from functional programming <span class="when">(2015)</span></li>
+  </ul>
+
+  <h2 id="experience">Experience</h2>
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Senior Manager, Data Science <span class="org">· Charles Schwab, Chicago, IL</span></h3>
+      <span class="dates">Jul 2017 – Present</span>
+    </div>
+<p class="subtitle">Part of Schwab&#39;s AI/ML center of excellence, the 50+-person central data science organization</p>    <ul>
+      <li>Building an agentic data scientist: it takes a question in plain English and returns a finished report, turning work that took days into an hour or two
+        <ul>
+<li>Plans the analysis, gathers the data, and changes course when a hypothesis fails</li><li>Every figure traces back to its source data and can be reproduced</li><li>Evaluations run after every change to keep data accuracy high; safeguards reduce hallucination</li><li>Reports follow the analytical frameworks taught by McKinsey and Harvard Business School, with charts chosen for the point they make</li>        </ul>
+      </li>
+      <li>Built and run a daily pipeline that cleans and aggregates the previous day&#39;s client conversation text and turns it into embeddings: a shared foundation that downstream models, including the lead models, are built on
+      </li>
+      <li>Built the lead models behind a program that flags sales opportunities in chatbot and live-chat conversations for sales agents, contributing to several hundred million dollars in new client assets
+      </li>
+      <li>Invented a patented algorithm that applies NLP techniques to client journey data to extract signal (U.S. Patent 11,609,805)
+      </li>
+      <li>Built Schwab&#39;s first detailed digital client journey dataset, used by McKinsey consultants as the backbone of their analysis of client services
+      </li>
+      <li>Prepared Schwab&#39;s environment for LLM use, testing open models and creating templates for data scientists
+      </li>
+      <li>Data science lead for Schwab&#39;s internal search
+      </li>
+      <li>Led a small team that expanded Schwab&#39;s client chatbot, which serves all Schwab clients, from mobile to the web: coordinated with the technology platform, content and product teams, managed the team&#39;s work and negotiated with partners
+      </li>
+      <li>Built the initial infrastructure for the chatbot&#39;s analytics
+      </li>
+    </ul>
+  </div>
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Adjunct Associate Professor <span class="org">· University of Chicago, Chicago, IL</span></h3>
+      <span class="dates">2019 – Present</span>
+    </div>
+<p class="subtitle">Physical Sciences Division: MS in Financial Mathematics and MS in Applied Data Science (formerly the MS in Analytics, Graham School)</p>    <ul>
+      <li>Teach Python, software engineering and ML engineering to graduate students in data science and financial mathematics
+      </li>
+      <li>Developed a custom Jupyter plugin and an associated website for real-time review of, and feedback on, students&#39; in-class assignments: <a href="https://postcell.io">postcell.io</a>
+      </li>
+      <li>Created a Gradescope assignment that lets students test out of the Python classes; offered to over 400 incoming students in 2024
+      </li>
+      <li>Courses taught (over 600 students in about 30 sections; several sections in some quarters):
+        <ul>
+<li>FINM 32400 Python for Financial Data Science, renamed Software Developer Tools for Finance: Autumn 2025, Summer 2026, Autumn 2026</li><li>ADSP 32026 Advanced Python for Data Science, renamed Python for ML Engineering: Winter 2024, Winter 2025, Spring 2025, Summer 2025, Winter 2026, Spring 2026</li><li>MSCA/ADSP 37021 Python for Data Science: Spring 2023, Autumn 2023, Spring 2024, Spring 2025</li><li>MSCA 37014 Python for Analytics: Summer 2019, Winter 2020, Summer 2020, Winter 2021, Winter 2022, Winter 2023</li><li>MSCA 37010 Programming for Analytics: Autumn 2019, Autumn 2021, Autumn 2022</li>        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Software Engineer <span class="org">· Wolverine Trading, Chicago, IL</span></h3>
+      <span class="dates">May 2015 – Sep 2016</span>
+    </div>
+    <ul>
+      <li>Led a team that built latency and functional testing tools, including components that simulated exchange gateways
+      </li>
+      <li>Used core pinning to dramatically reduce tail latency
+      </li>
+      <li>Introduced Hadoop/Spark to the company for the roughly 4 TB of data collected every day (led to the creation of a new team)
+      </li>
+      <li>Wrote a tool to visualize complex strategies
+      </li>
+      <li>Member of the market-making engine team
+      </li>
+      <li>All programming in C++
+      </li>
+    </ul>
+  </div>
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Contractor <span class="org">· Bank of America, Chicago, IL</span></h3>
+      <span class="dates">Oct 2013 – Apr 2015</span>
+    </div>
+    <ul>
+      <li>One of two software engineers on a team of quants
+      </li>
+      <li>Helped migrate processes from an existing SQL/Java codebase to BofA&#39;s proprietary, Python-based Quartz system (a derivative of Goldman Sachs&#39; SecDB/Slang)
+      </li>
+      <li>Wrote the reference data manager for corporate-issued bonds and hedges (FAS 133)
+      </li>
+    </ul>
+  </div>
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Developer <span class="org">· StreamingEdge, New York, NY</span></h3>
+      <span class="dates">Apr 2013 – Aug 2013</span>
+    </div>
+    <ul>
+      <li>Responsible for the interest rate swap matching engine
+      </li>
+      <li>The matching engine was part of a low-latency distributed system that interacted with a historical data server, a market data server and order entry platforms, using high-performance libraries such as Disruptor, Chronicle and fast collections
+      </li>
+      <li>Day-to-day work included debugging and performance tuning
+      </li>
+    </ul>
+  </div>
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Vice President <span class="org">· S. J. Levinson, Purchase, NY</span></h3>
+      <span class="dates">Dec 2009 – Feb 2013</span>
+    </div>
+    <ul>
+      <li>One of two developers who wrote the algo container, which held strategy implementations, maintained parent/child order state, handled crash/recovery and interfaced with third-party OMSs such as Fidessa
+      </li>
+      <li>Worked with quants to translate their mathematical models into Java code deployed in the algo container; every logic update was tested with randomized input data checked against the quant models
+      </li>
+      <li>Wrote the first iteration of the pre-trade TCA (transaction cost analysis) API in Java and C#
+      </li>
+      <li>Wrote and contributed to trading strategies in Java, such as VWAP, TWAP and IS
+      </li>
+      <li>Contributed code to Fidessa&#39;s Java (Bluebox) interface between the Fidessa OMS and the in-house algo engine
+      </li>
+    </ul>
+  </div>
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Independent Consultant <span class="org">· Term Structure Inc.</span></h3>
+      <span class="dates">Dec 2003 – Dec 2009</span>
+    </div>
+    <div class="clients">
+      <div class="entry">
+        <div class="entry-head">
+          <h3>Domain/Tech Lead <span class="org">· Marco Polo Network/Omega Trading, New York, NY</span></h3>
+          <span class="dates">Sep 2007 – Oct 2009</span>
+        </div>
+        <ul>
+<li>Designed and implemented a complete Java trading system: broker interface (FIX 4.2, an off-the-shelf order router, Interactive Brokers), market data interface (Bloomberg and Interactive Brokers), trading strategy infrastructure, several strategies, and a remote user interface to control, manage and monitor the system</li><li>Traded the arbitrage strategy on that system, intervening manually on occasion, and did the post-trade analysis</li><li>Wrote libraries for rapid development and fast execution of strategies: a lock-free concurrency framework for multiple cores (based on the actor model, as in Erlang) and an event system for Java (as in C#)</li><li>Wrote a high-speed, low-latency UDP market data feed handler using MINA 2.0</li><li>Spent a month in Brazil writing feed handlers for Bovespa and BM&amp;F</li><li>Did the business-side research on a cross-border arbitrage trade, and designed a system to capture very short-lived arbitrage opportunities</li><li>Designed and implemented a system that monitored high-speed market data, orders and trades to calculate FIFO positions, currency-adjusted P&amp;L (realized and unrealized), exposure, hedge level, etc.</li><li>Programmed the market data feed monitor in Coral8 (a stream database), the position manager in Java, post-trade analysis in Python, visualization in R and some prototypes in C#</li><li>Experimented with a (partially successful) C# interface to Excel&#39;s RTD interface</li><li>Wrote Java and C# interfaces to Bloomberg&#39;s market data feed, and two market data feeders for proprietary OMSs</li>        </ul>
+      </div>
+      <div class="entry">
+        <div class="entry-head">
+          <h3>Algorithmic Trading Engine Developer <span class="org">· Wachovia/Wells Fargo Securities, Jersey City, NJ</span></h3>
+          <span class="dates">Oct 2006 – Sep 2007</span>
+        </div>
+        <ul>
+<li>Implemented and maintained execution strategies for customer orders with a team of developers</li><li>Helped maintain the execution strategy engine: a multi-threaded, event-based Java engine connecting to OMSs over FIX with custom fields</li><li>Worked with traders to resolve issues and potential bugs</li>        </ul>
+      </div>
+      <div class="entry">
+        <div class="entry-head">
+          <h3>Contract Developer <span class="org">· Goldman Sachs, Jersey City, NJ</span></h3>
+          <span class="dates">Nov 2005 – May 2006</span>
+        </div>
+        <ul>
+<li>Changed GS&#39;s client reporting infrastructure from one that needed Java, SQL and config edits for each new report to a generic framework driven by a single config file</li><li>Amended SWIFT reports for more reliable transmission of derivatives and debt data</li>        </ul>
+      </div>
+      <div class="entry">
+        <div class="entry-head">
+          <h3>Contract Project Implementer <span class="org">· Jefferies Inc., Jersey City, NJ</span></h3>
+          <span class="dates">Sep 2004 – Jun 2005</span>
+        </div>
+        <ul>
+<li>Customized a P&amp;L calculation algorithm for Jefferies&#39; Brass equities trading system, converting it from PL/SQL to T-SQL</li><li>The P&amp;L, computed from daily trades, security positions and firm P&amp;L, was used daily by head traders to see which customers contributed most and least to the firm&#39;s bottom line</li><li>Wrote an ASP.NET web application for analyzing the calculated P&amp;L</li><li>Split the time between working with business managers and implementing the algorithm (customized with their feedback), the web application and the database</li>        </ul>
+      </div>
+      <div class="entry">
+        <div class="entry-head">
+          <h3>Contract Developer <span class="org">· FXall, New York, NY</span></h3>
+          <span class="dates">Feb 2004 – Aug 2004</span>
+        </div>
+        <ul>
+<li>Wrote a Swing quote monitor that displayed fast-moving data in real time with a master-detail layout</li><li>Re-architected an existing Swing application to scale to a rapidly growing volume of data</li>        </ul>
+      </div>
+      <div class="entry">
+        <div class="entry-head">
+          <h3>Contract Developer <span class="org">· Bank of America, New York, NY</span></h3>
+          <span class="dates">Dec 2003 – Feb 2004</span>
+        </div>
+        <ul>
+<li>Wrote a message-driven bean (JMS EJB on WebLogic) that ran tasks in parallel, speeding up performance several-fold</li><li>Did a detailed performance analysis of the existing J2EE architecture and recommended improvements</li>        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Developer <span class="org">· UBS Investment Bank (Hedge Fund Risk), New York, NY</span></h3>
+      <span class="dates">Nov 2002 – Dec 2003</span>
+    </div>
+    <ul>
+      <li>Designed a Java object model for every instrument traded by the Hedge Fund Risk team, including equity, derivative, fixed income and FX instruments
+      </li>
+      <li>Designed and developed a Java API that read position and market data from flat files, databases and XML, populated the instrument model and fed the VaR engine
+      </li>
+      <li>Wrote Sybase stored procedures to gather data for that API
+      </li>
+      <li>Did data gap analysis to find the relevant attributes of convertible bonds (CBs), and wrote an Oracle SQL query returning CBs and their cash flow schedules as XML
+      </li>
+      <li>Developed a Java loader that converted that CB XML feed into BCP files for a Sybase database
+      </li>
+      <li>Worked with a quant to support arbitrary market scenarios (stress tests) in the pricing and VaR engines
+      </li>
+      <li>Worked daily with team members and systems in New York, Stamford, CT and London
+      </li>
+    </ul>
+  </div>
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Developer <span class="org">· Knight Securities, Jersey City, NJ</span></h3>
+      <span class="dates">Sep 2000 – Aug 2002</span>
+    </div>
+    <ul>
+      <li>Technical lead on a team, with a business strategist and a senior company lawyer, investigating business opportunities in the ECN business
+      </li>
+      <li>Prototyped a small, real-time, multithreaded order matching engine (mini-ECN) in Java and TIBCO
+      </li>
+      <li>Worked with senior developers on a smart order routing system using metrics such as speed and liquidity, with real-time updates from various ECNs
+      </li>
+      <li>Designed and developed a web-based decision support application in Java (JSP, servlets, JDBC) with interactive charts, a Sybase backend (over a million rows across a dozen tables) and WebLogic as the application server
+      </li>
+      <li>Managed two consultants who built a system for fast access to company-wide decision support systems
+      </li>
+      <li>Helped senior management evaluate future services and products by analyzing existing data and forecasting metrics
+      </li>
+    </ul>
+  </div>
+
+  <h2 id="education">Education</h2>
+  <div class="entry">
+    <div class="entry-head">
+      <h3>University of Chicago <span class="org">· Master of Science in Analytics</span></h3>
+      <span class="dates">2015 – 2018</span>
+    </div>
+    <ul>
+<li>A combination of statistics and machine learning</li><li>Won the top prize for the capstone presentation</li>    </ul>
+  </div>
+  <div class="entry">
+    <div class="entry-head">
+      <h3>University of Michigan <span class="org">· Bachelor of Science in Computer Science</span></h3>
+      <span class="dates">1998 – 2000</span>
+    </div>
+    <ul>
+<li>Member of the Business School E-Commerce Lab</li><li>Member of the Artificial Intelligence Lab</li>    </ul>
+  </div>
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Western Michigan University <span class="org">· Computer Science, Kalamazoo, MI</span></h3>
+      <span class="dates">1996 – 1998</span>
+    </div>
+    <ul>
+<li>Member of the Lee Honors College</li>    </ul>
+  </div>
+
+  <h2 id="publications">Patents and Publications</h2>
+  <ul>
+    <li><a href="https://patents.google.com/patent/US11609805B1/en">U.S. Patent 11,609,805</a>: Shahbaz Chaudhary, Justin Robischon, Jodi Blomberg. <em>System and method for routing requests for events.</em> Issued March 21, 2023 (assigned to Charles Schwab).</li>
+    <li>Jason M. Daida, Robert R. Bertram, Stephen A. Stanhope, Jonathan C. Khoo, Shahbaz A. Chaudhary, Omer A. Chaudhri, John Polito. <em>What Makes a Problem GP-Hard? Analysis of a Tunably Difficult Problem in Genetic Programming.</em> Genetic Programming and Evolvable Machines 2(2): 165–191 (2001).</li>
+    <li>Jason M. Daida, Shahbaz A. Chaudhary. <em>Classification of Spectral Image Using Genetic Programming.</em> GECCO 2000: 726–733.</li>
+  </ul>
+
+  <h2 id="speaking">Speaking</h2>
+  <ul>
+    <li>Panelist, “AI for Driving Business Efficiency in Financial Services”, CXO Insights conference, Chicago, <span class="when">September 2025</span></li>
+  </ul>
+</div>
+
