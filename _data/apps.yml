@@ -46,6 +46,16 @@
     Real-time feedback for Jupyter classes. A cell magic sends each student's
     code to the instructor, who sees every latest attempt live.
 
+- name: SQL Forever
+  url: https://sqlforever.com
+  image: /img/apps/sql-forever.webp
+  tag: Teaching
+  since: 2020
+  description: >-
+    Practice SQL on six real databases, from a digital music store to a
+    company data warehouse. No signup and nothing to install, and any query
+    can be shared as a link.
+
 - name: Interactive Trainer
   url: https://trainingdata.fit
   image: /img/apps/interactive-trainer.webp
