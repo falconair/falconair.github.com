@@ -7,6 +7,9 @@
   {% include seo.html %}
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | absolute_url }}">
   <link rel="alternate" type="text/markdown" title="Site summary for language models" href="{{ "/llms.txt" | absolute_url }}">
+  {%- if page.markdown_copy %}
+  <link rel="alternate" type="text/markdown" title="{{ page.title }} as Markdown" href="{{ page.markdown_copy | absolute_url }}">
+  {%- endif %}
   <link rel="icon" type="image/png" href="{{ "/ico/favicon.png" | relative_url }}">
   <link rel="apple-touch-icon" href="{{ "/ico/apple-touch-icon-144-precomposed.png" | relative_url }}">
   <link rel="stylesheet" href="{{ "/css/site.css" | relative_url }}">
