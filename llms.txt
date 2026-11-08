@@ -10,15 +10,16 @@ permalink: /llms.txt
 {%- endcomment -%}
 # {{ site.title }}
 
-> Shahbaz Chaudhary is a software engineer and data scientist in Chicago with over 25 years in financial services. Shahbaz spent about 15 years building trading systems, much of it around the FIX protocol, and wrote FIX Parser, a widely used tool for reading FIX messages. Shahbaz is also an Adjunct Associate Professor at the University of Chicago, teaching Python and software engineering.
+> Shahbaz Chaudhary is a software engineer and data scientist in Chicago with over 25 years in financial services. Shahbaz spent about 15 years as a software engineer, including real-time, low-latency trading systems, and wrote FIX Parser, a tool for reading FIX messages used by thousands of people every month. Shahbaz is also an Adjunct Associate Professor at the University of Chicago, teaching Python and software engineering.
 
 ## About
 
-- Trading systems (2000–2016): algorithmic trading engines, FIX order routing, market data feed handlers, order matching engines and latency testing tools, at Knight Securities, UBS, Goldman Sachs, Wachovia/Wells Fargo Securities, S. J. Levinson, StreamingEdge, Bank of America and Wolverine Trading. Languages: Java, C++, C#, Python.
-- FIX protocol: has worked with FIX since 2006, from connecting execution engines to order management systems to building a complete FIX 4.2 trading system. Author of FIX Parser (since 2012), FIX Tester, the fix.js library (since 2012) and nodefix (2010), an early FIX engine for Node.js.
+- Trading systems (2006–2016): real-time, concurrent, low-latency systems that dealt with live markets, at Wachovia/Wells Fargo Securities (algorithmic execution engine), Marco Polo Network/Omega Trading (a complete Java trading system, market data feed handlers), S. J. Levinson (algo container, VWAP/TWAP/IS strategies) and Wolverine Trading (latency testing tools, exchange gateway simulators, C++). Before and between these, financial software at Knight Securities, UBS, Bank of America and StreamingEdge.
+- FIX protocol: has worked with FIX since 2006, from connecting an execution engine to order management systems to building a complete FIX 4.2 trading system. Author of FIX Parser (since 2012), FIX Tester, the fix.js library (since 2012) and nodefix (2010), a FIX engine for Node.js.
 - Data science and AI (2017–present): Senior Manager, Data Science at Charles Schwab, in its AI/ML center of excellence. Work includes NLP on client conversations, lead models for sales, an agentic data scientist, and U.S. Patent 11,609,805.
 - Teaching (2019–present): Adjunct Associate Professor at the University of Chicago, teaching Python for data science, Python for ML engineering, and software developer tools for finance to graduate students. Over 600 students in about 30 sections.
 - Education: MS in Analytics, University of Chicago; BS in Computer Science, University of Michigan.
+- Resume: the [complete resume in Markdown]({{ "/resume.md" | absolute_url }}) has every job since 2000 in full, plus courses taught, patents and publications. The [web page]({{ "/resume" | absolute_url }}) is a short, human-readable version of the same resume.
 - Contact: {{ site.author.email }} · [GitHub](https://github.com/falconair) · [LinkedIn](https://www.linkedin.com/in/shahbaz-chaudhary/)
 
 ## Apps
@@ -43,5 +44,5 @@ permalink: /llms.txt
 
 ## Optional
 
-- [Resume]({{ "/resume" | absolute_url }}): full work history, courses taught, patents and publications
+- [Complete resume (Markdown)]({{ "/resume.md" | absolute_url }}): full work history since 2000, courses taught, patents and publications
 - [All projects on GitHub](https://github.com/falconair)
