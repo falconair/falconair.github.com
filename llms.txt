@@ -1,0 +1,47 @@
+---
+layout: null
+sitemap: false
+permalink: /llms.txt
+---
+{%- comment -%}
+  A plain-Markdown summary of the site for language models (https://llmstxt.org).
+  The About section is written by hand; keep its facts in step with the resume.
+  The lists below are generated from _data/*.yml and _posts, so they don't go stale.
+{%- endcomment -%}
+# {{ site.title }}
+
+> Shahbaz Chaudhary is a software engineer and data scientist in Chicago with over 25 years in financial services. Shahbaz spent about 15 years building trading systems, much of it around the FIX protocol, and wrote FIX Parser, a widely used tool for reading FIX messages. Shahbaz is also an Adjunct Associate Professor at the University of Chicago, teaching Python and software engineering.
+
+## About
+
+- Trading systems (2000–2016): algorithmic trading engines, FIX order routing, market data feed handlers, order matching engines and latency testing tools, at Knight Securities, UBS, Goldman Sachs, Wachovia/Wells Fargo Securities, S. J. Levinson, StreamingEdge, Bank of America and Wolverine Trading. Languages: Java, C++, C#, Python.
+- FIX protocol: has worked with FIX since 2006, from connecting execution engines to order management systems to building a complete FIX 4.2 trading system. Author of FIX Parser (since 2012), FIX Tester, the fix.js library (since 2012) and nodefix (2010), an early FIX engine for Node.js.
+- Data science and AI (2017–present): Senior Manager, Data Science at Charles Schwab, in its AI/ML center of excellence. Work includes NLP on client conversations, lead models for sales, an agentic data scientist, and U.S. Patent 11,609,805.
+- Teaching (2019–present): Adjunct Associate Professor at the University of Chicago, teaching Python for data science, Python for ML engineering, and software developer tools for finance to graduate students. Over 600 students in about 30 sections.
+- Education: MS in Analytics, University of Chicago; BS in Computer Science, University of Michigan.
+- Contact: {{ site.author.email }} · [GitHub](https://github.com/falconair) · [LinkedIn](https://www.linkedin.com/in/shahbaz-chaudhary/)
+
+## Apps
+{% for app in site.data.apps %}
+- [{{ app.name }}]({{ app.url }}): {{ app.description | normalize_whitespace }}{% if app.since %} (since {{ app.since }}){% endif %}
+{%- endfor %}
+
+## Reference
+{% for item in site.data.reference %}
+- [{{ item.name }}]({{ item.url }}): {{ item.description | normalize_whitespace }}
+{%- endfor %}
+
+## Open source
+{% for project in site.data.open_source %}
+- [{{ project.name }}]({{ project.url }}): {{ project.description | normalize_whitespace }}{% if project.since %} (since {{ project.since }}{% if project.rewritten %}, rewritten {{ project.rewritten }}{% endif %}){% endif %}
+{%- endfor %}
+
+## Writing
+{% for post in site.posts %}
+- [{{ post.title }}]({{ post.url | absolute_url }}) ({{ post.date | date: "%Y" }}): {{ post.excerpt | strip_html | normalize_whitespace }}
+{%- endfor %}
+
+## Optional
+
+- [Resume]({{ "/resume" | absolute_url }}): full work history, courses taught, patents and publications
+- [All projects on GitHub](https://github.com/falconair)
