@@ -2,8 +2,10 @@
 # image is optional: an 800x500 screenshot in img/apps/
 - name: Skill Tracer
   url: https://shahbazac.com/skills/
+  image: /img/apps/skill-tracer.webp
   tag: Reference
   description: >-
     Read how professionals write agent skills. Over 900 skills, each with
-    its text annotated, what starts it and how it connects to the others. A model drafts the notes, and every quote is
-    checked against the skill's own text.
+    its text annotated, what starts it and how it connects to the others. A
+    model drafts the notes, and every quote is checked against the skill's
+    own text.

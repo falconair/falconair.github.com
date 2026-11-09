@@ -1,0 +1,23 @@
+<span class="theme-toggle" role="group" aria-label="Colour theme">
+  <button type="button" data-theme-choice="auto" aria-pressed="true">Auto</button>
+  <button type="button" data-theme-choice="light" aria-pressed="false">Light</button>
+  <button type="button" data-theme-choice="dark" aria-pressed="false">Dark</button>
+</span>
+<script>
+  (function () {
+    var root = document.documentElement;
+    var buttons = document.querySelectorAll("[data-theme-choice]");
+    function show(choice) {
+      buttons.forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.themeChoice === choice)); });
+    }
+    show(root.dataset.theme || "auto");
+    buttons.forEach(function (b) {
+      b.addEventListener("click", function () {
+        var choice = b.dataset.themeChoice;
+        if (choice === "auto") delete root.dataset.theme; else root.dataset.theme = choice;
+        try { if (choice === "auto") localStorage.removeItem("theme"); else localStorage.setItem("theme", choice); } catch (e) {}
+        show(choice);
+      });
+    });
+  })();
+</script>
