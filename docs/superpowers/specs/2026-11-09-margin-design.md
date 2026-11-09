@@ -138,10 +138,9 @@ the switch: home, posts, resume, privacy and 404.
 
 - Header: site name in EB Garamond on the left, nav (Apps, Open source, Writing, Resume)
   in small caps on the right. A hairline under it.
-- Posts: date in small caps above the title; body in EB Garamond with a 34rem measure;
-  blockquotes italic with no bar; tables in the body face with hairlines; code blocks on a
-  slightly darker paper (`--code-bg`), with the existing highlight colours retuned so they
-  read on paper.
+- Posts keep their original theme (see Old posts below).
+- Code blocks on plain pages sit on a slightly darker paper (`--code-bg`), with the
+  existing highlight colours retuned so they read on paper.
 - Resume, privacy and 404 pages take the same type and colours.
 
 ### The resume page *(builder's call)*
@@ -159,16 +158,17 @@ rules hide the footer. Printing always uses the light colours, whatever theme is
 screen, so a resume printed from dark mode doesn't come out as pale text on white paper.
 `site.css` sets the light tokens inside `@media print`, so this covers every page.
 
-### Old posts *(builder's call)*
+### Old posts *(Shahbaz's call)*
 
-Two kinds of leftovers in the 2015 and 2017 posts would break the constraints below, so
-the restyle fixes them in the post files, leaving the words unchanged:
-
-- Hard-coded text colours in inline spans (for example `#993300` and `#999999` in
-  `2017-05-15-trading-tools-in-javascript.md`) fail AA contrast in one theme or the other.
-  Replace them with a small set of classes whose colours come from the theme tokens.
-- Font Awesome loaded from `maxcdn.bootstrapcdn.com` points at the copy already in
-  `/css/font-awesome.css` and `/fonts/`.
+The 2015 and 2017 posts keep the look they have had for over a decade: the original
+Frappuccino theme (`/css/style.css`, `custom.css`, `shahbazprism.css`, Font Awesome 3,
+Prism), its black top strip, icon row and footer. `_layouts/legacy.html` and
+`_layouts/post_page.html` restore that shell from before October 2026. Their diagrams and
+inline styles were drawn for it, so nothing in Margin applies to them: no `site.css`, no
+theme switch, no dark mode. Only invisible parts are current (title and link-preview tags,
+GA4, icon links), and October's deliberate fixes stay: the 19 repaired links, no Disqus or
+job/forum notices, and the new LinkedIn address. The post files themselves are not touched;
+the third-party check allows the maxcdn Font Awesome link two of them carry.
 
 ### Share image
 

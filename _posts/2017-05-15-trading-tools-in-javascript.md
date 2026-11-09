@@ -4,7 +4,7 @@ title: Writing Trading Utilities in JavaScript - part 1
 excerpt: In this blog post, I will show JavaScript code for utilities which should be helpful to programmers who work on professional financial trading systems (including HFT or high frequency trading and algorithmic trading)
 comments: true
 ---
-<link href="/css/font-awesome.css" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
 In this blog post I will show how to write utilities for financial trading software using JavaScript. Specifically, I will write a very simple implementation of FIX protocol, a TCP protocol used widely across the trading industry. The code I show here will be useful for writing higher level support and monitoring tools but won't be fast enough to be used in latency sensitive environments.
 
@@ -24,7 +24,7 @@ FIX or Financial Exchange Protocol is a text based TCP/IP protocol which has bee
 
 <br>
 
-### <span class="fix-tag">8</span><span class="fix-sep">=</span>FIX.4.2<span class="fix-sep">;</span><span class="fix-tag">9</span><span class="fix-sep">=</span>035<span class="fix-sep">;<span class="fix-tag">49</span>=<span class="fix-val">SENDERID</span>;<span class="fix-tag">52</span>=<span class="fix-val">TARGETID</span>;....;</span><span class="fix-tag">10</span><span class="fix-sep">=</span>345<span class="fix-sep">;</span>
+### <span style="color: #993300;">8</span><span style="color: #999999;">=</span>FIX.4.2<span style="color: #999999;">;</span><span style="color: #993300;">9</span><span style="color: #999999;">=</span>035<span style="color: #999999;">;<span style="color: #993300;">49</span>=<span style="color: #000000;">SENDERID</span>;<span style="color: #993300;">52</span>=<span style="color: #000000;">TARGETID</span>;....;</span><span style="color: #993300;">10</span><span style="color: #999999;">=</span>345<span style="color: #999999;">;</span>
 <br>
 
 Messages start with tag 8, containing the version of FIX, followed by tag 9, containing the length of the message and end with tag 10, which contains a checksum, used to confirm the integrity of the message. Every FIX message also contains other administrative fields, such as the time a message was sent, sequence numbers to make sure gaps are identified, identification tokens of the sender and receiver and the type of message being transmitted. The remaining tags contain business specific information. For example, if the message contains a new order, it will contain symbol, quantity, price and other related information. FIX defines a fairly large number of message types, although just a handful are used by most companies. Our examples will look at Login, Login response, NewOrderSingle (new orders) and ExecutionReport (acknowledgement of receipt, fill notification, etc.).
@@ -43,87 +43,87 @@ Recall that FIX is structured as tag=value;tag=value... where tags are all numer
 
 A peek inside the _fields_ dictionary:
 
-###### <span class="fix-sep">{</span> ...
+###### <span style="color: #999999;">{</span> ...
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">1</span><span class="fix-sep">':'</span>Account<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">Account</span><span class="fix-sep">':'</span>1<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">1</span><span style="color: #999999;">':'</span>Account<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">Account</span><span style="color: #999999;">':'</span>1<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">2</span><span class="fix-sep">':'</span>AdvId<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">AdvId</span><span class="fix-sep">':'</span>2<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">2</span><span style="color: #999999;">':'</span>AdvId<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">AdvId</span><span style="color: #999999;">':'</span>2<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">3</span><span class="fix-sep">':'</span>AdvRefID<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">AdvRefID</span><span class="fix-sep">':'</span>3<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">3</span><span style="color: #999999;">':'</span>AdvRefID<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">AdvRefID</span><span style="color: #999999;">':'</span>3<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">4</span><span class="fix-sep">':'</span>AdvSide<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">AdvSide</span><span class="fix-sep">':'</span>4<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">4</span><span style="color: #999999;">':'</span>AdvSide<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">AdvSide</span><span style="color: #999999;">':'</span>4<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">5</span><span class="fix-sep">':'</span>AdvTransType<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">AdvTransType</span><span class="fix-sep">':'</span>5<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">5</span><span style="color: #999999;">':'</span>AdvTransType<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">AdvTransType</span><span style="color: #999999;">':'</span>5<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">6</span><span class="fix-sep">':'</span>AvgPx<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">AvgPx</span><span class="fix-sep">':'</span>6<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">6</span><span style="color: #999999;">':'</span>AvgPx<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">AvgPx</span><span style="color: #999999;">':'</span>6<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">7</span><span class="fix-sep">':'</span>BeginSeqNo<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">BeginSeqNo</span><span class="fix-sep">':'</span>7<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">7</span><span style="color: #999999;">':'</span>BeginSeqNo<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">BeginSeqNo</span><span style="color: #999999;">':'</span>7<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">8</span><span class="fix-sep">':'</span>BeginString<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">BeginString</span><span class="fix-sep">':'</span>8<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">8</span><span style="color: #999999;">':'</span>BeginString<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">BeginString</span><span style="color: #999999;">':'</span>8<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">9</span><span class="fix-sep">':'</span>BodyLength<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">BodyLength</span><span class="fix-sep">':'</span>9<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">9</span><span style="color: #999999;">':'</span>BodyLength<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">BodyLength</span><span style="color: #999999;">':'</span>9<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">10</span><span class="fix-sep">':'</span>Checksum<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">Checksum</span><span class="fix-sep">':'</span>10<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">10</span><span style="color: #999999;">':'</span>Checksum<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">Checksum</span><span style="color: #999999;">':'</span>10<span style="color: #999999;">',</span>
 
-###### ... <span class="fix-sep">}</span>
+###### ... <span style="color: #999999;">}</span>
 <br>
 Complete contents of _msgs_ dictionary (for FIX version 4.0):
 
-###### <span class="fix-sep">{</span>
+###### <span style="color: #999999;">{</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">7</span><span class="fix-sep">':'</span>Advertisement<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">Advertisement</span><span class="fix-sep">':'</span>7<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">7</span><span style="color: #999999;">':'</span>Advertisement<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">Advertisement</span><span style="color: #999999;">':'</span>7<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">P</span><span class="fix-sep">':'</span>AllocationInstructionAck<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">AllocationInstructionAck</span><span class="fix-sep">':'</span>P<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">P</span><span style="color: #999999;">':'</span>AllocationInstructionAck<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">AllocationInstructionAck</span><span style="color: #999999;">':'</span>P<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">J</span><span class="fix-sep">':'</span>Allocation<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">Allocation</span><span class="fix-sep">':'</span>J<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">J</span><span style="color: #999999;">':'</span>Allocation<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">Allocation</span><span style="color: #999999;">':'</span>J<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">Q</span><span class="fix-sep">':'</span>DontKnowTrade<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">DontKnowTrade</span><span class="fix-sep">':'</span><span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">Q</span><span style="color: #999999;">':'</span>DontKnowTrade<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">DontKnowTrade</span><span style="color: #999999;">':'</span><span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">C</span><span class="fix-sep">':'</span>Email<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">Email</span><span class="fix-sep">':'</span>5<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">C</span><span style="color: #999999;">':'</span>Email<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">Email</span><span style="color: #999999;">':'</span>5<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">8</span><span class="fix-sep">':'</span>ExecutionReport<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">ExecutionReport</span><span class="fix-sep">':'</span>8<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">8</span><span style="color: #999999;">':'</span>ExecutionReport<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">ExecutionReport</span><span style="color: #999999;">':'</span>8<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">0</span><span class="fix-sep">':'</span>Heartbeat<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">Heartbeat</span><span class="fix-sep">':'</span>0<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">0</span><span style="color: #999999;">':'</span>Heartbeat<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">Heartbeat</span><span style="color: #999999;">':'</span>0<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">6</span><span class="fix-sep">':'</span>IOI<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">IOI</span><span class="fix-sep">':'</span>6<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">6</span><span style="color: #999999;">':'</span>IOI<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">IOI</span><span style="color: #999999;">':'</span>6<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">K</span><span class="fix-sep">':'</span>ListCancelRequest<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">ListCancelRequest</span><span class="fix-sep">':'</span>K<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">K</span><span style="color: #999999;">':'</span>ListCancelRequest<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">ListCancelRequest</span><span style="color: #999999;">':'</span>K<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">L</span><span class="fix-sep">':'</span>ListExecute<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">ListExecute</span><span class="fix-sep">':'</span>L<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">L</span><span style="color: #999999;">':'</span>ListExecute<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">ListExecute</span><span style="color: #999999;">':'</span>L<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">N</span><span class="fix-sep">':'</span>ListStatus<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">ListStatus</span><span class="fix-sep">':'</span>N<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">N</span><span style="color: #999999;">':'</span>ListStatus<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">ListStatus</span><span style="color: #999999;">':'</span>N<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">M</span><span class="fix-sep">':'</span>ListStatusRequest<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">ListStatusRequest</span><span class="fix-sep">':'</span>M<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">M</span><span style="color: #999999;">':'</span>ListStatusRequest<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">ListStatusRequest</span><span style="color: #999999;">':'</span>M<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">A</span><span class="fix-sep">':'</span>Logon<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">Logon</span><span class="fix-sep">':'</span>5<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">A</span><span style="color: #999999;">':'</span>Logon<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">Logon</span><span style="color: #999999;">':'</span>5<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">5</span><span class="fix-sep">':'</span>Logout<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">Logout</span><span class="fix-sep">':'</span>5<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">5</span><span style="color: #999999;">':'</span>Logout<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">Logout</span><span style="color: #999999;">':'</span>5<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">E</span><span class="fix-sep">':'</span>NewOrderList<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">NewOrderList</span><span class="fix-sep">':'</span>E<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">E</span><span style="color: #999999;">':'</span>NewOrderList<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">NewOrderList</span><span style="color: #999999;">':'</span>E<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">D</span><span class="fix-sep">':'</span>NewOrderSingle<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">NewOrderSingle</span><span class="fix-sep">':'</span>D<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">D</span><span style="color: #999999;">':'</span>NewOrderSingle<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">NewOrderSingle</span><span style="color: #999999;">':'</span>D<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">B</span><span class="fix-sep">':'</span>News<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">News</span><span class="fix-sep">':'</span>B<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">B</span><span style="color: #999999;">':'</span>News<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">News</span><span style="color: #999999;">':'</span>B<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">9</span><span class="fix-sep">':'</span>OrderCancelReject<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">OrderCancelReject</span><span class="fix-sep">':'</span>9<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">9</span><span style="color: #999999;">':'</span>OrderCancelReject<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">OrderCancelReject</span><span style="color: #999999;">':'</span>9<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">G</span><span class="fix-sep">':'</span>OrderCancelReplaceRequest<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">OrderCancelReplaceRequest</span><span class="fix-sep">':'</span>G<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">G</span><span style="color: #999999;">':'</span>OrderCancelReplaceRequest<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">OrderCancelReplaceRequest</span><span style="color: #999999;">':'</span>G<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">F</span><span class="fix-sep">':'</span>OrderCancelRequest<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">OrderCancelRequest</span><span class="fix-sep">':'</span>F<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">F</span><span style="color: #999999;">':'</span>OrderCancelRequest<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">OrderCancelRequest</span><span style="color: #999999;">':'</span>F<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">H</span><span class="fix-sep">':'</span>OrderStatusRequest<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">OrderStatusRequest</span><span class="fix-sep">':'</span>H<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">H</span><span style="color: #999999;">':'</span>OrderStatusRequest<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">OrderStatusRequest</span><span style="color: #999999;">':'</span>H<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">S</span><span class="fix-sep">':'</span>Quote<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">Quote</span><span class="fix-sep">':'</span>S<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">S</span><span style="color: #999999;">':'</span>Quote<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">Quote</span><span style="color: #999999;">':'</span>S<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">3</span><span class="fix-sep">':'</span>Reject<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">Reject</span><span class="fix-sep">':'</span>3<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">3</span><span style="color: #999999;">':'</span>Reject<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">Reject</span><span style="color: #999999;">':'</span>3<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">2</span><span class="fix-sep">':'</span>ResendRequest<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">ResendRequest</span><span class="fix-sep">':'</span>2<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">2</span><span style="color: #999999;">':'</span>ResendRequest<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">ResendRequest</span><span style="color: #999999;">':'</span>2<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">4</span><span class="fix-sep">':'</span>SequenceReset<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">SequenceReset</span><span class="fix-sep">':'</span>4<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">4</span><span style="color: #999999;">':'</span>SequenceReset<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">SequenceReset</span><span style="color: #999999;">':'</span>4<span style="color: #999999;">',</span>
 
-###### &nbsp; <span class="fix-sep">'</span><span class="fix-tag">1</span><span class="fix-sep">':'</span>TestRequest<span class="fix-sep">',</span> <span class="fix-sep">'</span><span class="fix-tag">TestRequest</span><span class="fix-sep">':'</span>1<span class="fix-sep">',</span>
+###### &nbsp; <span style="color: #999999;">'</span><span style="color: #993300;">1</span><span style="color: #999999;">':'</span>TestRequest<span style="color: #999999;">',</span> <span style="color: #999999;">'</span><span style="color: #993300;">TestRequest</span><span style="color: #999999;">':'</span>1<span style="color: #999999;">',</span>
 
-######  <span class="fix-sep">}</span>
+######  <span style="color: #999999;">}</span>
 
 There are, naturally, many different types of messages communicated over FIX. Each of those messages has a number of fields. The first JSON snippet shows mappings to/from numeric tags from/to mnemonics. The second code block shows message type mappings between numeric tags and mnemonics.
 
@@ -237,10 +237,10 @@ static toMap(fix){
 ```
 
 Visually, this line:
-<span class="fix-tag">8</span><span class="fix-sep">=</span>FIX.4.2<span class="fix-sep">;</span><span class="fix-tag">9</span><span class="fix-sep">=</span>035<span class="fix-sep">;<span class="fix-tag">49</span>=<span class="fix-val">SENDERID</span>;<span class="fix-tag">52</span>=<span class="fix-val">TARGETID</span>;....;</span><span class="fix-tag">10</span><span class="fix-sep">=</span>345<span class="fix-sep">;</span>
+<span style="color: #993300;">8</span><span style="color: #999999;">=</span>FIX.4.2<span style="color: #999999;">;</span><span style="color: #993300;">9</span><span style="color: #999999;">=</span>035<span style="color: #999999;">;<span style="color: #993300;">49</span>=<span style="color: #000000;">SENDERID</span>;<span style="color: #993300;">52</span>=<span style="color: #000000;">TARGETID</span>;....;</span><span style="color: #993300;">10</span><span style="color: #999999;">=</span>345<span style="color: #999999;">;</span>
 
 is converted to this:
-<span class="fix-sep">{</span><span class="fix-sep">'</span><span class="fix-tag">8</span><span class="fix-sep">':'</span>FIX.4.2<span class="fix-sep">',</span><span class="fix-sep">'</span><span class="fix-tag">9</span><span class="fix-sep">':'</span>035<span class="fix-sep">',</span><span class="fix-sep">'</span><span class="fix-tag">49</span><span class="fix-sep">':'</span>SENDERID<span class="fix-sep">',</span><span class="fix-sep">'</span><span class="fix-tag">52</span><span class="fix-sep">':'</span>TARGETID<span class="fix-sep">',</span><span class="fix-sep">'</span><span class="fix-tag">10</span><span class="fix-sep">':'</span>345<span class="fix-sep">',</span><span class="fix-sep">...</span><span class="fix-sep">}</span>
+<span style="color: #999999;">{</span><span style="color: #999999;">'</span><span style="color: #993300;">8</span><span style="color: #999999;">':'</span>FIX.4.2<span style="color: #999999;">',</span><span style="color: #999999;">'</span><span style="color: #993300;">9</span><span style="color: #999999;">':'</span>035<span style="color: #999999;">',</span><span style="color: #999999;">'</span><span style="color: #993300;">49</span><span style="color: #999999;">':'</span>SENDERID<span style="color: #999999;">',</span><span style="color: #999999;">'</span><span style="color: #993300;">52</span><span style="color: #999999;">':'</span>TARGETID<span style="color: #999999;">',</span><span style="color: #999999;">'</span><span style="color: #993300;">10</span><span style="color: #999999;">':'</span>345<span style="color: #999999;">',</span><span style="color: #999999;">...</span><span style="color: #999999;">}</span>
 
 
 #### toFIXString: convert messages in Map datastructure back to string

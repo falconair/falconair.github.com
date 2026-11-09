@@ -1,0 +1,8 @@
+# Pictures for the Writing tiles on the home page, keyed by post slug.
+# The post files themselves are left as written; this keeps the tile picture out of
+# their front matter (where it would also replace the 1200x630 link-preview image).
+# Shots are 800x500, made by tools/writing-shots.py.
+financial-exchange: /img/writing/financial-exchange.webp
+composingcontracts: /img/writing/composing-contracts.webp
+we-need-multicolumn-editors: /img/writing/multicolumn-editors.webp
+trading-tools-in-javascript: /img/writing/trading-tools-in-javascript.webp

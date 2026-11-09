@@ -14,7 +14,8 @@ LIGHT = {"--bg": "#f7f5ef", "--text": "#1c1b19", "--muted": "#6b665d",
 DARK = {"--bg": "#1c1a17", "--text": "#e8e4da", "--muted": "#a59f93",
         "--accent": "#e26a5c", "--line": "#3a3631"}
 FONTS = ["eb-garamond-400.woff2", "eb-garamond-400-italic.woff2", "eb-garamond-500.woff2"]
-ALLOWED_EXTERNAL = ("https://www.googletagmanager.com/",)
+# Old posts are left exactly as written, including their Font Awesome link.
+ALLOWED_EXTERNAL = ("https://www.googletagmanager.com/", "//maxcdn.bootstrapcdn.com/font-awesome/")
 FIRST_PARTY = ("https://shahbazac.com/",)
 
 
@@ -185,7 +186,8 @@ def check_home(site):
 
 def check_theme_switch(site):
     errs = []
-    pages = [site / n for n in ("index.html", "resume.html", "privacy.html", "404.html")] + post_pages(site)
+    # Old posts keep their original theme, which has no switch.
+    pages = [site / n for n in ("index.html", "resume.html", "privacy.html", "404.html")]
     for p in pages:
         if not p.exists():
             errs.append(f"missing page {p.relative_to(site)}")
@@ -199,17 +201,53 @@ def check_theme_switch(site):
     return errs
 
 
+OLD_THEME = ["/css/font-awesome.css", "/css/style.css", "/css/shahbazprism.css", "/css/custom.css"]
+
+
 def check_old_posts(site):
+    """Old posts keep the look they had for years (the Frappuccino theme, used until
+    October 2026): its stylesheets, black top strip and footer, and none of site.css."""
     errs = []
-    for p in post_pages(site):
-        if 'style="color' in p.read_text(encoding="utf-8"):
-            errs.append(f"{p.relative_to(site)} has inline colours")
-    for p in html_pages(site):
-        if "maxcdn.bootstrapcdn.com" in p.read_text(encoding="utf-8", errors="replace"):
-            errs.append(f"{p.relative_to(site)} loads from maxcdn")
-    js = list(site.glob("2017/**/trading-tools-in-javascript.html"))
-    if not js or 'class="fix-tag"' not in js[0].read_text(encoding="utf-8"):
-        errs.append("the 2017 JavaScript post has no fix-tag spans")
+    posts = post_pages(site)
+    if not posts:
+        return ["no posts built"]
+    for p in posts:
+        t = p.read_text(encoding="utf-8")
+        name = p.relative_to(site)
+        links = re.findall(r'<link rel="stylesheet" href="([^"]+)"', t)
+        if links[:4] != OLD_THEME:
+            errs.append(f"{name} stylesheets: {links}")
+        if "/css/site.css" in t or "data-theme-choice" in t:
+            errs.append(f"{name} loads the new design")
+        if 'class="top-strip"' not in t or "Frappuccino" not in t:
+            errs.append(f"{name} lacks the old top strip or footer")
+        if "disqus" in t.lower():
+            errs.append(f"{name} brings Disqus back")
+    js = [p for p in posts if p.name == "trading-tools-in-javascript.html"]
+    if not js or 'style="color: #993300;"' not in js[0].read_text(encoding="utf-8"):
+        errs.append("the 2017 post should keep its inline FIX colours")
+    return errs
+
+
+def check_writing(site):
+    """Writing uses the same tiles as the apps: one per post, each with its own shot."""
+    page = (site / "index.html").read_text(encoding="utf-8")
+    start = page.find('id="writing"')
+    if start < 0:
+        return ["no writing section"]
+    section = page[start:page.find("</section>", start)]
+    errs = []
+    if '<ul class="apps">' not in section:
+        errs.append("writing should use the apps grid")
+    tiles = re.findall(r'<li class="app">(.*?)</li>', section, re.S)
+    if len(tiles) != len(post_pages(site)):
+        errs.append(f"{len(tiles)} writing tiles for {len(post_pages(site))} posts")
+    for t in tiles:
+        img = re.search(r'<img class="app-shot" src="([^"]+)"[^>]*width="800" height="500"', t)
+        if not img:
+            errs.append("a writing tile lacks an 800x500 app-shot")
+        elif not (site / img.group(1).lstrip("/")).exists():
+            errs.append(f"missing {img.group(1)}")
     return errs
 
 
@@ -220,7 +258,7 @@ def check_retired_styles(site):
 
 
 CHECKS = [check_fonts, check_no_third_party, check_tokens, check_print,
-          check_home, check_theme_switch, check_old_posts, check_retired_styles]
+          check_home, check_theme_switch, check_old_posts, check_writing, check_retired_styles]
 
 
 def main(argv):

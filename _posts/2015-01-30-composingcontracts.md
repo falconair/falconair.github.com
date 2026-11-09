@@ -4,7 +4,7 @@ title: Adventures in financial and software engineering
 excerpt: This post describes how to implement a DSL for pricing financial contracts in Scala
 comments: true
 ---
-<link href="/css/font-awesome.css" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
 Several years ago I read an extremely interesting paper, ["How to write a financial contract"](http://research.microsoft.com/en-us/um/people/simonpj/Papers/financial-contracts/contracts-icfp.htm), by Simon Peyton Jones and Jean-Marc Eber. This paper presents a domain specific language for describing financial instruments such as bonds, options and futures. This subject is bound to be interesting to those in the financial industry; however, the ideas are explained so beautifully that the paper should inspire all programmers. Many academic papers are jargon filled and difficult to comprehend for non-experts. Peyton-Jones and Eber (and Julian Seward in a earlier version of the paper) take the time to motivate the problem and craft explanations. They also published a [powerpoint slide deck](http://research.microsoft.com/en-us/um/people/simonpj/Papers/financial-contracts/Options-ICFP.ppt) which further explains the combinator programming by using an easier example of measuring sugar content of cupcakes!
 

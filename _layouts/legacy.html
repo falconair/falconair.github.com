@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		{%- comment -%}
+		The blog's original page shell (the Frappuccino theme), used by the old posts until
+		October 2026 and kept so they look the way they always have. Only invisible parts
+		are current: the title and link-preview tags, GA4 and the icon links. The old
+		posts' illustrations were drawn for this theme; don't restyle it.
+		{%- endcomment %}
+		{% include seo.html %}
+		<link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | absolute_url }}">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<link rel="author" href="/humans.txt">
+	<link rel="stylesheet" href="/css/font-awesome.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/shahbazprism.css">
+	<link rel="stylesheet" href="/css/custom.css">
+		<link rel="icon" type="image/png" href="{{ "/ico/favicon.png" | relative_url }}">
+		<link rel="apple-touch-icon" href="{{ "/ico/apple-touch-icon-144-precomposed.png" | relative_url }}">
+		{% include analytics.html %}
+	</head>
+	<body>
+	<header>
+
+	</header>
+
+	{{ content }}
+
+	<footer>
+		<div class="container">
+			<a href="http://richbray.me/frap/">Frappuccino</a> | Copyright 2015
+		</div>
+	</footer>
+
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/prism.js"></script>
+	<script src="/js/custom.js"></script>
+	</body>
+</html>

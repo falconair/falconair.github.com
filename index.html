@@ -25,14 +25,18 @@ layout: default
 
 <section id="writing" class="wrap" aria-labelledby="writing-title">
   <h2 id="writing-title">Writing</h2>
-  <ul class="posts">
+  <ul class="apps">
     {% for post in site.posts %}
-    <li>
-      <div>
-        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-        {% if post.excerpt %}<p>{{ post.excerpt | strip_html | truncatewords: 28 }}</p>{% endif %}
-      </div>
-      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %Y" }}</time>
+    {% assign shot = site.data.writing[post.slug] %}
+    <li class="app">
+      <a href="{{ post.url | relative_url }}">
+        {% if shot %}<img class="app-shot" src="{{ shot | relative_url }}" alt="" width="800" height="500" loading="lazy" decoding="async">{% endif %}
+        <div class="app-body">
+          <div class="app-meta"><time class="app-tag" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %Y" }}</time></div>
+          <h3>{{ post.title }}</h3>
+          {% if post.excerpt %}<p>{{ post.excerpt | strip_html | truncatewords: 28 }}</p>{% endif %}
+        </div>
+      </a>
     </li>
     {% endfor %}
   </ul>
