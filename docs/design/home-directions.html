@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- The four home page directions explored on 2026-11-08. Margin was chosen; see docs/superpowers/specs/2026-11-09-margin-design.md.
+     Open this file directly in a browser; the switcher at the bottom changes direction and theme. -->
+<title>Home Page Directions</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=Alegreya+Sans:wght@400;500;700&family=Archivo:wdth,wght@62..125,400..800&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Four directions for shahbazac.com, one data set, one switcher.
+   margin: Tufte reading column + margin notes, all serif, one red.
+   ink:    fixed identity column + work index, blue-grey paper, ink blue.
+   green:  deep green masthead, sage paper, screenshots first, one featured app.
+   swiss:  large grotesque name, 12-column grid, counts in signal red. */
+:root {
+  --bg: #f7f5ef; --surface: #fbfaf6; --fg: #1c1b19; --muted: #6b665d; --accent: #a3201a; --second: #a3201a;
+  --line: #dcd7cc; --band: #f7f5ef; --band-fg: #1c1b19; --band-muted: #6b665d; --shadow: rgba(0,0,0,0);
+  --ui-bg: #ffffff; --ui-fg: #161616; --ui-muted: #5d5d5d; --ui-line: #d9d9d9; --ui-on-bg: #161616; --ui-on-fg: #ffffff;
+}
+:root[data-style="ink"] {
+  --bg: #e7ebee; --surface: #f3f5f7; --fg: #15202c; --muted: #56626f; --accent: #1f4f8f; --second: #1f4f8f;
+  --line: #cbd3da; --band: #15202c; --band-fg: #c9d3dd; --band-muted: #8b98a6; --shadow: rgba(0,0,0,0);
+}
+:root[data-style="green"] {
+  --bg: #e8ebe3; --surface: #f1f3ed; --fg: #1b231e; --muted: #58635a; --accent: #1f5f46; --second: #85651a;
+  --line: #cdd3c7; --band: #1e4636; --band-fg: #eef1ea; --band-muted: #a9c2b4; --shadow: rgba(20,45,32,.35);
+}
+:root[data-style="swiss"] {
+  --bg: #e5e6e3; --surface: #efefed; --fg: #111111; --muted: #565854; --accent: #c0221a; --second: #c0221a;
+  --line: #c4c6c1; --band: #111111; --band-fg: #d6d7d3; --band-muted: #8d8f8a; --shadow: rgba(0,0,0,0);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1c1a17; --surface: #23211d; --fg: #e8e4da; --muted: #a59f93; --accent: #e26a5c; --second: #e26a5c;
+    --line: #3a3631; --band: #1c1a17; --band-fg: #e8e4da; --band-muted: #a59f93; --shadow: rgba(0,0,0,0);
+    --ui-bg: #262626; --ui-fg: #eeeeee; --ui-muted: #a8a8a8; --ui-line: #3d3d3d; --ui-on-bg: #eeeeee; --ui-on-fg: #161616;
+    color-scheme: dark;
+  }
+  :root:not([data-theme="light"])[data-style="margin"] {
+    --bg: #1c1a17; --surface: #23211d; --fg: #e8e4da; --muted: #a59f93; --accent: #e26a5c; --second: #e26a5c;
+    --line: #3a3631; --band: #1c1a17; --band-fg: #e8e4da; --band-muted: #a59f93; --shadow: rgba(0,0,0,0);
+  }
+  :root:not([data-theme="light"])[data-style="ink"] {
+    --bg: #10161d; --surface: #18212b; --fg: #d9e1ea; --muted: #8c99a8; --accent: #8db4ea; --second: #8db4ea;
+    --line: #263240; --band: #0a0f14; --band-fg: #b6c2cf; --band-muted: #7b8897; --shadow: rgba(0,0,0,0);
+  }
+  :root:not([data-theme="light"])[data-style="green"] {
+    --bg: #121814; --surface: #19211c; --fg: #dfe5dd; --muted: #95a197; --accent: #7cc3a2; --second: #d4b56a;
+    --line: #27312a; --band: #0d241b; --band-fg: #e6ece5; --band-muted: #8fb3a1; --shadow: rgba(0,0,0,.6);
+  }
+  :root:not([data-theme="light"])[data-style="swiss"] {
+    --bg: #151615; --surface: #1d1e1d; --fg: #ededea; --muted: #9b9d98; --accent: #ff5b45; --second: #ff5b45;
+    --line: #333532; --band: #000000; --band-fg: #cfd0cc; --band-muted: #8a8c87; --shadow: rgba(0,0,0,0);
+  }
+}
+:root[data-theme="dark"] {
+  --ui-bg: #262626; --ui-fg: #eeeeee; --ui-muted: #a8a8a8; --ui-line: #3d3d3d; --ui-on-bg: #eeeeee; --ui-on-fg: #161616;
+  color-scheme: dark;
+}
+:root[data-theme="dark"][data-style="margin"] {
+  --bg: #1c1a17; --surface: #23211d; --fg: #e8e4da; --muted: #a59f93; --accent: #e26a5c; --second: #e26a5c;
+  --line: #3a3631; --band: #1c1a17; --band-fg: #e8e4da; --band-muted: #a59f93; --shadow: rgba(0,0,0,0);
+}
+:root[data-theme="dark"][data-style="ink"] {
+  --bg: #10161d; --surface: #18212b; --fg: #d9e1ea; --muted: #8c99a8; --accent: #8db4ea; --second: #8db4ea;
+  --line: #263240; --band: #0a0f14; --band-fg: #b6c2cf; --band-muted: #7b8897; --shadow: rgba(0,0,0,0);
+}
+:root[data-theme="dark"][data-style="green"] {
+  --bg: #121814; --surface: #19211c; --fg: #dfe5dd; --muted: #95a197; --accent: #7cc3a2; --second: #d4b56a;
+  --line: #27312a; --band: #0d241b; --band-fg: #e6ece5; --band-muted: #8fb3a1; --shadow: rgba(0,0,0,.6);
+}
+:root[data-theme="dark"][data-style="swiss"] {
+  --bg: #151615; --surface: #1d1e1d; --fg: #ededea; --muted: #9b9d98; --accent: #ff5b45; --second: #ff5b45;
+  --line: #333532; --band: #000000; --band-fg: #cfd0cc; --band-muted: #8a8c87; --shadow: rgba(0,0,0,0);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); margin: 0; padding-bottom: 10rem; }
+#app a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.gut { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.shot { display: block; width: 100%; max-width: 100%; height: auto; aspect-ratio: 8 / 5; object-fit: cover; object-position: top left; background: var(--surface); }
+h1, h2, h3 { text-wrap: balance; }
+.foot { margin-top: 5rem; background: var(--band); color: var(--band-fg); }
+.foot .in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem 2rem; padding-block: 1.75rem 2.25rem; margin: 0 auto; }
+.foot a { color: var(--band-fg) !important; text-decoration: none; }
+.foot a:hover { text-decoration: underline; }
+.foot .soc { display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; }
+.foot p { margin: 0; color: var(--band-muted); }
+
+/* ---------- Margin (Tufte) ---------- */
+.v-margin { font-family: "EB Garamond", Garamond, "Iowan Old Style", Georgia, serif; font-size: 1.28rem; line-height: 1.5; font-variant-numeric: oldstyle-nums; }
+.v-margin .page { max-width: 66rem; margin: 0 auto; padding-block: 4.5rem 0; }
+.v-margin .row { display: grid; grid-template-columns: minmax(0, 34rem) minmax(0, 15rem); column-gap: 3.5rem; }
+.v-margin h1 { font-weight: 400; font-size: clamp(2.6rem, 6vw, 3.7rem); line-height: 1.05; margin: 0; letter-spacing: -.005em; }
+.v-margin .sub { font-style: italic; font-size: 1.55rem; color: var(--muted); margin: .35rem 0 1.6rem; }
+.v-margin .lede { margin: 0 0 1.1rem; }
+.v-margin .soc { display: flex; flex-wrap: wrap; gap: .2rem 1.3rem; font-variant-caps: all-small-caps; letter-spacing: .07em; font-size: 1.12em; }
+.v-margin .soc a { color: var(--accent) !important; text-decoration: none; }
+.v-margin .soc a:hover { text-decoration: underline; }
+.v-margin .hero .note { align-self: end; font-size: .95rem; color: var(--muted); line-height: 1.4; }
+.v-margin h2 { font-weight: 400; font-style: italic; font-size: 2.1rem; margin: 4rem 0 1.1rem; }
+.v-margin .item { margin-bottom: 2.2rem; }
+.v-margin h3 { font-weight: 500; font-size: 1.5rem; line-height: 1.2; margin: 0 0 .25rem; }
+.v-margin h3 a { text-decoration: none; }
+.v-margin h3 a:hover { color: var(--accent); }
+.v-margin .item p { margin: 0; }
+.v-margin .note { font-size: 1rem; line-height: 1.35; color: var(--muted); padding-top: .35rem; }
+.v-margin { --shot-edge: #d3cdc0; --shot-shadow: 0 1px 2px rgba(60,45,25,.10), 0 6px 16px -10px rgba(60,45,25,.40); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .v-margin { --shot-edge: #776f64; --shot-shadow: none; } }
+:root[data-theme="dark"] .v-margin { --shot-edge: #776f64; --shot-shadow: none; }
+.v-margin .shot { border: 1px solid var(--shot-edge); border-radius: 2px; box-shadow: var(--shot-shadow); }
+.v-margin .note .shot { margin-bottom: .5rem; }
+.v-margin .tag { font-variant-caps: all-small-caps; letter-spacing: .07em; color: var(--accent); font-size: 1.1em; }
+.v-margin .url { display: block; font-style: italic; text-decoration: none; overflow-wrap: anywhere; }
+.v-margin .url:hover { color: var(--accent); }
+.v-margin .tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.75rem 2.25rem; }
+.v-margin .tile .shot { margin-bottom: .75rem; }
+.v-margin .tile .top { display: flex; flex-wrap: wrap; gap: .1rem .6rem; align-items: baseline; font-size: 1rem; color: var(--muted); }
+.v-margin .tile h3 { margin: .1rem 0 .3rem; }
+.v-margin .tile p { margin: 0 0 .35rem; font-size: 1.12rem; line-height: 1.45; }
+.v-margin .tile .url { font-size: 1rem; color: var(--muted); }
+.v-margin .tile.feature { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 2.25rem; align-items: start; }
+.v-margin .tile.feature .shot { grid-column: 1 / 3; margin: 0; }
+.v-margin .tile.feature h3 { font-size: 2rem; }
+.v-margin .tile.feature p { font-size: 1.25rem; line-height: 1.5; }
+.v-margin .tile p.claim { font-style: italic; margin: .2rem 0 .6rem; }
+@media (max-width: 52rem) {
+  .v-margin .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .v-margin .tile.feature { grid-template-columns: minmax(0, 1fr); row-gap: .75rem; }
+  .v-margin .tile.feature .shot { grid-column: auto; }
+}
+@media (max-width: 36rem) { .v-margin .tiles { grid-template-columns: minmax(0, 1fr); } }
+.v-margin .foot { background: transparent; color: var(--muted); }
+.v-margin .foot .in { max-width: 66rem; border-top: 1px solid var(--line); font-style: italic; }
+.v-margin .foot a, .v-margin .foot p { color: var(--muted) !important; }
+.v-margin .foot .end { display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem 1.4rem; }
+.v-margin .theme-toggle { display: inline-flex; gap: .8rem; font-style: normal; }
+.v-margin .theme-toggle button { font: inherit; font-style: normal; font-variant-caps: all-small-caps; letter-spacing: .07em; background: none; border: 0; padding: 0; color: var(--muted); cursor: pointer; }
+.v-margin .theme-toggle button:hover { color: var(--fg); }
+.v-margin .theme-toggle button[aria-pressed="true"] { color: var(--accent); }
+@media (max-width: 52rem) {
+  .v-margin .row { grid-template-columns: minmax(0, 1fr); }
+  .v-margin .item .note { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: .8rem; align-items: start; margin-top: .6rem; }
+  .v-margin .item .note .shot { margin: 0; }
+  .v-margin .item .note.text { display: block; }
+  .v-margin .hero .note { margin-top: 1rem; }
+}
+
+/* ---------- Ink (index) ---------- */
+.v-ink { font-family: "IBM Plex Sans", system-ui, -apple-system, sans-serif; font-size: 1rem; line-height: 1.6; }
+.v-ink .page { max-width: 76rem; margin: 0 auto; display: grid; grid-template-columns: 19rem minmax(0, 1fr); gap: 4.5rem; padding-block: 3.5rem 0; }
+.v-ink .side { position: sticky; top: 2.5rem; align-self: start; }
+.v-ink h1 { font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 2.35rem; line-height: 1.08; margin: 0 0 .7rem; letter-spacing: -.012em; }
+.v-ink .sub { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: .8rem; color: var(--accent); margin: 0 0 1.3rem; }
+.v-ink .lede { margin: 0 0 1.6rem; font-size: .98rem; }
+.v-ink .index { list-style: none; padding: 0; margin: 0 0 1.6rem; border-top: 1px solid var(--line); }
+.v-ink .index a { display: flex; justify-content: space-between; padding: .5rem 0; border-bottom: 1px solid var(--line); text-decoration: none; font-weight: 500; }
+.v-ink .index a:hover { color: var(--accent); }
+.v-ink .index .n { font-family: "IBM Plex Mono", ui-monospace, monospace; color: var(--muted); font-variant-numeric: tabular-nums; font-weight: 400; }
+.v-ink .soc { display: flex; flex-wrap: wrap; gap: .3rem 1.1rem; font-size: .92rem; }
+.v-ink .side .soc a { color: var(--accent); text-decoration: none; }
+.v-ink .side .soc a:hover { text-decoration: underline; }
+.v-ink section + section { margin-top: 3.75rem; }
+.v-ink h2 { font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 1.55rem; margin: 0 0 1.4rem; scroll-margin-top: 2rem; }
+.v-ink .tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem 2rem; }
+.v-ink .tiles.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.v-ink .shot { border: 1px solid var(--line); border-radius: 3px; }
+.v-ink .tile .shot { margin-bottom: .9rem; }
+.v-ink .tile p { margin: 0; }
+.v-ink .tile .meta.top { margin: 0 0 .35rem; }
+.v-ink .tile.feature { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 2rem; align-items: start; }
+.v-ink .tile.feature .shot { margin: 0; }
+.v-ink .tile.feature h3 { font-size: 1.65rem; }
+@media (max-width: 50rem) { .v-ink .tiles.three { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 38rem) {
+  .v-ink .tiles, .v-ink .tile.feature { grid-template-columns: minmax(0, 1fr); }
+  .v-ink .tile.feature { row-gap: .9rem; }
+}
+.v-ink h3 { font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 1.28rem; line-height: 1.2; margin: 0 0 .3rem; }
+.v-ink h3 a { text-decoration: none; }
+.v-ink h3 a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.v-ink .item p { margin: 0; }
+.v-ink .meta { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: .78rem; color: var(--muted); margin-top: .55rem; display: flex; flex-wrap: wrap; gap: .2rem 1rem; }
+.v-ink .meta .tag { color: var(--fg); font-weight: 500; }
+.v-ink .meta .url { color: var(--accent); text-decoration: none; overflow-wrap: anywhere; }
+.v-ink .post { margin-bottom: 1.4rem; }
+.v-ink .post .meta { margin: 0 0 .15rem; }
+.v-ink .foot .in { max-width: 76rem; }
+@media (max-width: 58rem) {
+  .v-ink .page { grid-template-columns: minmax(0, 1fr); gap: 3rem; }
+  .v-ink .side { position: static; }
+}
+
+/* ---------- Green (masthead) ---------- */
+.v-green { font-family: "Alegreya Sans", "Gill Sans", "Segoe UI", sans-serif; font-size: 1.08rem; line-height: 1.58; }
+.v-green .in { max-width: 66rem; margin: 0 auto; }
+.v-green .mast { background: var(--band); color: var(--band-fg); }
+.v-green .mast .in { padding-block: 4.5rem 3.5rem; }
+.v-green h1 { font-family: Alegreya, Georgia, serif; font-weight: 700; font-size: clamp(2.7rem, 6.5vw, 4.3rem); line-height: 1.02; margin: 0 0 .45rem; }
+.v-green .sub { font-family: Alegreya, Georgia, serif; font-style: italic; font-size: 1.4rem; color: var(--band-muted); margin: 0 0 1.6rem; }
+.v-green .lede { max-width: 38rem; font-size: 1.18rem; margin: 0 0 1.5rem; }
+.v-green .mast .soc { display: flex; flex-wrap: wrap; gap: .3rem 1.4rem; font-weight: 500; }
+.v-green .mast .soc a { color: var(--band-fg); text-decoration: underline; text-decoration-color: var(--band-muted); text-underline-offset: 4px; }
+.v-green .mast .soc a:hover { text-decoration-color: var(--band-fg); }
+.v-green h2 { font-family: Alegreya, Georgia, serif; font-weight: 700; font-size: 2rem; color: var(--accent); margin: 3.75rem 0 1.4rem; }
+.v-green .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.75rem 2.5rem; }
+.v-green .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem 2.5rem; }
+.v-green .card.feature { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 2.25rem; align-items: center; }
+.v-green .shot { border-radius: 4px; box-shadow: 0 1px 2px var(--shadow), 0 10px 26px -14px var(--shadow); }
+.v-green h3 { font-family: Alegreya, Georgia, serif; font-weight: 700; font-size: 1.5rem; line-height: 1.15; margin: .35rem 0 .35rem; }
+.v-green .card.feature h3 { font-size: 2.1rem; }
+.v-green .card > .shot + div, .v-green .card > .shot + .body { margin-top: .9rem; }
+.v-green h3 a { text-decoration: none; }
+.v-green h3 a:hover { color: var(--accent); }
+.v-green .card p { margin: 0 0 .5rem; }
+.v-green .top { display: flex; flex-wrap: wrap; gap: .2rem 1rem; align-items: baseline; }
+.v-green .tag { font-variant-caps: all-small-caps; letter-spacing: .08em; color: var(--second); font-weight: 700; font-size: 1.05em; }
+.v-green .since { color: var(--muted); font-size: .92rem; }
+.v-green .url { color: var(--accent); font-weight: 500; text-decoration: none; font-size: .95rem; overflow-wrap: anywhere; }
+.v-green .url:hover { text-decoration: underline; }
+.v-green .posts { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.4rem; }
+.v-green .posts li { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 1.25rem; }
+.v-green .posts time { font-family: Alegreya, Georgia, serif; font-style: italic; color: var(--muted); padding-top: .15rem; }
+.v-green .posts a { font-family: Alegreya, Georgia, serif; font-weight: 700; font-size: 1.3rem; text-decoration: none; }
+.v-green .posts a:hover { color: var(--accent); }
+.v-green .posts p { margin: .1rem 0 0; color: var(--muted); }
+.v-green .foot .in { max-width: 66rem; }
+@media (max-width: 52rem) { .v-green .grid.three { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 44rem) {
+  .v-green .grid, .v-green .card.feature { grid-template-columns: minmax(0, 1fr); }
+  .v-green .card.feature { gap: .9rem; }
+  .v-green .card.feature h3 { font-size: 1.6rem; }
+  .v-green .posts li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+}
+
+/* ---------- Swiss (grid) ---------- */
+.v-swiss { font-family: Archivo, "Helvetica Neue", Arial, sans-serif; font-size: 1.02rem; line-height: 1.55; }
+.v-swiss .page { max-width: 80rem; margin: 0 auto; padding-block: 3rem 0; }
+.v-swiss .g12 { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 1.5rem; }
+.v-swiss h1 { grid-column: 1 / -1; font-weight: 800; font-stretch: 72%; font-size: clamp(3.6rem, 13vw, 9.5rem); line-height: .86; letter-spacing: -.025em; margin: 0 0 2.25rem; }
+.v-swiss .sub { grid-column: 1 / 4; font-weight: 650; font-size: 1rem; line-height: 1.35; margin: .2rem 0 0; }
+.v-swiss .lede { grid-column: 4 / 11; font-size: 1.28rem; line-height: 1.45; margin: 0 0 1.2rem; }
+.v-swiss .hero .soc { grid-column: 4 / -1; display: flex; flex-wrap: wrap; gap: .3rem 1.4rem; font-weight: 600; }
+.v-swiss .hero .soc a { text-decoration: none; border-bottom: 2px solid var(--accent); }
+.v-swiss .hero .soc a:hover { color: var(--accent); }
+.v-swiss section { border-top: 2px solid var(--fg); padding-top: 1rem; margin-top: 3.5rem; row-gap: 1.25rem; }
+.v-swiss h2 { grid-column: 1 / 4; font-weight: 750; font-stretch: 85%; font-size: 1.7rem; line-height: 1.1; margin: 0; display: flex; gap: .6rem; align-items: baseline; }
+.v-swiss h2 .n { color: var(--accent); font-family: "DM Mono", ui-monospace, monospace; font-size: .95rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+.v-swiss .list { grid-column: 4 / -1; display: grid; gap: 2.1rem; }
+.v-swiss .item { display: grid; grid-template-columns: 11rem minmax(0, 1fr) 8.5rem; gap: 1.5rem; align-items: start; }
+.v-swiss .list.text .item { grid-template-columns: minmax(0, 1fr) 8.5rem; }
+.v-swiss .shot { outline: 1px solid var(--line); outline-offset: -1px; }
+.v-swiss h3 { font-weight: 720; font-stretch: 88%; font-size: 1.5rem; line-height: 1.1; margin: 0 0 .35rem; }
+.v-swiss h3 a { text-decoration: none; }
+.v-swiss h3 a:hover { color: var(--accent); }
+.v-swiss .item p { margin: 0 0 .4rem; }
+.v-swiss .url { font-family: "DM Mono", ui-monospace, monospace; font-size: .8rem; color: var(--accent); text-decoration: none; overflow-wrap: anywhere; }
+.v-swiss .url:hover { text-decoration: underline; }
+.v-swiss .meta { font-family: "DM Mono", ui-monospace, monospace; font-size: .78rem; line-height: 1.45; text-align: right; color: var(--muted); display: grid; gap: .15rem; padding-top: .3rem; font-variant-numeric: tabular-nums; }
+.v-swiss .meta .tag { color: var(--fg); font-weight: 500; text-transform: uppercase; letter-spacing: .04em; }
+.v-swiss .tiles { grid-column: 4 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.75rem 1.5rem; }
+.v-swiss .tile .meta { display: flex; justify-content: space-between; gap: 1rem; text-align: left; border-top: 1px solid var(--fg); padding-top: .45rem; margin-bottom: .85rem; }
+.v-swiss .tile .shot { margin-bottom: .9rem; }
+.v-swiss .tile.feature { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 1.5rem; align-items: start; }
+.v-swiss .tile.feature .meta { grid-column: 1 / -1; }
+.v-swiss .tile.feature .shot { grid-column: 1 / 3; margin: 0; }
+.v-swiss .tile.feature h3 { font-size: 2.3rem; line-height: 1; margin-bottom: .6rem; }
+.v-swiss .foot .in { max-width: 80rem; }
+@media (max-width: 62rem) {
+  .v-swiss .sub, .v-swiss .lede, .v-swiss .hero .soc, .v-swiss h2, .v-swiss .list, .v-swiss .tiles { grid-column: 1 / -1; }
+  .v-swiss .sub { margin-bottom: .8rem; }
+}
+@media (max-width: 50rem) {
+  .v-swiss .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .v-swiss .tile.feature { grid-template-columns: minmax(0, 1fr); row-gap: .9rem; }
+  .v-swiss .tile.feature .meta, .v-swiss .tile.feature .shot { grid-column: auto; }
+  .v-swiss .tile.feature .meta { margin-bottom: 0; }
+}
+@media (max-width: 42rem) {
+  .v-swiss .tiles { grid-template-columns: minmax(0, 1fr); }
+  .v-swiss .item, .v-swiss .list.text .item { grid-template-columns: minmax(0, 1fr); gap: .7rem; }
+  .v-swiss .meta { text-align: left; display: flex; flex-wrap: wrap; gap: .2rem 1rem; padding: 0; order: -1; }
+  .v-swiss .item .shot { order: -2; }
+}
+
+/* ---------- Switcher (not part of any design) ---------- */
+.switch {
+  position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); z-index: 20;
+  width: min(40rem, calc(100vw - 32px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)));
+  background: var(--ui-bg); color: var(--ui-fg); border: 1px solid var(--ui-line); border-radius: 12px;
+  box-shadow: 0 10px 30px -10px rgba(0,0,0,.35); padding: .75rem .8rem .8rem;
+  font: 13px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+.switch p { margin: 0 .2rem .6rem; color: var(--ui-muted); }
+.switch p b { color: var(--ui-fg); }
+.switch .btns { display: flex; flex-wrap: wrap; gap: .35rem; }
+.switch button { font: inherit; font-weight: 600; cursor: pointer; padding: .4rem .75rem; border-radius: 7px; border: 1px solid var(--ui-line); background: transparent; color: var(--ui-fg); }
+.switch button[aria-pressed="true"] { background: var(--ui-on-bg); color: var(--ui-on-fg); border-color: var(--ui-on-bg); }
+.switch #theme { margin-left: auto; font-weight: 500; color: var(--ui-muted); }
+@media (prefers-reduced-motion: no-preference) { body { transition: background-color .2s; } }
+</style>
+
+</head>
+<body>
+<div id="app"></div>
+
+<div class="switch" role="group" aria-label="Design direction">
+  <p id="desc"></p>
+  <div class="btns">
+    <button type="button" id="b-margin" data-v="margin">Margin</button>
+    <button type="button" id="b-ink" data-v="ink">Ink</button>
+    <button type="button" id="b-green" data-v="green">Green</button>
+    <button type="button" id="b-swiss" data-v="swiss">Swiss</button>
+    <button type="button" id="theme">Dark</button>
+  </div>
+</div>
+
+<script>
+const D = {
+  name: "Shahbaz Chaudhary",
+  sub: "Tools for trading, data and teaching",
+  lede: "I build tools for people who write trading software, work with data, or teach programming. I teach Python and software tools at the University of Chicago, and before that built trading systems at banks and trading firms.",
+  social: [
+    ["GitHub", "https://github.com/falconair"],
+    ["LinkedIn", "https://www.linkedin.com/in/shahbaz-chaudhary/"],
+    ["Resume", "https://shahbazac.com/resume"],
+    ["Email", null],
+    ["RSS", "https://shahbazac.com/feed.xml"]
+  ],
+  apps: [
+    { name: "FIX Parser", url: "https://fixparser.targetcompid.com", img: "img/fix-parser.webp", tag: "Trading", since: 2012,
+      note: "A standard tool for much of Wall Street. From the largest banks to the smallest trading firms.",
+      d: "Paste FIX messages or drop a log file and read every tag by name, in a timeline of orders and executions. Parsed in your browser, so logs stay on your computer." },
+    { name: "FIX Tester", url: "https://fixtester.targetcompid.com", img: "img/fix-tester.webp", tag: "Trading",
+      d: "A hosted FIX server to test your FIX engine against. Point your engine at it, log on, send test orders, and acknowledge, fill or reject them from the page." },
+    { name: "Agent Debugger", url: "https://agentdebugger.sh", img: "img/agent-debugger.webp", tag: "AI tools",
+      d: "See what your coding agent actually did: every read, retry and wasted step in a Claude Code, Codex or GitHub Copilot session." },
+    { name: "Class Planner", url: "https://classplanner.io", img: "img/class-planner.webp", tag: "Teaching",
+      d: "Plan a course by what depends on what. The schedule flags any topic taught before its prerequisites, or a class that runs over time." },
+    { name: "postcell.io", url: "https://postcell.io", img: "img/postcell.webp", tag: "Teaching", since: 2020,
+      d: "Real-time feedback for Jupyter classes. A cell magic sends each student's code to the instructor, who sees every latest attempt live." },
+    { name: "SQL Forever", url: "https://sqlforever.com", img: "img/sql-forever.webp", tag: "Teaching", since: 2020,
+      d: "Practice SQL on six real databases, from a digital music store to a company data warehouse. No signup and nothing to install, and any query can be shared as a link." },
+    { name: "Interactive Trainer", url: "https://trainingdata.fit", img: "img/interactive-trainer.webp", tag: "Data science",
+      d: "Build training labels when there is no ground truth. Mark a few examples on a 2D map of your data and it ranks every remaining row for review." }
+  ],
+  reference: [
+    { name: "Skill Tracer", url: "https://shahbazac.com/skills/", img: "img/skill-tracer.webp", tag: "Reference",
+      d: "Read how professionals write agent skills. Over 900 skills, each with its text annotated, what starts it and how it connects to the others. A model drafts the notes, and every quote is checked against the skill's own text." }
+  ],
+  open: [
+    { name: "fix.js", url: "https://github.com/falconair/fix.js", tag: "Node.js", since: 2012, rewritten: 2026,
+      d: "A FIX protocol library for building trading tools. Client and server sessions with logon, heartbeats and resends handled, and messages with FIX names. Tested against QuickFIX/J." },
+    { name: "sklearn-embeddings", url: "https://github.com/falconair/sklearn-embeddings", tag: "Python", since: 2025,
+      d: "Sentence-transformer embeddings as a scikit-learn pipeline step, so a text classifier encodes, fits, predicts and saves as one model. On PyPI." },
+    { name: "Lecture notes", url: "https://github.com/falconair/lectures", tag: "Jupyter", since: 2019,
+      d: "Jupyter notebooks from my University of Chicago classes: Python, pandas, time series, machine learning, the shell and git." }
+  ],
+  posts: [
+    { t: "Writing Trading Utilities in JavaScript, part 1", date: "May 2017", iso: "2017-05-15", url: "https://shahbazac.com/2017/05/15/trading-tools-in-javascript.html",
+      d: "In this blog post, I will show JavaScript code for utilities which should be helpful to programmers who work on professional financial trading systems…" },
+    { t: "Seriously, we need multi-column editors", date: "Mar 2015", iso: "2015-03-03", url: "https://shahbazac.com/2015/03/03/we-need-multicolumn-editors.html",
+      d: "We need editors for high resolution monitors." },
+    { t: "Adventures in financial and software engineering", date: "Jan 2015", iso: "2015-01-30", url: "https://shahbazac.com/2015/01/30/composingcontracts.html",
+      d: "This post describes how to implement a DSL for pricing financial contracts in Scala." },
+    { t: "Simulating a financial exchange in Scala", date: "Jan 2015", iso: "2015-01-05", url: "https://shahbazac.com/2015/01/05/financial-exchange.html",
+      d: "This post describes how to build a financial exchange in Scala." }
+  ]
+};
+
+const host = u => u.replace("https://", "").replace("www.", "").replace(/\/$/, "");
+const since = i => i.since ? `Since ${i.since}${i.rewritten ? `, rewritten ${i.rewritten}` : ""}` : "";
+const link = (i, cls = "") => `<a${cls ? ` class="${cls}"` : ""} href="${i.url}">`;
+const soc = () => D.social.map(([n, u]) => u ? `<a href="${u}">${n}</a>` : `<a href="#" onclick="return false">${n}</a>`).join("");
+const shot = i => i.img ? `<img class="shot" src="../../${i.img.replace("img/","img/apps/")}" alt="Screenshot of ${i.name}" width="800" height="500" decoding="async">` : "";
+const toggle = () => `<span class="theme-toggle" role="group" aria-label="Colour theme">${["auto", "light", "dark"].map(c => `<button type="button" data-theme-choice="${c}">${c[0].toUpperCase() + c.slice(1)}</button>`).join("")}</span>`;
+const foot = (withToggle) => `<footer class="foot gut"><div class="in"><nav class="soc">${soc()}</nav>${withToggle ? `<div class="end"><p>© 2026 ${D.name}</p>${toggle()}</div>` : `<p>© 2026 ${D.name}</p>`}</div></footer>`;
+const sections = [["apps", "Apps", D.apps], ["reference", "Reference", D.reference], ["open-source", "Open source", D.open]];
+
+function margin() {
+  const tile = (i, n, feat) => `<article class="tile${feat && n === 0 ? " feature" : ""}">${shot(i)}<div class="txt">
+      <div class="top"><span class="tag">${i.tag}</span>${i.since ? `<span>${since(i).toLowerCase()}</span>` : ""}</div>
+      <h3>${link(i)}${i.name}</a></h3><p>${i.d}</p>${feat && n === 0 && i.note ? `<p class="claim">${i.note}</p>` : ""}${link(i, "url")}${host(i.url)}</a></div></article>`;
+  const grid = (xs, cls, feat) => `<div class="tiles${cls}">${xs.map((i, n) => tile(i, n, feat)).join("")}</div>`;
+  return `<div class="v-margin"><div class="page gut">
+    <header class="row hero">
+      <div><h1>${D.name}</h1><p class="sub">${D.sub}</p><p class="lede">${D.lede}</p><nav class="soc">${soc()}</nav></div>
+    </header>
+    <section><h2>Apps</h2>${grid(D.apps, "", true)}</section>
+    <section><h2>Reference</h2>${grid(D.reference, " one")}</section>
+    <section><h2>Open source</h2>${grid(D.open, "")}</section>
+    <section><h2>Writing</h2>${D.posts.map(p => `<div class="row item"><div><h3><a href="${p.url}">${p.t}</a></h3><p>${p.d}</p></div><aside class="note text"><time datetime="${p.iso}">${p.date}</time></aside></div>`).join("")}</section>
+  </div>${foot(true)}</div>`;
+}
+
+function ink() {
+  const tile = (i, n, feat) => `<article class="tile${feat && n === 0 ? " feature" : ""}">${shot(i)}<div class="txt">
+      <div class="meta top"><span class="tag">${i.tag}</span>${i.since ? `<span>${since(i)}</span>` : ""}</div>
+      <h3>${link(i)}${i.name}</a></h3><p>${i.d}</p><div class="meta">${link(i, "url")}${host(i.url)} →</a></div></div></article>`;
+  const grid = (xs, cls, feat) => `<div class="tiles${cls}">${xs.map((i, n) => tile(i, n, feat)).join("")}</div>`;
+  const body = { apps: grid(D.apps, "", true), reference: grid(D.reference, " one"), "open-source": grid(D.open, " three") };
+  const all = [...sections, ["writing", "Writing", D.posts]];
+  return `<div class="v-ink"><div class="page gut">
+    <aside class="side">
+      <h1>${D.name}</h1><p class="sub">${D.sub}</p><p class="lede">${D.lede}</p>
+      <ul class="index">${all.map(([id, t, xs]) => `<li><a href="#i-${id}" onclick="document.getElementById('i-${id}').scrollIntoView({behavior:'smooth'});return false"><span>${t}</span><span class="n">${xs.length}</span></a></li>`).join("")}</ul>
+      <nav class="soc">${soc()}</nav>
+    </aside>
+    <div>
+      ${sections.map(([id, t]) => `<section><h2 id="i-${id}">${t}</h2>${body[id]}</section>`).join("")}
+      <section><h2 id="i-writing">Writing</h2>${D.posts.map(p => `<article class="post"><div class="meta"><time datetime="${p.iso}">${p.date}</time></div><h3><a href="${p.url}">${p.t}</a></h3><p>${p.d}</p></article>`).join("")}</section>
+    </div>
+  </div>${foot()}</div>`;
+}
+
+function green() {
+  const body = i => `<div class="body"><div class="top"><span class="tag">${i.tag}</span>${i.since ? `<span class="since">${since(i)}</span>` : ""}</div>
+      <h3>${link(i)}${i.name}</a></h3><p>${i.d}</p>${link(i, "url")}${host(i.url)} →</a></div>`;
+  const card = (i, n) => `<article class="card${n === 0 ? " feature" : ""}">${shot(i)}${body(i)}</article>`;
+  return `<div class="v-green">
+    <header class="mast gut"><div class="in"><h1>${D.name}</h1><p class="sub">${D.sub}</p><p class="lede">${D.lede}</p><nav class="soc">${soc()}</nav></div></header>
+    <main class="gut"><div class="in">
+      <section><h2>Apps</h2><div class="grid">${D.apps.map(card).join("")}</div></section>
+      <section><h2>Reference</h2><div class="grid one">${D.reference.map(i => `<article class="card">${body(i)}</article>`).join("")}</div></section>
+      <section><h2>Open source</h2><div class="grid three">${D.open.map(i => `<article class="card">${body(i)}</article>`).join("")}</div></section>
+      <section><h2>Writing</h2><ul class="posts">${D.posts.map(p => `<li><time datetime="${p.iso}">${p.date}</time><div><a href="${p.url}">${p.t}</a><p>${p.d}</p></div></li>`).join("")}</ul></section>
+    </div></main>${foot()}</div>`;
+}
+
+function swiss() {
+  const tile = (i, n, feat) => `<article class="tile${feat && n === 0 ? " feature" : ""}">
+      <div class="meta"><span class="tag">${i.tag}</span>${i.since ? `<span>${i.since}${i.rewritten ? `/${i.rewritten}` : ""}</span>` : ""}</div>
+      ${shot(i)}<div class="txt"><h3>${link(i)}${i.name}</a></h3><p>${i.d}</p>${link(i, "url")}${host(i.url)}</a></div></article>`;
+  const grid = (xs, cls, feat) => `<div class="tiles${cls}">${xs.map((i, n) => tile(i, n, feat)).join("")}</div>`;
+  const sec = (t, xs, inner) => `<section class="g12"><h2>${t}<span class="n">${String(xs.length).padStart(2, "0")}</span></h2>${inner}</section>`;
+  return `<div class="v-swiss"><div class="page gut">
+    <header class="g12 hero"><h1>Shahbaz<br>Chaudhary</h1><p class="sub">${D.sub}</p><p class="lede">${D.lede}</p><nav class="soc">${soc()}</nav></header>
+    ${sec("Apps", D.apps, grid(D.apps, "", true))}
+    ${sec("Reference", D.reference, grid(D.reference, " one"))}
+    ${sec("Open source", D.open, grid(D.open, ""))}
+    ${sec("Writing", D.posts, `<div class="list text">${D.posts.map(p => `<article class="item"><div><h3><a href="${p.url}">${p.t}</a></h3><p>${p.d}</p></div><div class="meta"><time datetime="${p.iso}">${p.date}</time></div></article>`).join("")}</div>`)}
+  </div>${foot()}</div>`;
+}
+
+const V = {
+  margin: { r: margin, label: "Margin", desc: "Tufte's restraint: all serif, one red, no boxes. Screenshots get a thin edge; the theme switch sits quietly in the footer." },
+  ink:    { r: ink,    label: "Ink",    desc: "A working index: who you are in a fixed column on the left, the work tiled beside it. Blue-grey paper, ink-blue links." },
+  green:  { r: green,  label: "Green",  desc: "A deep green masthead over sage paper. Screenshots lead, and FIX Parser gets the featured spot." },
+  swiss:  { r: swiss,  label: "Swiss",  desc: "Print editorial: a large condensed name, a strict grid, section counts in signal red." }
+};
+
+function show(v) {
+  if (!V[v]) v = "margin";
+  document.documentElement.dataset.style = v;
+  document.getElementById("app").innerHTML = V[v].r();
+  document.getElementById("desc").innerHTML = `<b>${V[v].label}.</b> ${V[v].desc}`;
+  document.querySelectorAll(".switch [data-v]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === v)));
+  syncToggle();
+}
+function syncToggle() {
+  const t = document.documentElement.dataset.theme || "auto";
+  document.querySelectorAll("[data-theme-choice]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.themeChoice === t)));
+}
+document.getElementById("app").addEventListener("click", e => {
+  const b = e.target.closest("[data-theme-choice]");
+  if (!b) return;
+  if (b.dataset.themeChoice === "auto") delete document.documentElement.dataset.theme;
+  else document.documentElement.dataset.theme = b.dataset.themeChoice;
+  syncToggle(); themeLabel();
+});
+function isDark() {
+  const t = document.documentElement.dataset.theme;
+  return t ? t === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+}
+function themeLabel() { document.getElementById("theme").textContent = isDark() ? "Light mode" : "Dark mode"; }
+
+document.querySelectorAll(".switch [data-v]").forEach(b => b.addEventListener("click", () => {
+  if (location.hash !== "#" + b.dataset.v) location.hash = b.dataset.v; else show(b.dataset.v);
+  window.scrollTo(0, 0);
+}));
+document.getElementById("theme").addEventListener("click", () => {
+  document.documentElement.dataset.theme = isDark() ? "light" : "dark";
+  themeLabel(); syncToggle();
+});
+addEventListener("hashchange", () => show(location.hash.slice(1)));
+matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", themeLabel);
+show(location.hash.slice(1));
+themeLabel();
+</script>
+
+</body>
+</html>
