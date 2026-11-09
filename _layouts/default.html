@@ -12,6 +12,10 @@
   {%- endif %}
   <link rel="icon" type="image/png" href="{{ "/ico/favicon.png" | relative_url }}">
   <link rel="apple-touch-icon" href="{{ "/ico/apple-touch-icon-144-precomposed.png" | relative_url }}">
+  <script>
+    /* Apply a saved theme before the page paints; with none saved, CSS follows the system. */
+    try { var t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
   <link rel="stylesheet" href="{{ "/css/site.css" | relative_url }}">
   {% include analytics.html %}
 </head>
@@ -38,7 +42,7 @@
   <footer class="site-footer">
     <div class="wrap">
       {% include social.html %}
-      <p>© {{ site.time | date: "%Y" }} {{ site.author.name }}</p>
+      <p>© {{ site.time | date: "%Y" }} {{ site.author.name }}{% include theme-toggle.html %}</p>
     </div>
   </footer>
 </body>
