@@ -84,6 +84,7 @@ body {
 a { color: var(--accent); }
 img, svg, video { max-width: 100%; height: auto; }
 h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.2; }
+b, strong { font-weight: 500; } /* the font ships 400 and 500 only; no synthetic bold */
 .wrap { max-width: 66rem; margin: 0 auto; padding: 0 1.25rem; }
 .skip { position: absolute; left: -999px; }
 .skip:focus { left: 1rem; top: 1rem; background: var(--bg); padding: .5rem 1rem; z-index: 1; }
@@ -106,7 +107,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.2; }
 /* Home: introduction */
 .hero { padding-top: 4.5rem; }
 .hero h1 { font-size: clamp(2.6rem, 6vw, 3.7rem); font-weight: 400; line-height: 1.05; margin: 0; letter-spacing: -.005em; }
-.tagline { font-style: italic; font-size: 1.55rem; color: var(--muted); margin: .35rem 0 1.6rem; }
+.hero .tagline { font-style: italic; font-size: 1.55rem; color: var(--muted); margin: .35rem 0 1.6rem; }
 .lede { max-width: 34rem; margin: 0 0 1.1rem; }
 
 .social { display: flex; flex-wrap: wrap; gap: .2rem 1.3rem; }
@@ -189,6 +190,23 @@ pre code { font-size: 1em; }
 .post-nav a:hover { text-decoration: underline; }
 .post-nav a[rel="next"] { text-align: right; }
 .page { padding-bottom: 2rem; }
+
+/* Old posts: FIX messages were coloured inline; these classes take the theme colours */
+.fix-tag { color: var(--accent); }
+.fix-sep { color: var(--muted); }
+.fix-val { color: var(--text); }
+
+/* Resume: _pages/resume.html is generated elsewhere (tools/build.py in the resume repo)
+   and carries its own <style> after this file, so these rules are one class stronger. */
+.page > .resume { max-width: 46rem; }
+.page .resume { font-size: 1.12rem; }
+.page .resume h1 { font-weight: 400; }
+.page .resume h2 { font-size: 1.7rem; font-weight: 400; font-style: italic; border-bottom: 0; padding-bottom: 0; margin-bottom: .6rem; }
+.page .resume .entry-head h3 { font-size: 1.2rem; font-weight: 500; }
+.page .resume .contact { font-size: 1.05rem; }
+.page .resume .dates, .page .resume .when { font-size: 1rem; }
+.page .resume details.more summary { font-size: 1rem; }
+.page .resume details.more > ul { border-radius: 0; }
 
 /* Footer: plain paper under a hairline, the theme switch at the end */
 .site-footer { margin-top: 5rem; padding: 0 1.25rem; color: var(--muted); font-size: 1rem; }
