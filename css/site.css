@@ -1,4 +1,9 @@
-/* Site styles. No web fonts, no frameworks: system fonts keep pages fast. */
+/* Site styles: the Margin design (docs/superpowers/specs/2026-11-09-margin-design.md).
+   One self-hosted face, EB Garamond, subset by tools/subset-fonts.sh. No frameworks. */
+@font-face { font-family: "EB Garamond"; src: url("/fonts/eb-garamond/eb-garamond-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "EB Garamond"; src: url("/fonts/eb-garamond/eb-garamond-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "EB Garamond"; src: url("/fonts/eb-garamond/eb-garamond-500.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+
 :root {
   --bg: #fdfdfc;
   --surface: #ffffff;
@@ -9,7 +14,7 @@
   --accent-soft: #edf3f8;
   --code-bg: #f5f5f5;
   --ink: #111111; /* the black strip and footer of the old theme */
-  --serif: "Iowan Old Style", "Charter", "Georgia", "Times New Roman", serif;
+  --serif: "EB Garamond", Garamond, "Iowan Old Style", Georgia, serif;
   --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
   --hl-comment: #6a737d;
