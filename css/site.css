@@ -160,30 +160,35 @@ section > h2 { font-size: 2.1rem; font-weight: 400; font-style: italic; margin: 
   .posts time { padding-top: .2rem; }
 }
 
-/* Post pages */
-.post { max-width: 46rem; }
+/* Post pages and plain pages (privacy, 404, resume): a left-aligned 34rem text
+   column under the header, with code and tables allowed wider */
+.post-header, .post-nav, .post-body > *, .page > * { max-width: 34rem; }
+.post-body > pre, .post-body > .highlighter-rouge, .post-body > table, .post-body > div[style],
+.page > pre, .page > .highlighter-rouge, .page > table { max-width: 46rem; }
 .post-header { padding: 3rem 0 1rem; }
-.post-date { color: var(--muted); font-size: .9rem; margin: 0; text-transform: uppercase; letter-spacing: .08em; }
-.post-header h1 { font-size: clamp(2rem, 5vw, 2.8rem); margin: .4rem 0 0; }
-.post-body { font-family: var(--serif); font-size: 1.15rem; line-height: 1.7; overflow-wrap: anywhere; }
+.post-date { color: var(--muted); font-size: 1.05rem; margin: 0; }
+.post-header h1, .page h1 { font-size: clamp(2.1rem, 5vw, 2.9rem); font-weight: 400; line-height: 1.1; margin: .3rem 0 0; }
+.page h1 { margin-top: 3rem; }
+.post-body { overflow-wrap: anywhere; }
 .post-body pre { overflow-wrap: normal; }
-.post-body h2 { font-size: 1.6rem; margin-top: 2.5rem; }
-.post-body h3 { font-size: 1.3rem; margin-top: 2rem; }
-.post-body blockquote { margin: 1.5rem 0; padding: .25rem 0 .25rem 1.25rem; border-left: 3px solid var(--line); color: var(--muted); }
-.post-body table { border-collapse: collapse; display: block; overflow-x: auto; font-family: var(--sans); font-size: .95rem; }
-.post-body th, .post-body td { border: 1px solid var(--line); padding: .35rem .6rem; }
+.post-body h2 { font-size: 1.7rem; font-weight: 400; font-style: italic; margin-top: 2.5rem; }
+.post-body h3 { font-size: 1.35rem; margin-top: 2rem; }
+.post-body blockquote { margin: 1.5rem 0; padding: 0 0 0 1.5rem; font-style: italic; }
+.post-body table { border-collapse: collapse; display: block; overflow-x: auto; font-size: 1.05rem; }
+.post-body th, .post-body td { border-bottom: 1px solid var(--line); padding: .35rem .9rem .35rem 0; text-align: left; }
+.post-body th { font-weight: 500; }
 .post-body img { display: block; margin: 1.5rem auto; }
 .post-body div[style] { max-width: 100%; } /* old posts set fixed widths inline */
 .post-body iframe { max-width: 100%; }
-code, pre { font-family: var(--mono); font-size: .85em; }
-:not(pre) > code { background: var(--code-bg); padding: .1em .35em; border-radius: 4px; }
-pre { background: var(--code-bg); padding: 1rem 1.1rem; border-radius: 8px; overflow-x: auto; line-height: 1.5; }
-.post-nav { display: flex; justify-content: space-between; gap: 1rem; margin: 3rem 0 2rem; padding-top: 1.25rem; border-top: 1px solid var(--line); font-size: .95rem; }
+code, pre { font-family: var(--mono); font-size: .8em; font-variant-numeric: normal; }
+:not(pre) > code { background: var(--code-bg); padding: .1em .3em; border-radius: 2px; }
+pre { background: var(--code-bg); padding: 1rem 1.1rem; border-radius: 2px; overflow-x: auto; line-height: 1.5; }
+pre code { font-size: 1em; }
+.post-nav { display: flex; justify-content: space-between; gap: 1rem; margin: 3rem 0 2rem; padding-top: 1.25rem; border-top: 1px solid var(--line); font-size: 1.05rem; font-style: italic; }
 .post-nav a { text-decoration: none; }
+.post-nav a:hover { text-decoration: underline; }
 .post-nav a[rel="next"] { text-align: right; }
-
-/* Plain pages (resume) */
-.page { max-width: 46rem; padding-bottom: 2rem; }
+.page { padding-bottom: 2rem; }
 
 /* Footer: plain paper under a hairline, the theme switch at the end */
 .site-footer { margin-top: 5rem; padding: 0 1.25rem; color: var(--muted); font-size: 1rem; }
