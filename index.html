@@ -3,13 +3,14 @@ layout: default
 ---
 <section class="hero wrap">
   <h1>{{ site.title }}</h1>
+  <p class="tagline">{{ site.tagline }}</p>
   <p class="lede">I build tools for people who write trading software, work with data, or teach programming. I teach Python and software tools at the University of Chicago, and before that built trading systems at banks and trading firms.</p>
   {% include social.html %}
 </section>
 
 <section id="apps" class="wrap" aria-labelledby="apps-title">
   <h2 id="apps-title">Apps</h2>
-  {% include cards.html items=site.data.apps %}
+  {% include cards.html items=site.data.apps feature=true %}
 </section>
 
 <section id="reference" class="wrap" aria-labelledby="reference-title">
@@ -27,11 +28,11 @@ layout: default
   <ul class="posts">
     {% for post in site.posts %}
     <li>
-      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %Y" }}</time>
       <div>
         <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
         {% if post.excerpt %}<p>{{ post.excerpt | strip_html | truncatewords: 28 }}</p>{% endif %}
       </div>
+      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %Y" }}</time>
     </li>
     {% endfor %}
   </ul>
