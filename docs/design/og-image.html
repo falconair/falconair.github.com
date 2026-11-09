@@ -1,0 +1,29 @@
+<!doctype html>
+<!-- Source of img/og-default.png, the link-preview image. Redraw it with headless Chrome
+     from the repo root (see docs/superpowers/plans/2026-11-09-margin-restyle.md, Task 7):
+     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars \
+       --force-device-scale-factor=1 --window-size=1200,630 \
+       --screenshot="$PWD/img/og-default.png" "file://$PWD/docs/design/og-image.html" -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Share image</title>
+<style>
+  @font-face { font-family: "EB Garamond"; src: url("../../fonts/eb-garamond/eb-garamond-400.woff2") format("woff2"); font-weight: 400; font-style: normal; }
+  @font-face { font-family: "EB Garamond"; src: url("../../fonts/eb-garamond/eb-garamond-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; }
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: #f7f5ef; }
+  body { box-sizing: border-box; padding: 112px 96px 0; color: #1c1b19; font-family: "EB Garamond", Georgia, serif; font-variant-numeric: oldstyle-nums; }
+  h1 { font-weight: 400; font-size: 104px; line-height: 1; margin: 0; letter-spacing: -.005em; }
+  .sub { font-style: italic; font-size: 46px; line-height: 1.2; color: #6b665d; margin: 18px 0 0; }
+  .apps { font-size: 38px; margin: 64px 0 0; padding-top: 30px; border-top: 2px solid #dcd7cc; width: 860px; }
+  .apps span + span::before { content: " · "; color: #6b665d; }
+  .site { position: absolute; left: 96px; bottom: 58px; font-size: 38px; color: #a3201a; font-variant-caps: all-small-caps; letter-spacing: .08em; }
+</style>
+</head>
+<body>
+  <h1>Shahbaz Chaudhary</h1>
+  <p class="sub">Software for trading systems, data science and teaching</p>
+  <p class="apps"><span>FIX Parser</span><span>FIX Tester</span><span>Agent Debugger</span><span>Class Planner</span></p>
+  <p class="site">shahbazac.com</p>
+</body>
+</html>
