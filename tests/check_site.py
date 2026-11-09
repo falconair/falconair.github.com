@@ -93,6 +93,12 @@ def check_fonts(site):
             errs.append(f"missing file fonts/eb-garamond/{f}")
     if not faces or any("font-display: swap" not in face for face in faces):
         errs.append("every @font-face needs font-display: swap")
+    # The font ships 400 and 500 only: any other weight is faked by the browser.
+    bad = sorted(set(w for w in re.findall(r"font-weight:\s*(\w+)", text) if w not in ("400", "500")))
+    if bad:
+        errs.append(f"font-weight other than 400/500: {bad}")
+    if not re.search(r"(?m)^h4, h5, h6\s*\{[^}]*font-weight:\s*500", text):
+        errs.append("h4-h6 need font-weight 500 (browser default 700 is synthesised)")
     serif = props(find_block(text, r"^:root\s*\{")).get("--serif", "")
     if not serif.startswith('"EB Garamond"') or "Georgia" not in serif:
         errs.append(f"--serif should start with \"EB Garamond\" and fall back to Georgia, got {serif!r}")

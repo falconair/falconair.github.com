@@ -84,6 +84,8 @@ body {
 a { color: var(--accent); }
 img, svg, video { max-width: 100%; height: auto; }
 h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.2; }
+h4, h5, h6 { font-family: var(--serif); font-weight: 500; }
+.post-body h6 { font-size: 1rem; } /* old posts use h6 for captions and the FIX tag list */
 b, strong { font-weight: 500; } /* the font ships 400 and 500 only; no synthetic bold */
 .wrap { max-width: 66rem; margin: 0 auto; padding: 0 1.25rem; }
 .skip { position: absolute; left: -999px; }
@@ -179,7 +181,9 @@ section > h2 { font-size: 2.1rem; font-weight: 400; font-style: italic; margin: 
 .post-body th, .post-body td { border-bottom: 1px solid var(--line); padding: .35rem .9rem .35rem 0; text-align: left; }
 .post-body th { font-weight: 500; }
 .post-body img { display: block; margin: 1.5rem auto; }
-.post-body div[style] { max-width: 100%; } /* old posts set fixed widths inline */
+/* Old posts size diagrams with inline widths and 'margin: 0 auto'; keep them on the
+   text column's left edge and within 46rem. !important is the only way past inline margins. */
+.post-body > div[style] { max-width: min(100%, 46rem); margin-left: 0 !important; margin-right: 0 !important; }
 .post-body iframe { max-width: 100%; }
 code, pre { font-family: var(--mono); font-size: .8em; font-variant-numeric: normal; }
 :not(pre) > code { background: var(--code-bg); padding: .1em .3em; border-radius: 2px; }
