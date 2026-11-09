@@ -1,6 +1,6 @@
 <ul class="apps">
   {% for app in include.items %}
-  <li class="app">
+  <li class="app{% if include.feature and forloop.first %} feature{% endif %}">
     <a href="{{ app.url }}">
       {% if app.image %}<img class="app-shot" src="{{ app.image | relative_url }}" alt="Screenshot of {{ app.name }}" width="800" height="500"{% if forloop.index > 3 %} loading="lazy"{% endif %} decoding="async">{% endif %}
       <div class="app-body">
@@ -10,7 +10,8 @@
         </div>
         <h3>{{ app.name }}</h3>
         <p>{{ app.description }}</p>
-        <span class="app-url">{{ app.url | remove: "https://" | remove: "www." }} →</span>
+        {% if include.feature and forloop.first and app.note %}<p class="app-claim">{{ app.note }}</p>{% endif %}
+        <span class="app-url">{{ app.url | remove: "https://" | remove: "www." | remove_last: "/" }}</span>
       </div>
     </a>
   </li>

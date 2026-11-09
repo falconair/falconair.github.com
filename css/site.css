@@ -1,65 +1,75 @@
-/* Site styles. No web fonts, no frameworks: system fonts keep pages fast. */
+/* Site styles: the Margin design (docs/superpowers/specs/2026-11-09-margin-design.md).
+   One self-hosted face, EB Garamond, subset by tools/subset-fonts.sh. No frameworks. */
+@font-face { font-family: "EB Garamond"; src: url("/fonts/eb-garamond/eb-garamond-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "EB Garamond"; src: url("/fonts/eb-garamond/eb-garamond-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "EB Garamond"; src: url("/fonts/eb-garamond/eb-garamond-500.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+
 :root {
-  --bg: #fdfdfc;
-  --surface: #ffffff;
-  --text: #222222;
-  --muted: #5c5c5c;
-  --line: #e6e6e6;
-  --accent: #0a6aa1;
-  --accent-soft: #edf3f8;
-  --code-bg: #f5f5f5;
-  --ink: #111111; /* the black strip and footer of the old theme */
-  --serif: "Iowan Old Style", "Charter", "Georgia", "Times New Roman", serif;
-  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --bg: #f7f5ef;
+  --surface: #f7f5ef;
+  --text: #1c1b19;
+  --muted: #6b665d;
+  --line: #dcd7cc;
+  --accent: #a3201a;
+  --accent-soft: #f1e4df;
+  --code-bg: #efece4;
+  --shot-edge: #d3cdc0;
+  --shot-shadow: 0 1px 2px rgba(60, 45, 25, .10), 0 6px 16px -10px rgba(60, 45, 25, .40);
+  --hl-comment: #6b665d;
+  --hl-keyword: #a3201a;
+  --hl-string: #3f6a2c;
+  --hl-number: #875a0e;
+  --hl-function: #1f4f8f;
+  --hl-class: #7a4a12;
+  --hl-operator: #5b4a86;
+  --serif: "EB Garamond", Garamond, "Iowan Old Style", Georgia, serif;
+  --sans: var(--serif); /* one face throughout; kept because the generated resume uses it */
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
-  --hl-comment: #6a737d;
-  --hl-keyword: #a626a4;
-  --hl-string: #50a14f;
-  --hl-number: #986801;
-  --hl-function: #4078f2;
-  --hl-class: #c18401;
-  --hl-operator: #0184bc;
 }
-/* Dark follows the system unless the footer toggle set data-theme on <html>. */
+/* Dark follows the system unless the footer switch set data-theme on <html>.
+   The two dark blocks must stay identical (tests/check_site.py checks). */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #15171a;
-    --surface: #1c1f23;
-    --text: #e8e6e1;
-    --muted: #a3a7ad;
-    --line: #2e3238;
-    --accent: #6cb6e6;
-    --accent-soft: #1c2c38;
-    --code-bg: #1f2227;
-    --ink: #0b0c0e;
-    --hl-comment: #7f848e;
-    --hl-keyword: #c678dd;
-    --hl-string: #98c379;
-    --hl-number: #d19a66;
-    --hl-function: #61afef;
-    --hl-class: #e5c07b;
-    --hl-operator: #56b6c2;
+    --bg: #1c1a17;
+    --surface: #1c1a17;
+    --text: #e8e4da;
+    --muted: #a59f93;
+    --line: #3a3631;
+    --accent: #e26a5c;
+    --accent-soft: #2e221f;
+    --code-bg: #25221e;
+    --shot-edge: #776f64;
+    --shot-shadow: none;
+    --hl-comment: #a59f93;
+    --hl-keyword: #e9796b;
+    --hl-string: #a9c48c;
+    --hl-number: #d8a660;
+    --hl-function: #93b8e8;
+    --hl-class: #d9b872;
+    --hl-operator: #bba9dc;
   }
 }
 :root[data-theme="dark"] {
-  color-scheme: dark;
-  --bg: #15171a;
-  --surface: #1c1f23;
-  --text: #e8e6e1;
-  --muted: #a3a7ad;
-  --line: #2e3238;
-  --accent: #6cb6e6;
-  --accent-soft: #1c2c38;
-  --code-bg: #1f2227;
-  --ink: #0b0c0e;
-  --hl-comment: #7f848e;
-  --hl-keyword: #c678dd;
-  --hl-string: #98c379;
-  --hl-number: #d19a66;
-  --hl-function: #61afef;
-  --hl-class: #e5c07b;
-  --hl-operator: #56b6c2;
+  --bg: #1c1a17;
+  --surface: #1c1a17;
+  --text: #e8e4da;
+  --muted: #a59f93;
+  --line: #3a3631;
+  --accent: #e26a5c;
+  --accent-soft: #2e221f;
+  --code-bg: #25221e;
+  --shot-edge: #776f64;
+  --shot-shadow: none;
+  --hl-comment: #a59f93;
+  --hl-keyword: #e9796b;
+  --hl-string: #a9c48c;
+  --hl-number: #d8a660;
+  --hl-function: #93b8e8;
+  --hl-class: #d9b872;
+  --hl-operator: #bba9dc;
 }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { color-scheme: dark; } }
+:root[data-theme="dark"] { color-scheme: dark; }
 :root[data-theme="light"] { color-scheme: light; }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -68,101 +78,112 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font: 17px/1.6 var(--sans);
-  border-top: 8px solid var(--ink);
+  font: 1.28rem/1.5 var(--serif);
+  font-variant-numeric: oldstyle-nums;
 }
 a { color: var(--accent); }
 img, svg, video { max-width: 100%; height: auto; }
-h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.2; }
-.wrap { max-width: 64rem; margin: 0 auto; padding: 0 1.25rem; }
+h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.2; }
+h4, h5, h6 { font-family: var(--serif); font-weight: 500; }
+b, strong { font-weight: 500; } /* the font ships 400 and 500 only; no synthetic bold */
+.wrap { max-width: 66rem; margin: 0 auto; padding: 0 1.25rem; }
 .skip { position: absolute; left: -999px; }
-.skip:focus { left: 1rem; top: 1rem; background: var(--surface); padding: .5rem 1rem; z-index: 1; }
+.skip:focus { left: 1rem; top: 1rem; background: var(--bg); padding: .5rem 1rem; z-index: 1; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Small caps: tags, nav, social links, dates and the theme switch */
+.site-header nav a, .social a, .app-tag, .theme-toggle button {
+  font-variant-caps: all-small-caps; letter-spacing: .07em;
+}
+.social svg { display: none; } /* text links only, as in the mockup */
 
 /* Header on inner pages */
 .site-header { border-bottom: 1px solid var(--line); }
-.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-top: .9rem; padding-bottom: .9rem; }
-.site-name { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--text); text-decoration: none; }
-.site-header nav a { margin-left: 1.25rem; color: var(--muted); text-decoration: none; font-size: .95rem; }
+.site-header .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .25rem 1rem; padding-top: .9rem; padding-bottom: .9rem; }
+.site-name { font-size: 1.25rem; font-weight: 400; color: var(--text); text-decoration: none; }
+.site-header nav { display: flex; flex-wrap: wrap; gap: 0 1.25rem; }
+.site-header nav a { color: var(--muted); text-decoration: none; font-size: 1.05rem; }
 .site-header nav a:hover { color: var(--accent); }
 
 /* Home: introduction */
-.hero { padding-top: 4.5rem; padding-bottom: 1rem; }
-.hero h1 { font-size: clamp(2.4rem, 6vw, 3.6rem); margin: 0 0 1rem; letter-spacing: -0.01em; }
-.lede { font-size: 1.2rem; color: var(--muted); max-width: 40rem; margin: 0 0 1.5rem; }
+.hero { padding-top: 4.5rem; }
+.hero h1 { font-size: clamp(2.6rem, 6vw, 3.7rem); font-weight: 400; line-height: 1.05; margin: 0; letter-spacing: -.005em; }
+.hero .tagline { font-style: italic; font-size: 1.55rem; color: var(--muted); margin: .35rem 0 1.6rem; }
+.lede { max-width: 34rem; margin: 0 0 1.1rem; }
 
-.social { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; }
-.social a { display: inline-flex; align-items: center; gap: .4rem; color: var(--muted); text-decoration: none; font-size: .95rem; }
-.social a:hover { color: var(--accent); }
-.social svg { width: 1rem; height: 1rem; fill: currentColor; }
+.social { display: flex; flex-wrap: wrap; gap: .2rem 1.3rem; }
+.social a { color: var(--accent); text-decoration: none; font-size: 1.12em; }
+.social a:hover { text-decoration: underline; }
 
-section > h2 { font-size: 1.6rem; margin: 3.5rem 0 1.25rem; padding-bottom: .5rem; border-bottom: 1px solid var(--line); }
+section > h2 { font-size: 2.1rem; font-weight: 400; font-style: italic; margin: 4rem 0 1.1rem; }
 
-/* Home: app cards */
-.apps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: 1rem; }
-.app a {
-  display: flex; flex-direction: column; height: 100%; overflow: hidden;
-  background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
-  color: var(--text); text-decoration: none;
-  transition: border-color .15s, transform .15s, box-shadow .15s;
+/* Home: tiles. No boxes and no hover lift; hover only turns the title red. */
+.apps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.75rem 2.25rem; }
+.app a { display: block; color: var(--text); text-decoration: none; }
+.app a:hover h3 { color: var(--accent); }
+.app-shot {
+  display: block; width: 100%; height: auto; aspect-ratio: 8 / 5; object-fit: cover; object-position: top left;
+  margin-bottom: .75rem; background: var(--code-bg);
+  border: 1px solid var(--shot-edge); border-radius: 2px; box-shadow: var(--shot-shadow);
 }
-.app a:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.06); }
-.app-shot { display: block; width: 100%; aspect-ratio: 8 / 5; object-fit: cover; object-position: top left; border-bottom: 1px solid var(--line); background: var(--code-bg); }
-.app-body { display: flex; flex-direction: column; flex: 1; padding: 1rem 1.25rem 1rem; }
-.app h3 { font-size: 1.3rem; margin: .5rem 0 .4rem; }
-.app p { margin: 0 0 1rem; color: var(--muted); font-size: .95rem; flex: 1; }
-.app-meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .25rem .75rem; }
-.app-since { font-size: .8rem; color: var(--muted); white-space: nowrap; }
-.app-tag { align-self: flex-start; font-size: .72rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); padding: .15rem .5rem; border-radius: 99px; }
-.app-url { font-size: .85rem; color: var(--accent); font-family: var(--mono); overflow-wrap: anywhere; }
+.app-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .6rem; font-size: 1rem; color: var(--muted); }
+.app-tag { color: var(--accent); font-size: 1.1em; }
+.app-since { text-transform: lowercase; }
+.app h3 { font-size: 1.5rem; margin: .1rem 0 .3rem; }
+.app p { margin: 0 0 .35rem; font-size: 1.12rem; line-height: 1.45; }
+.app-url { display: block; font-size: 1rem; font-style: italic; color: var(--muted); overflow-wrap: anywhere; }
 
-/* Home: posts */
-.posts { list-style: none; padding: 0; margin: 0; }
-.posts li { display: grid; grid-template-columns: 6rem 1fr; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--line); }
-.posts li:last-child { border-bottom: 0; }
-.posts time { color: var(--muted); font-size: .9rem; padding-top: .2rem; }
-.posts a { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; color: var(--text); text-decoration: none; }
-.posts a:hover { color: var(--accent); }
-.posts p { margin: .25rem 0 0; color: var(--muted); font-size: .95rem; }
-@media (max-width: 30rem) {
-  .posts li { grid-template-columns: 1fr; gap: .1rem; }
+/* The first app spans the row: screenshot across two columns, text in the third */
+.app.feature { grid-column: 1 / -1; }
+.app.feature a { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 2.25rem; align-items: start; }
+.app.feature .app-shot { grid-column: 1 / 3; margin: 0; }
+.app.feature h3 { font-size: 2rem; }
+.app.feature p { font-size: 1.25rem; line-height: 1.5; }
+.app.feature .app-claim { font-style: italic; margin: .2rem 0 .6rem; }
+
+@media (max-width: 56rem) {
+  .apps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .app.feature a { grid-template-columns: minmax(0, 1fr); row-gap: .75rem; }
+  .app.feature .app-shot { grid-column: auto; }
+}
+@media (max-width: 36rem) {
+  .apps { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* Post pages */
-.post { max-width: 46rem; }
-.post-header { padding: 3rem 0 1rem; }
-.post-date { color: var(--muted); font-size: .9rem; margin: 0; text-transform: uppercase; letter-spacing: .08em; }
-.post-header h1 { font-size: clamp(2rem, 5vw, 2.8rem); margin: .4rem 0 0; }
-.post-body { font-family: var(--serif); font-size: 1.15rem; line-height: 1.7; overflow-wrap: anywhere; }
-.post-body pre { overflow-wrap: normal; }
-.post-body h2 { font-size: 1.6rem; margin-top: 2.5rem; }
-.post-body h3 { font-size: 1.3rem; margin-top: 2rem; }
-.post-body blockquote { margin: 1.5rem 0; padding: .25rem 0 .25rem 1.25rem; border-left: 3px solid var(--line); color: var(--muted); }
-.post-body table { border-collapse: collapse; display: block; overflow-x: auto; font-family: var(--sans); font-size: .95rem; }
-.post-body th, .post-body td { border: 1px solid var(--line); padding: .35rem .6rem; }
-.post-body img { display: block; margin: 1.5rem auto; }
-.post-body div[style] { max-width: 100%; } /* old posts set fixed widths inline */
-.post-body iframe { max-width: 100%; }
-code, pre { font-family: var(--mono); font-size: .85em; }
-:not(pre) > code { background: var(--code-bg); padding: .1em .35em; border-radius: 4px; }
-pre { background: var(--code-bg); padding: 1rem 1.1rem; border-radius: 8px; overflow-x: auto; line-height: 1.5; }
-.post-nav { display: flex; justify-content: space-between; gap: 1rem; margin: 3rem 0 2rem; padding-top: 1.25rem; border-top: 1px solid var(--line); font-size: .95rem; }
-.post-nav a { text-decoration: none; }
-.post-nav a[rel="next"] { text-align: right; }
+/* Plain pages (privacy, 404, resume): a left-aligned 34rem text column, code and tables wider.
+   Old posts don't use this file: they keep their original theme (_layouts/legacy.html). */
+.page > * { max-width: 34rem; }
+.page > pre, .page > .highlighter-rouge, .page > table { max-width: 46rem; }
+.page h1 { font-size: clamp(2.1rem, 5vw, 2.9rem); font-weight: 400; line-height: 1.1; margin: 3rem 0 0; }
+code, pre { font-family: var(--mono); font-size: .8em; font-variant-numeric: normal; }
+:not(pre) > code { background: var(--code-bg); padding: .1em .3em; border-radius: 2px; }
+pre { background: var(--code-bg); padding: 1rem 1.1rem; border-radius: 2px; overflow-x: auto; line-height: 1.5; }
+pre code { font-size: 1em; }
+.page { padding-bottom: 2rem; }
 
-/* Plain pages (resume) */
-.page { max-width: 46rem; padding-bottom: 2rem; }
+/* Resume: _pages/resume.html is generated elsewhere (tools/build.py in the resume repo)
+   and carries its own <style> after this file, so these rules are one class stronger. */
+.page > .resume { max-width: 46rem; }
+.page .resume { font-size: 1.12rem; }
+.page .resume h1 { font-weight: 400; }
+.page .resume h2 { font-size: 1.7rem; font-weight: 400; font-style: italic; border-bottom: 0; padding-bottom: 0; margin-bottom: .6rem; }
+.page .resume .entry-head h3 { font-size: 1.2rem; font-weight: 500; }
+.page .resume .contact { font-size: 1.05rem; }
+.page .resume .dates, .page .resume .when { font-size: 1rem; }
+.page .resume details.more summary { font-size: 1rem; }
+.page .resume details.more > ul { border-radius: 0; }
 
-/* Footer */
-.site-footer { margin-top: 4rem; background: var(--ink); padding: 1.75rem 0 2.5rem; color: #c8c8c8; font-size: .9rem; }
-.site-footer .social a { color: #c8c8c8; }
-.site-footer .social a:hover { color: #fff; }
-.site-footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; align-items: center; }
-.site-footer p { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: .4rem 1rem; }
-.theme-toggle { display: inline-flex; gap: .15rem; }
-.theme-toggle button { font: inherit; font-size: .8rem; color: #9a9a9a; background: none; border: 1px solid transparent; border-radius: 4px; padding: .1rem .45rem; cursor: pointer; }
-.theme-toggle button:hover { color: #fff; }
-.theme-toggle button[aria-pressed="true"] { color: #fff; border-color: #555; }
+/* Footer: plain paper under a hairline, the theme switch at the end */
+.site-footer { margin-top: 5rem; padding: 0 1.25rem; color: var(--muted); font-size: 1rem; }
+.site-footer .wrap { max-width: calc(66rem - 2.5rem); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .6rem 2rem; padding: 1.5rem 0 2.5rem; border-top: 1px solid var(--line); }
+.site-footer .social { display: flex; flex-wrap: wrap; gap: .2rem 1.25rem; }
+.site-footer .social a { color: var(--muted); text-decoration: none; font-size: 1.1em; }
+.site-footer .social a:hover { color: var(--accent); }
+.site-footer p { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem 1.4rem; font-style: italic; }
+.theme-toggle { display: inline-flex; gap: .8rem; font-style: normal; }
+.theme-toggle button { font: inherit; font-style: normal; font-variant-caps: all-small-caps; letter-spacing: .07em; font-size: 1.1em; color: var(--muted); background: none; border: 0; padding: 0; cursor: pointer; }
+.theme-toggle button:hover { color: var(--text); }
+.theme-toggle button[aria-pressed="true"] { color: var(--accent); }
 
 /* Code highlighting (Rouge token classes); colours set with the theme above */
 .highlight .c, .highlight .c1, .highlight .cm, .highlight .cs { color: var(--hl-comment); font-style: italic; }
@@ -173,3 +194,30 @@ pre { background: var(--code-bg); padding: 1rem 1.1rem; border-radius: 8px; over
 .highlight .nc, .highlight .nn { color: var(--hl-class); }
 .highlight .o, .highlight .ow { color: var(--hl-operator); }
 .highlight .err { color: inherit; background: none; }
+
+/* Print: always the light colours, whatever theme is on screen; no header or footer.
+   Both selectors match <html> at the same weight as the dark blocks and come later. */
+@media print {
+  :root:not([data-theme="light"]), :root[data-theme] {
+    color-scheme: light;
+    --bg: #f7f5ef;
+    --surface: #f7f5ef;
+    --text: #1c1b19;
+    --muted: #6b665d;
+    --line: #dcd7cc;
+    --accent: #a3201a;
+    --accent-soft: #f1e4df;
+    --code-bg: #efece4;
+    --shot-edge: #d3cdc0;
+    --shot-shadow: none;
+    --hl-comment: #6b665d;
+    --hl-keyword: #a3201a;
+    --hl-string: #3f6a2c;
+    --hl-number: #875a0e;
+    --hl-function: #1f4f8f;
+    --hl-class: #7a4a12;
+    --hl-operator: #5b4a86;
+  }
+  body { background: #fff; }
+  .site-header, .site-footer, .skip { display: none; }
+}

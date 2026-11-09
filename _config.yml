@@ -55,7 +55,7 @@ plugins:
   - jekyll-sitemap
 
 include: ['_pages']
-exclude: ['Gemfile', 'Gemfile.lock', 'vendor', 'README.md', 'css/sass', 'css/style.scss']
+exclude: ['Gemfile', 'Gemfile.lock', 'vendor', 'README.md', 'css/sass', 'css/style.scss', 'docs', 'tests', 'tools']
 
 defaults:
   - scope: { path: "", type: posts }

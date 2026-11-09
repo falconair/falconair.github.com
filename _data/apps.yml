@@ -2,11 +2,14 @@
 # image: an 800x500 screenshot in img/apps/
 # since is optional: the year the work really began, not the age of a repo.
 # Leave it out for anything built in 2026.
+# note is optional, one line shown in italic only on the first app, which the
+# home page shows as a wide tile. Never put usage numbers here.
 - name: FIX Parser
   url: https://fixparser.targetcompid.com
   image: /img/apps/fix-parser.webp
   tag: Trading
   since: 2012
+  note: "A standard tool for much of Wall Street. From the largest banks to the smallest trading firms."
   description: >-
     Paste FIX messages or drop a log file and read every tag by name, in a
     timeline of orders and executions. Parsed in your browser, so logs stay on

@@ -16,6 +16,7 @@
     /* Apply a saved theme before the page paints; with none saved, CSS follows the system. */
     try { var t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
   </script>
+  <link rel="preload" href="{{ "/fonts/eb-garamond/eb-garamond-400.woff2" | relative_url }}" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{{ "/css/site.css" | relative_url }}">
   {% include analytics.html %}
 </head>
