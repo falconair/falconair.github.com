@@ -24,6 +24,15 @@
     Sentence-transformer embeddings as a scikit-learn pipeline step, so a text
     classifier encodes, fits, predicts and saves as one model. On PyPI.
 
+- name: wireframes
+  url: https://github.com/falconair/wireframes
+  tag: Agent skill
+  description: >-
+    A skill for Claude Code, Codex, Copilot, Cursor and other coding agents.
+    When the agent proposes UI changes, it draws cheap Now vs Proposed
+    wireframes instead of writing paragraphs. A picture is worth a thousand
+    words.
+
 - name: Lecture notes
   url: https://github.com/falconair/lectures
   tag: Jupyter
