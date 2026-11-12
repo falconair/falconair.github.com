@@ -462,6 +462,7 @@ Given this base, one can build many productivity enhancing tools such as:
 
 * ###### A dummy exchange for testing a trading system
 With just a few lines, you can build an order executor based on your own rules. Do you just want to execute everything? Use the code I already provided (or use QuickFIX's executor). Want to reject some percentage of order or leave them hanging without any acknowledgement? Just change a few lines.  Want to test some upcoming functionality such as yet another variation of the uptick rule, code it up in quickly and easily and test your systems.
+<br>_Update, 2026: I have since built this as a hosted service. [FIX Tester](https://fixtester.targetcompid.com/?utm_source=blog&utm_medium=post) is a FIX server you can point your engine at: log on, send test orders, and acknowledge, fill or reject them from the page._
 * ###### A proxy or a router
 Route your orders through a proxy to test message enrichment or perhaps to concurrently test old and new versions of your software.
 * ###### A GUI for interactive FIX message creation, etc.
