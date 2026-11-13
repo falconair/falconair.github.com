@@ -26,6 +26,7 @@
 
 - name: wireframes
   url: https://github.com/falconair/wireframes
+  image: /img/apps/wireframes.webp
   tag: Agent skill
   description: >-
     A skill for Claude Code, Codex, Copilot, Cursor and other coding agents.
